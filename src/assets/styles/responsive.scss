@@ -1,0 +1,346 @@
+
+/*============================================================== 
+ Para pantallas de menos de 1650px
+ ============================================================== */
+
+@media (min-width: 1650px) {
+  .main-container.boxed {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+}
+/*============================================================== 
+  Para pantallas de 1600px o menos
+ ============================================================== */
+
+@media (max-width: 1600px) {
+  .main-container.boxed {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .hide {
+    display: none;
+  }
+
+}
+
+/*============================================================== 
+  Para pantallas de 1500px o menos
+ ============================================================== */
+
+ @media (max-width: 1500px) {
+  .max-1500-hidden {
+    display: none!important;
+  }
+
+}
+
+/*============================================================== 
+  Para pantallas de 1400px o menos
+ ============================================================== */
+
+ @media (max-width: 1400px) {
+  .max-1400-hidden {
+    display: none!important;
+  }
+
+}
+
+/*============================================================== 
+  Para pantallas de 1280px o menos
+ ============================================================== */
+
+ @media (max-width: 1280px) {
+  .max-1280-hidden {
+    display: none!important;
+  }
+
+}
+
+/*============================================================== 
+  Para pantallas de 1150px o menos
+ ============================================================== */
+
+ @media (max-width: 1150px) {
+  .max-1150-hidden {
+    display: none!important;
+  }
+
+}
+
+/*-- ============================================================== 
+ Para pantallas mayores a 1024px
+ ============================================================== */
+
+@media (min-width: 1024px) {
+  .card-group {
+    padding: 0 15px;
+    display: flex;
+    flex-flow: row wrap;
+    .mat-card {
+      margin: 15px 0px;
+      flex: 1 0 0%;
+      border-left: 1px solid $border;
+      &:first-child {
+        border: 0px;
+      }
+    }
+  }
+
+  .min-1024-hidden {
+    display: none!important;
+  }
+
+  .dialog-profile-width {
+    width: 1150px !important;
+  }
+
+}
+
+
+/*-- ============================================================== 
+ Para pantallas menores a 1024px
+ ============================================================== */
+
+@media (max-width: 1024px) {
+  .card-group {
+    margin: 15px 0;
+    .mat-card {
+      margin: 0 15px;
+      border-top: 1px solid $border;
+      &:first-child {
+        border: 0px;
+      }
+    }
+  }
+
+  .max-1024-hidden {
+    display: none!important;
+  }
+
+  .text-product-box {
+    max-width: 200px!important;
+  }
+}
+
+
+/*-- ============================================================== 
+ Pantallas mayores a 968px
+ ============================================================== */
+
+ @media (min-width: 968px) {
+
+  
+
+ }
+
+
+/*-- ============================================================== 
+ Pantallas menores a 968px
+ ============================================================== */
+
+ @media (max-width: 968px) {
+  .user-data-container .work-hour {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .work-hour-day {
+      padding-left: 0;
+    }
+    .work-hour-range {
+      mat-form-field {
+        width: 190px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .hide-968 {
+    display: none;
+  }
+
+  .show-968 {
+    display: block!important;
+  }
+
+ }
+
+/*-- ============================================================== 
+ Pantallas menores a 800px
+ ============================================================== */
+
+ @media (max-width: 800px) {
+  .mid-user-data-container {
+    flex-direction: column;
+  }
+
+  .max-800-hidden {
+    display: none!important;
+  }
+
+ }
+
+/*-- ============================================================== 
+ Pantallas mayores a 768px
+ ============================================================== */
+
+@media (min-width: 768px) {
+  .navbar-header {
+    width: 225px;
+    flex-shrink: 0;
+    .navbar-brand {
+      padding-top: 0px;
+    }
+  }
+
+}
+
+
+/*-- ============================================================== 
+ Pantallas menores a 768px
+ ============================================================== */
+
+@media (max-width: 768px) {
+  .mat-toolbar-single-row {
+    height: 64px !important;
+  }
+  .d-flex {
+    display: block;
+  }
+  .no-block {
+    display: flex;
+  }
+
+  mat-toolbar .sidenav-header {
+    min-width: 48px;
+  }
+
+  #sdialog {
+    width: 480px;
+    max-width: 480px;
+  }
+
+  .max-768-hidden {
+    display: none!important;
+  }
+
+  .text-product-box {
+    max-width: 250px!important;
+  }
+
+  .mat-card.dialog-detail {
+    max-width: 490px!important;
+    .box-detail {
+      flex-direction: column;
+      .box-image {
+        width: 100%!important;
+      }
+      .box-text {
+        width: 100%!important;
+        padding: 0!important;
+        .category_state {
+          div {
+            margin-right: 0;
+            padding: 10px 0 0 0;
+            span {
+              font-size: 1rem;
+            }
+          }
+      }
+      }
+    }
+  }
+
+}
+
+
+/*-- ============================================================== 
+ Pantallas menores a 600px
+ ============================================================== */
+
+@media (max-width: 600px) {
+
+  #sdialog {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .box-table {
+    overflow-x: auto;
+    table {
+        font-size: 12px;
+    }
+  }
+
+  .card-product.addProduct.infoProduct {
+    .sku-product-box {
+        button {
+            padding: 3px 0!important;
+        }
+    }
+  }
+
+  .max-600-hidden {
+    display: none!important;
+  }
+
+  .set-width-600 {
+    width: 170px;
+  }
+
+}
+
+
+/*-- ============================================================== 
+ Pantallas menores a 500px
+ ============================================================== */
+
+ @media (max-width: 500px) {
+
+.max-500-hidden {
+  display: none!important;
+}
+
+.card-product.addProduct.imgProduct {
+  .img-dropzone {
+    padding: 1.5rem!important;
+  }
+}
+
+.mat-card.dialog-detail {
+  .mat-card-content {
+      .box-detail {
+          .box-text {
+              min-width: 310px!important;
+          }
+        }
+      }
+}
+
+}
+
+/*-- ============================================================== 
+ Pantallas menores a 400px
+ ============================================================== */
+
+ @media (max-width: 400px) {
+  .user-data-container .work-hour {
+    .work-hour-range {
+      mat-form-field {
+        width: 140px;
+      }
+    }
+  }
+
+  .max-400-hidden {
+    display: none!important;
+  }
+
+  .card-product.addProduct.imgProduct {
+    .img-dropzone {
+      padding: 0.75rem!important;
+    }
+  }
+
+ }

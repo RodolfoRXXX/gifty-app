@@ -1,0 +1,37 @@
+<!-- detail Card -->
+
+<mat-card class="card">
+  <mat-card-content>
+    <div class="d-flex flex-column align-items-start justify-content-between info">
+        <p class="text-muted mb-3">Detalle de mi plan</p>
+        <div class="d-flex justify-content-center align-items-center p-3 w-100" *ngIf="isLoading">
+            <p class="mb-0">Cargando...</p>
+        </div>
+        <div class="row g-2 w-100 p-2 rounded border" *ngIf="!isLoading">
+            <!-- título -->
+            <div class="col-12 col-md-4 d-flex flex-column align-items-center justify-content-between p-2">
+                <img [src]="actualPlan?actualPlan.image:''" height="100" alt="">
+                <h4 class="cap mt-2 mb-0">{{ actualPlan?actualPlan.name:'' }}</h4>
+                <p class="fs-08 mb-0 text-center">{{ actualPlan?actualPlan.description:'' }}</p>
+            </div>
+            <!-- características -->
+            <div class="col-12 col-md-4 ps-2">
+                <p class="mb-1 text-muted">Características: </p>
+                <ul *ngFor="let item of actualPlan?actualPlan.features:[]">
+                    <li class="fs-08">{{ item }}</li>
+                </ul>
+            </div>
+            <!-- precio -->
+            <div class="col-12 col-md-4 ps-2">
+                <p class="mb-4 text-muted">Precio: </p>
+                <div class="text-center mb-3 mt-4">
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                      <h1 class="mb-0"><span class="fs-09">$</span>{{ actualPlan?actualPlan.price:0 }}<span class="fs-08">/mes</span></h1>
+                      <small class="text-muted fs-08">(K equivale a 1000)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,132 @@
+<!-- List of providers -->
+
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+
+    <!-- Provider List Table -->
+    <mat-card class="card mb-2">
+        <mat-card-content class="mat-card-content">
+            <!-- Loader -->
+            <div class="loader" *ngIf="load">
+                <p>Cargando...</p>
+            </div>
+            <!-- Table of providers -->
+            <div class="box-list" *ngIf="!recharge && resultsLength">
+                <div class="d-flex justify-content-between">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filtrar</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar un proveedor" #input>
+                    </mat-form-field>
+                    <a mat-flat-button color="primary" routerLink="../provider-edit">
+                        + <span class="max-500-hidden">Agregar</span> Proveedor
+                    </a>
+                </div>
+                <table mat-table [dataSource]="dataSource" class="mt-1" matSort>
+                
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                        <td mat-cell *matCellDef="let element" class="font-family-def font-size-def">
+                            <p class="mb-0" style="color: rgb(72, 72, 222);">#{{ element.id }}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- provider Column -->
+                    <ng-container matColumnDef="provider">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PROVEEDOR </th>
+                        <td mat-cell *matCellDef="let element" class="font-family-def"> 
+                            <!-- código de la columna proveedor que muestra el nombre del proveedor -->
+                            <p class="mb-0 fs-11 fw-500">{{ element.name }}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- phone Column -->
+                    <ng-container matColumnDef="phone">
+                        <th mat-header-cell *matHeaderCellDef class="max-1280-hidden"> TELEFONO </th>
+                        <td mat-cell *matCellDef="let element" class="max-1280-hidden font-family-def">
+                            <!-- código que muestra el teléfono del proveedor -->
+                            <p class="mb-0 fs-16">{{ element.phone }}</p>
+                        </td>
+                    </ng-container>
+
+                    <!-- whatsapp Column -->
+                    <ng-container matColumnDef="whatsapp">
+                        <th mat-header-cell *matHeaderCellDef class="max-768-hidden"> WHATSAPP </th>
+                        <td mat-cell *matCellDef="let element" class="max-768-hidden">
+                            <!-- código que muestra el whatsapp del proveedor -->
+                            <button mat-icon-button 
+                                    color="primary" 
+                                    (click)="openDialogWhatsapp(element.whatsapp)"
+                                    matTooltip="Enviar un mensaje"
+                                    [disabled]="element.whatsapp == ''">
+                                <mat-icon style="position: relative; bottom: 2px;">phone_iphone</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef class="max-1024-hidden"> EMAIL </th>
+                        <td mat-cell *matCellDef="let element" class="max-1024-hidden font-family-def">
+                            <!-- código que muestra el email del proveedor -->
+                            <p class="mb-0 fs-16">{{ element.email }}</p>
+                        </td>
+                    </ng-container>
+                
+                    <!-- address Column -->
+                    <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="max-1400-hidden"> DIRECCION </th>
+                        <td mat-cell *matCellDef="let element" class="max-1400-hidden font-family-def">
+                            <!-- código que muestra la dirección del proveedor -->
+                            <p class="mb-0 fs-16">{{ element.address }}</p>
+                        </td>
+                    </ng-container>
+    
+                    <!-- country column -->
+                    <ng-container matColumnDef="country">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="max-600-hidden"> PAIS </th>
+                        <td mat-cell *matCellDef="let element" class="max-600-hidden font-family-def">
+                            <!-- código que muestra el país del proveedor -->
+                            {{ element.country }}
+                        </td>
+                    </ng-container>
+
+                    <!-- edit Column -->
+                    <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef> EDITAR </th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- botón que permite editar el proveedor -->
+                            <button mat-icon-button color="primary" (click)="editProvider(element.id)">
+                                <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)" class="bill-row"></tr>
+    
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">Búsqueda sin resultados para "{{input.value}}"</td>
+                    </tr>
+                </table>
+                <mat-paginator class="m-t-15" [length]="resultsLength" [pageSize]="10" showFirstLastButtons aria-label="paginador"></mat-paginator>              
+            </div>
+            <!-- Recharge button -->
+            <div class="recharge" *ngIf="recharge">
+                <!-- Botón para recargar los datos -->
+                <button mat-raised-button color="accent" (click)="rechargeData()">Recargar los datos</button>
+            </div>
+            <!-- No providers -->
+            <div class="recharge" *ngIf="!resultsLength">
+                <!-- Botón para recargar los datos -->
+                <p>No hay proveedores</p>
+                <a mat-flat-button color="primary" routerLink="../provider-edit">
+                    + Agregar Proveedor
+                </a>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>
+<!-- / Content -->

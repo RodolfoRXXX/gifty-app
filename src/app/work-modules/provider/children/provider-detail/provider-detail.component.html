@@ -1,0 +1,178 @@
+<!-- Detail provider -->
+
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y row">
+    <!-- Caja que contiene imagen, indicadores básicos y detalles -->
+    <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0" *ngIf="!load">
+        <div class="card mb-6">
+            <div class="card-body pt-12">
+                <!-- caja de la imagen -->
+                <div>
+                    <div class="d-flex align-items-center flex-column">
+                        <img src="assets/images/system/blanck_provider.png" alt="Provider image" class="img-fluid rounded mb-4" width="120" height="120">
+                        <div class="text-center mb-6">
+                            <h4 class="mb-0">{{ provider.name || 'Sin información' }}</h4>
+                            <span class="fs-09 text-muted">Proveedor ID #<span>{{ provider.id || '' }}</span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- caja con indicadores básicos y el nombre -->
+                <div class="d-flex justify-content-around flex-wrap mb-6 gap-0 gap-md-3 gap-lg-4 mt-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar">
+                            <span class="avatar-initial rounded text-heading primary-badge">
+                                <span class="material-symbols-outlined">inventory</span>
+                            </span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">{{ card_values.total_art || 0 }}</h5>
+                            <span class="text-muted fs-08">Artículos</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar">
+                            <span class="avatar-initial rounded text-heading primary-badge">
+                                <span class="material-symbols-outlined">paid</span>
+                            </span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">${{ card_values.total_inv || 0 }}</h5>
+                            <span class="text-muted fs-08">Invertido</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- caja con información básica -->
+                <div>
+                    <h5 class="border-bottom text-capitalize pb-3 mt-4 mb-3">detalles</h5>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">
+                            <span class="h6 me-1">Email: </span>
+                            <span>{{ provider.email || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Teléfono: </span>
+                            <span>{{ provider.phone || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Whatsapp: </span>
+                            <span>{{ provider.whatsapp || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Dirección: </span>
+                            <span>{{ provider.address || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">País: </span>
+                            <span>{{ provider.country || 'Sin información' }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Caja con botón para editar información -->
+                <div class="d-flex justify-content-center">
+                    <button mat-flat-button color="primary" class="w-100" (click)="editProvider(provider.id)">
+                        <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
+                        Editar detalles
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Caja que contiene información de las operaciones -->
+    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+        <!-- Tabs para ver otras opciones -->
+        <div class="nav-align-tab mb-4">
+            <ul class="nav nav-pills flex-column flex-md-row mb-6 row-gap-2">
+                <li class="nav-item me-3">
+                    <button mat-flat-button color="primary">
+                        <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
+                        Descripción
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <!-- Conjunto de cards con información -->
+        <div class="row text-nowrap" *ngIf="!load">
+            <!-- cards individuales -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body pb-0">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded text-heading primary-badge">
+                                    <span class="material-symbols-outlined">inventory</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h5 class="card-title mb-3">Total artículos</h5>
+                            <div class="d-flex align-items-baseline gap-1">
+                                <h5 class="text-primary mb-1 ms-1">{{ card_values.total_art || 0 }}</h5>
+                            </div>
+                            <p class="mb-0 text-truncate">Artículos comprados al proveedor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body pb-0">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded text-heading primary-badge">
+                                    <span class="material-symbols-outlined">paid</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h5 class="card-title mb-3">Total invertido</h5>
+                            <div class="d-flex align-items-baseline gap-1">
+                                <h5 class="text-primary mb-1 ms-1">${{ card_values.total_inv || 0 }}</h5>
+                            </div>
+                            <p class="mb-0 text-truncate">Valor total del inventario del proveedor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body pb-0">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded text-heading primary-badge">
+                                    <span class="material-symbols-outlined">outlined_flag</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h5 class="card-title mb-3">Fecha creación</h5>
+                            <div class="d-flex align-items-baseline gap-1">
+                                <h5 class="text-primary mb-1 ms-1">{{ provider.created || '' | date:'dd/MM/yyyy' }}</h5>
+                            </div>
+                            <p class="mb-0 text-truncate">Fecha inicio con el proveedor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body pb-0">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded text-heading primary-badge">
+                                    <span class="material-symbols-outlined">event</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h5 class="card-title mb-3">Ultima compra</h5>
+                            <div class="d-flex align-items-baseline gap-1">
+                                <h5 class="text-primary mb-1 ms-1">{{ (card_values.last_shop)?(card_values.last_shop | date:'dd/MM/yyyy'):'Sin información' }}</h5>
+                            </div>
+                            <p class="mb-0 text-truncate">Fecha última compra al proveedor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

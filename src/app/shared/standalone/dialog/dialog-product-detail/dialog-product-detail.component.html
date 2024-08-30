@@ -1,0 +1,104 @@
+<mat-card class="mat-card dialog-detail">
+    <mat-card-content class="mat-card-content">
+        <a mat-icon-button class="close-card" routerLink="#" aria-label="close-button" (click)="closeDialog()">
+            <mat-icon>close</mat-icon>
+        </a>
+    
+        <!-- Box principal -->
+        <div class="row card-content">
+            <!-- Caja imagen -->
+            <div class="col-md-5 image-container">
+                <div class="product-image grey-load" *ngIf="!product" style="height: 300px; width: 300px;"></div>
+                <img class="product-image" *ngIf="product" [src]="baseURL + product.image" [alt]="product.name">
+            </div>
+    
+            <!-- Caja de texto -->
+            <div class="col-md-7 text-container">
+                <!-- Nombre -->
+                <p class=" product-name rounded grey-load" style="height: 23px; width: 300px;" *ngIf="!product"></p>
+                <p class="product-name" *ngIf="product">{{ product.name }}</p>
+                
+                <!-- Badges -->
+                <div class="status-container d-flex justify-content-start align-items-center" *ngIf="!product">
+                    <p class="rounded grey-load mb-0 me-2" style="height: 23px; width: 70px;"></p>
+                    <p class="rounded grey-load mb-0 me-2" style="height: 23px; width: 70px;"></p>
+                    <p class="rounded grey-load mb-0" style="height: 23px; width: 70px;"></p>
+                </div>
+                <div class="status-container d-flex justify-content-start align-items-center" *ngIf="product">
+                    <p class="status mb-0 fw-500 cap" [ngClass]="(product.state == 'activo')?'bg-label-success':'bg-label-danger'">
+                        {{ product.state }}
+                    </p>
+                    <p class="status mb-0 fw-500 cap" [ngStyle]="getStatusCategory(product.category_color)">
+                        {{ product.category_item }}
+                    </p>
+                    <p class="status mb-0 fw-500 cap" [ngClass]="(product.stock_available > 0)?'bg-label-success':'bg-label-danger'">
+                        {{ (product.stock_available > 0)?'Con stock':'Sin stock' }}
+                    </p>
+                    <span class="badge rounded-pill cap fs-08 bg-label-danger p-1"
+                            *ngIf="isNewerThan30Days(product.sale_date)"
+                            matTooltip="Alta rotación">
+                        <mat-icon>local_fire_department</mat-icon>
+                    </span>
+                    <span class="badge rounded-pill cap fs-08 bg-label-blue p-1"
+                            *ngIf="!isNewerThan30Days(product.sale_date)"
+                            matTooltip="Baja rotación">
+                        <mat-icon>ac_unit</mat-icon>
+                    </span>
+                </div>
+    
+                <!-- Descripción -->
+                <div class="description">
+                    <p class="rounded grey-load mb-2" style="height: 16px; width: 300px;" *ngIf="!product"></p>
+                    <h6 *ngIf="product">{{ product.description }}</h6>
+                </div>
+                <!-- lista -->
+                <ul class="list-unstyled ps-1 mb-1">
+                    <li class="mb-2">
+                        <p class="rounded grey-load mb-0" style="height: 23px; width: 100px;" *ngIf="!product"></p>
+                        <span *ngIf="product">
+                            <span class="h6 me-1 fs-08">SKU: </span>
+                            <span>{{ product.sku }}</span>
+                        </span>
+                    </li>
+                    <li class="mb-2">
+                        <p class="rounded grey-load mb-0" style="height: 23px; width: 250px;" *ngIf="!product"></p>
+                        <span *ngIf="product">
+                            <span class="h6 me-1 fs-08">Stock físico / disponible: </span>
+                            <span>
+                                {{ product.stock_real }} /
+                                {{ product.stock_available }} unidades
+                            </span>
+                        </span>
+                    </li>
+                    <li class="mb-2">
+                        <p class="rounded grey-load mb-0" style="height: 23px; width: 200px;" *ngIf="!product"></p>
+                        <span *ngIf="product">
+                            <span class="h6 me-1 fs-08">Ubicación: </span>
+                            <span>{{ (product.storage_name.length)?product.storage_name:'Sin información' }}</span>
+                        </span>
+                    </li>
+                </ul>
+                <!-- Filtros adicionales -->
+                <div class="status-container d-flex justify-content-start">
+                    <p class="rounded grey-load mb-0" style="height: 30px; width: 80px;" *ngIf="!product"></p>
+                    <ng-container *ngIf="product">
+                        <ng-container *ngIf="product.filter_values != null">
+                            <p class="status mb-0 fw-500 cap" *ngFor="let item of product.filter_values.split(',')">
+                                {{ item }}
+                            </p>
+                        </ng-container>
+                        <ng-container *ngIf="product.filter_values == null">
+                            <p class="status mb-0 fw-500 cap">
+                                Sin información
+                            </p>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <!-- Precio -->
+                <p class="rounded grey-load mb-0" style="height: 36px; width: 120px;" *ngIf="!product"></p>
+                <h2 class="fw-700 black-color mb-0" *ngIf="product">${{ product.sale_price }}</h2>
+            </div>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  

@@ -1,0 +1,24 @@
+
+.box-info {
+    display: inline-block;
+    text-align: center;
+    h3 {
+        font-weight: 600;
+        color: #222;
+        font-size: 1.7rem;
+    }
+    p {
+        line-height: 16px;
+    }
+}
+
+.btn-date {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    color: #b6b4b4;
+    mat-icon {
+        position: relative;
+        bottom: 2px;
+    }
+}

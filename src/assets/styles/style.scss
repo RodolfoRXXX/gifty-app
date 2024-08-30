@@ -1,0 +1,24 @@
+
+@import 'variables';
+
+@import 'mixins/spacing';
+@import 'mixins/color';
+@import 'mixins/font';
+
+@import 'component/global';
+@import 'component/heading';
+
+@import 'component/header';
+@import 'component/sidebar';
+@import 'component/spinner';
+@import 'component/card';
+@import 'component/dashboard';
+@import 'component/auth';
+@import 'component/settings';
+@import 'component/standalone';
+
+@import 'component/snackbar';
+
+@import 'responsive';
+
+@import "../styles/icons/material-design-iconic-font/css/materialdesignicons.min.css";

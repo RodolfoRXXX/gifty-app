@@ -1,0 +1,304 @@
+<!-- Profile View -->
+
+<!-- Loader -->
+<div class="loader" *ngIf="load">
+    <p>Cargando...</p>
+</div>
+
+<!-- Content -->
+<div
+    class="container-xxl flex-grow-1 container-p-y"
+    [ngClass]="{'dialog-profile-width': employee, 'container-box-width': !employee}"
+    *ngIf="!load"
+    style="max-height: 95vh;"
+>
+    <!-- Caja si no existe empleado -->
+    <div *ngIf="!employee && permissions.includes(edit_employee_control)" class="p-3">
+        <form [formGroup]="dataForm" (ngSubmit)="createEmployee()">
+            <!-- caja de la imagen -->
+            <div class="d-flex align-items-center flex-column mb-1">
+                <img
+                    [src]="baseURL + user.thumbnail"
+                    alt="User image"
+                    class="img-fluid rounded mb-3"
+                    width="120"
+                    height="120"
+                />
+                <h4 class="cap mb-3">{{ user.name.length ? user.name : user.email.split('@')[0] || 'Sin información' }}</h4>
+                <mat-form-field appearance="outline">
+                    <mat-label>Elegir un rol</mat-label>
+                    <mat-select formControlName="role" required>
+                        <ng-container *ngFor="let item of roles">
+                            <mat-option [value]="item.id">
+                                <mat-icon>{{ item.icon_role }}</mat-icon>
+                                <p class="mb-0 cap">{{ item.name_role }}</p>
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error *ngIf="dataForm.controls['role']!.errors" class="fs-08">{{ getErrorRole() }}</mat-error>
+                </mat-form-field>
+            </div>
+            <button
+                mat-flat-button
+                color="primary"
+                class="w-100"
+                [disabled]="user.state == '0' || dataForm.invalid"
+                type="submit"
+            >
+                <mat-icon style="position: relative; bottom: 0">power_settings_new</mat-icon>
+                Crear empleado
+            </button>
+        </form>
+        <mat-card-footer class="login-footer mt-3">
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+        </mat-card-footer>
+    </div>
+
+    <!-- Caja si existe empleado -->
+    <div class="row" *ngIf="employee">
+        <!-- Caja que contiene imagen, indicadores básicos y detalles -->
+        <div class="col-xl-4 col-lg-5 col-md-5">
+            <mat-card class="card mb-6">
+                <mat-card-content>
+                    <div class="d-flex align-items-center flex-column">
+                        <img
+                            [src]="baseURL + user.thumbnail"
+                            alt="User image"
+                            class="img-fluid rounded mb-3"
+                            width="120"
+                            height="120"
+                        />
+                        <div class="text-center mb-3">
+                            <h4 class="mb-0 cap">
+                                {{ employee.name.length ? employee.name : user.name || user.email.split('@')[0] }}
+                            </h4>
+                            <span class="fs-09 text-muted cap">{{ employee.name_role || 'Sin Rol asignado' }}</span>
+                        </div>
+                    </div>
+                    <!-- caja con indicadores básicos y el nombre -->
+                    <div class="d-flex justify-content-center flex-wrap mb-6 gap-0 gap-md-3 gap-lg-4 mt-0">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar">
+                                <span class="avatar-initial rounded text-heading primary-badge">
+                                    <span class="material-symbols-outlined">outlined_flag</span>
+                                </span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">{{ (employee.created | date:'dd/MM/yyyy') || 'Sin información' }}</h5>
+                                <span class="text-muted fs-08">Fecha inicio actividades</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- caja con información básica -->
+                    <h5 class="border-bottom text-capitalize pb-3 mt-4 mb-3">detalles</h5>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2">
+                            <span class="h6 me-1">Estado: </span>
+                            <span class="badge rounded-pill cap fs-08" [ngClass]="employee.status == 1?'bg-label-success':'bg-label-danger'">
+                                {{ (employee.status == 1)?'Activo':'inactivo' }}
+                            </span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Móvil: </span>
+                            <span>{{ employee.mobile || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Teléfono: </span>
+                            <span>{{ employee.phone || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Email: </span>
+                            <span>{{ employee.email || user.email || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Dirección: </span>
+                            <span>{{ employee.address || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Ciudad: </span>
+                            <span>{{ employee.city || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">Provincia: </span>
+                            <span>{{ employee.state || 'Sin información' }}</span>
+                        </li>
+                        <li class="mb-2">
+                            <span class="h6 me-1">País: </span>
+                            <span>{{ employee.country || 'Sin información' }}</span>
+                        </li>
+                    </ul>
+                    <!-- Caja con botón para editar información -->
+                    <div class="d-flex justify-content-center">
+                        <button mat-flat-button color="primary" (click)="editUser()" *ngIf="watcher.id == employee.id">
+                            <mat-icon style="position: relative; bottom: 0">edit</mat-icon>
+                            Editar
+                        </button>
+                        <button mat-stroked-button 
+                                [color]="(employee.status == 1)?'warn':'primary'" 
+                                class="ms-2" 
+                                *ngIf="this.permissions.includes(edit_employee_control)"
+                                (click)="activateEmployee(employee.id, employee.status)">
+                            <mat-icon style="position: relative; bottom: 0;">power_settings_new</mat-icon>
+                            <span *ngIf="(employee.status == 0)">Activar</span>
+                            <span *ngIf="(employee.status == 1)">Suspender</span>
+                        </button>
+                    </div>
+                </mat-card-content>
+                <mat-card-footer class="login-footer mt-3">
+                    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+                </mat-card-footer>
+            </mat-card>
+        </div>
+        <!-- Caja que contiene información de las operaciones -->
+        <div class="col-xl-8 col-lg-7 col-md-7">
+            <!-- Tabs para ver otras opciones -->
+            <div class="nav-align-tab mb-3">
+                <ul class="nav nav-pills flex-md-row mb-6 row-gap-2">
+                    <li class="nav-item me-3" *ngFor="let item of tabs, let i = index">
+                        <button class="nav-link" [ngClass]="item.state" mat-button (click)="setTab(i)">
+                            <mat-icon style="position: relative; bottom: 0;">{{ item.icon }}</mat-icon>
+                            <span>{{ item.name }}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <!-- Conjunto de cards con información -->
+                <!-- Cards desempeño empleado -->
+                <div class="row g-6 text-nowrap" *ngIf="tabs[0].state == 'active'">
+                    <!-- Ingresos totales($) -->
+                    <div class="col-lg-6">
+                        <mat-card class="card">
+                            <mat-card-content>
+                                <div class="card-icon mb-3">
+                                    <div class="avatar">
+                                        <span class="avatar-initial rounded text-heading primary-badge">
+                                            <span class="material-symbols-outlined">paid</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h5 class="card-title mb-3">Ventas realizadas</h5>
+                                    <div class="d-flex align-items-baseline gap-1">
+                                        <h5 class="text-primary mb-1 ms-1">${{ card_values.total_sale || 0 }}</h5>
+                                    </div>
+                                    <p class="mb-0 text-truncate">Ingreso por ventas en el último mes</p>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <!-- Ingresos pendientes($) -->
+                    <div class="col-lg-6">
+                        <mat-card class="card">
+                            <mat-card-content>
+                                <div class="card-icon mb-3">
+                                    <div class="avatar">
+                                        <span class="avatar-initial rounded text-heading primary-badge">
+                                            <span class="material-symbols-outlined">move_to_inbox</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h5 class="card-title mb-3">Ingresos pendientes</h5>
+                                    <div class="d-flex align-items-baseline gap-1">
+                                        <h5 class="text-primary mb-1 ms-1">${{ card_values.pending || 0 }}</h5>
+                                    </div>
+                                    <p class="mb-0 text-truncate">Ingresos pendientes de no entregados</p>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <!-- Pedidos abiertos(cant) -->
+                    <div class="col-lg-6">
+                        <mat-card class="card">
+                            <mat-card-content>
+                                <div class="card-icon mb-3">
+                                    <div class="avatar">
+                                        <span class="avatar-initial rounded text-heading primary-badge">
+                                            <span class="material-symbols-outlined">orders</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h5 class="card-title mb-3">Pedidos abiertos</h5>
+                                    <div class="d-flex align-items-baseline gap-1">
+                                        <h5 class="text-primary mb-1 ms-1">{{ card_values.open_orders || 0 }}</h5>
+                                    </div>
+                                    <p class="mb-0 text-truncate">Pedidos pendientes de entrega</p>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <!-- Eficacia(% relación entre cantidad de pedidos cerrados y pedidos realizados) -->
+                    <div class="col-lg-6">
+                        <mat-card class="card">
+                            <mat-card-content>
+                                <div class="card-icon mb-3">
+                                    <div class="avatar">
+                                        <span class="avatar-initial rounded text-heading primary-badge">
+                                            <span class="material-symbols-outlined">bolt</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h5 class="card-title mb-3">Eficacia de venta</h5>
+                                    <div class="d-flex align-items-baseline gap-1">
+                                        <h5 class="text-primary mb-1 ms-1">{{ (card_values.relative | number:'1.2-2') || 0 }}%</h5>
+                                    </div>
+                                    <p class="mb-0 text-truncate">Capacidad para cerrar ventas</p>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <!-- Caja de configuraciones empleado -->
+                <div class="row g-2" *ngIf="tabs[1].state == 'active'">
+                    <!-- Cambio de rol -->
+                    <mat-card class="card col-12 col-xl-6">
+                        <mat-card-content class="pb-2">
+                            <div class="">
+                                <div class="">
+                                    <div class="card-icon mb-3">
+                                        <div class="avatar">
+                                            <span class="avatar-initial rounded text-heading primary-badge">
+                                                <span class="material-symbols-outlined">account_box</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title mb-3">
+                                            <span class="text-muted fs-08 me-1">Rol actual: </span>
+                                            <mat-chip>
+                                                <span class="cap" style="position: relative; bottom: 0;">{{ employee.name_role }}</span>
+                                            </mat-chip>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Editar rol -->
+                                <form class="" [formGroup]="dataForm" (ngSubmit)="changeRole()" *ngIf="this.permissions.includes(edit_employee_control)">
+                                    <h5 class="mb-2 mt-2">Cambiar Rol</h5>
+                                    <div class="d-flex">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Elegir un rol</mat-label>
+                                            <mat-select formControlName="role">
+                                                    <ng-container *ngFor="let item of roles">
+                                                        <mat-option [value]="item.id" [disabled]="employee.role == item.id"><mat-icon>{{ item.icon_role }}</mat-icon><p class="mb-0 cap">{{ item.name_role }}</p></mat-option>
+                                                    </ng-container>
+                                            </mat-select>
+                                            <mat-error *ngIf="this.dataForm.controls['role']!.errors" class="fs-08">{{getErrorRole()}}</mat-error>
+                                        </mat-form-field>
+                                        <button mat-fab
+                                                class="ms-2" 
+                                                color="primary"
+                                                [disabled]="(user.state == '0') || this.dataForm.invalid"
+                                                type="submit">
+                                            <mat-icon style="position: relative; bottom: 0">save</mat-icon>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+        </div>
+    </div>
+</div>

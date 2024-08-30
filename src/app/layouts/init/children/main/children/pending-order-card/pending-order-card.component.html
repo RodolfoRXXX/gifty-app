@@ -1,0 +1,33 @@
+<!-- Pending order Card -->
+
+<mat-card class="card mb-6">
+    <mat-card-content class="position-relative">
+        <div class="row ps-1 pe-3">
+            <div class="col-4 d-flex align-items-center">
+                <div class="avatar">
+                    <span class="avatar-initial rounded text-heading bg-label-warning">
+                        <span class="material-symbols-outlined">other_admission</span>
+                    </span>
+                </div>
+                <div class="box-info ms-3">
+                    <h3 class="mb-0" *ngIf="info != null">{{ info }}</h3>
+                    <h6 *ngIf="info == null" class="text-muted fs-08 mb-0">Cargando...</h6>
+                </div>
+            </div>
+            <div class="col-8 d-flex align-items-end justify-content-end">
+                <div class="box-info me-4 p-2">
+                    <p class="mb-0 soft-grey-color font-16">Pedidos Pendientes</p>
+                    <small class="text-muted fs-07">{{ textRange }}</small>
+                </div>
+            </div>
+        </div>
+        <button mat-icon-button aria-label="Date Data" class="btn-date" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button class="text-muted fs-09" mat-menu-item (click)="setRange(30, 'Ultimos 30 días')">Ultimos 30 días</button>
+            <button class="text-muted fs-09" mat-menu-item (click)="setRange(180, 'Ultimos 6 meses')">Ultimos 6 meses</button>
+            <button class="text-muted fs-09" mat-menu-item (click)="setRange(365, 'Ultimos 12 meses')">Ultimos 12 meses</button>
+        </mat-menu>
+    </mat-card-content>
+</mat-card>

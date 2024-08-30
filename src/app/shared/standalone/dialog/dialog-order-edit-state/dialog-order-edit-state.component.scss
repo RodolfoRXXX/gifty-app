@@ -1,0 +1,19 @@
+
+.dialog {
+  min-width: 430px;
+  margin-bottom: 0;
+  .dialog-box {
+    padding: 25px 25px 15px;
+    .name-data {
+        --bs-text-opacity: 1;
+        color: #6f6f6f !important;
+        white-space: nowrap !important;
+        font-weight: 500 !important;
+    }
+  }
+}
+
+.bill-row:hover {
+  background-color: #FFFFFF !important;
+  cursor: auto;
+}

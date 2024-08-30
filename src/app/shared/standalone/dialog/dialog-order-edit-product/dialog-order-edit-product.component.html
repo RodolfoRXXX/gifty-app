@@ -1,0 +1,147 @@
+
+<div class="card options">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="position-absolute end-0 me-5 pe-4">
+            <span class="badge rounded-pill cap fs-09" 
+                [ngClass]="(product['state'] == 'activo')?'bg-label-success':'bg-label-danger'"
+                *ngIf="product?product['state']:false">
+                {{ product['state'] }}
+            </span>
+            <span class="h6" *ngIf="product?(!product['state']):false">Sin estado</span>
+        </div>
+        <h4 class="cap mb-0">
+            <span>{{ (data.id_product > 0)?'Editar':'Buscar' }}</span> un producto
+        </h4>
+        <a mat-icon-button class="" routerLink="#" aria-label="close-button" (click)="closeDialog(false)">
+            <mat-icon style="position: relative; top: -2px;">close</mat-icon>
+        </a>
+    </div>
+    <!-- Cargando -->
+    <div class="d-flex justify-content-center p-2" *ngIf="load">
+        <h4>Cargando...</h4>
+    </div>
+    <!-- Caja que coloca el texto elegido -->
+    <div style="position: relative;" [ngStyle]="{'height': (product?'82px':''), 'z-index': 10}" *ngIf="data.id_product == 0">
+        <mat-form-field class="w-100 bg-white" 
+                        appearance="outline"
+                        [style.position]="(optionBox && product)?'absolute':'relative'">
+            <input matInput 
+                    type="text"
+                    placeholder="Ingresá un texto"
+                    #input
+                    (keyup)="getText($event)"
+                    class="mb-1">
+            <!-- Tabla que muestra las posibles opciones -->
+            <table mat-table [dataSource]="dataSource" *ngIf="optionBox"> 
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element;">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="fw-500 fs-11">
+                            {{ element.name || 'Sin información' }}
+                        </div>
+                        <div class="d-flex justify-content-start w-100">
+                            <mat-chip-set class="ms-1" aria-label="filter-chips">
+                                <mat-chip class="soft-grey-background me-1">
+                                    <span class="cap fw-500">{{ (element.stock_available > 0)?(element.stock_available + ' unidades'):'sin stock' }}</span>
+                                </mat-chip>
+                                <mat-chip class="soft-grey-background me-1" *ngFor="let item of element.filter_values | keyvalue">
+                                    <span class="cap fw-500">{{ item.value }}</span>
+                                </mat-chip>
+                            </mat-chip-set>
+                        </div>
+                    </div>
+                    </td>
+                </ng-container>
+                
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></tr>
+            </table>
+            <p class="mb-0 fw-500 ms-1" *ngIf="!dataSource.data.length && optionBox">Sin opciones</p>
+        </mat-form-field>
+    </div>
+    <!-- Caja con la información del producto -->
+    <ng-container *ngIf="product">
+        <!-- caja de la imagen -->
+        <div class="d-flex align-items-center flex-column">
+            <img [src]="(product['image'])?(uriImg + product['image']):''" alt="Provider image" class="img-fluid rounded mb-3" width="120" height="120">
+            <div class="text-center mb-3" style="max-width: 310px;">
+                <h4 class="mb-0">{{ (product['name'])?product['name']:'Sin información' }}</h4>
+                <span class="fs-09 text-muted">{{ (product['description'])?product['description']:'Sin información' }}</span>
+            </div>
+        </div>
+        <!-- caja con indicadores básicos y el nombre -->
+        <div class="d-flex justify-content-around flex-wrap gap-0 gap-md-3 gap-lg-4">
+            <div class="d-flex align-items-center gap-3">
+                <div class="avatar">
+                    <span class="avatar-initial rounded text-heading primary-badge">
+                        <span class="material-symbols-outlined">inventory</span>
+                    </span>
+                </div>
+                <div>
+                    <h5 class="mb-0" [ngStyle]="{ 'color': ((product.stock_available == 0))?'red':''}">{{ (product.stock_available)?product.stock_available:0 }} unds</h5>
+                    <span class="text-muted fs-08">Stock</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="avatar">
+                    <span class="avatar-initial rounded text-heading primary-badge">
+                        <span class="material-symbols-outlined">paid</span>
+                    </span>
+                </div>
+                <div>
+                    <h5 class="mb-0">${{ (product.sale_price)?(product.sale_price | number:'1.2-2'):'0.00' }}</h5>
+                    <span class="text-muted fs-08">Precio</span>
+                </div>
+            </div>
+        </div>
+        <!-- caja con información básica -->
+        <h5 class="border-bottom text-capitalize pb-2 mt-3 mb-2">detalles</h5>
+        <ul class="list-unstyled mb-2 ps-2">
+            <li class="mb-2" *ngIf="product.filters != ''">
+                <mat-chip-set class="ms-1" aria-label="filter-chips">
+                    <mat-chip class="soft-grey-background me-1" *ngFor="let item of product.filter_values | keyvalue">
+                        <span class="cap fw-500">{{ item.value }}</span>
+                    </mat-chip>
+                </mat-chip-set>
+            </li>
+            <li class="mb-2">
+                <span class="me-1 fs-08">SKU: </span>
+                <span class="h6">{{ (product['sku'])?product['sku']:'Sin información' }}</span>
+            </li>
+        </ul>
+    </ng-container>
+    <!-- Caja con botón para editar información -->
+    <div class="d-flex justify-content-between" *ngIf="product">
+        <div class="posistion-relative">
+            <mat-form-field appearance="outline">
+                <mat-label>Cantidad</mat-label>
+                    <input matInput
+                            type="number"
+                            [(ngModel)]="qty"
+                            #inputQty
+                            (ngModelChange)="setQty($event)"
+                            [disabled]="!product || (product.stock_available == 0)"
+                            required>
+                    <mat-error class="fs-08" *ngIf="!qty">
+                        <span *ngIf="!qty">Ingresá una cantidad</span>
+                    </mat-error>
+            </mat-form-field>
+            <span class="fs-08 position-absolute" style="color: red; bottom: 15px; left: 30px;" *ngIf="stkError">
+                No hay stock suficiente
+            </span>
+        </div>
+        <button mat-fab
+                color="primary" 
+                class="ms-1 me-1"
+                [disabled]="!product || (product.state == 'inactivo') || (product.stock_available == 0) || qty == null || qty == 0 || data.qty_db == this.qty" 
+                (click)="confirm(state)">
+                <mat-icon>add</mat-icon>
+        </button>
+        <button mat-fab
+                color="warn"
+                [disabled]="data.id_product == 0" 
+                (click)="confirm('delete')">
+                <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<!--Componente que edita los artículos del remito -->
+
+<mat-card class="card card-data">
+    <mat-card-header>
+      <div class="d-flex justify-content-between w-100">
+        <mat-card-title>
+          Detalle del remito
+        </mat-card-title>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- cargando... -->
+      <div class="d-flex justify-content-center p-2" *ngIf="load">
+        <h4>Cargando...</h4>
+      </div>
+      <!-- Table of orders -->
+      <div *ngIf="dataSource.data.length">
+          <table mat-table [dataSource]="dataSource" class="mt-1">
+          
+              <!-- sku Column -->
+              <ng-container matColumnDef="sku">
+                  <th mat-header-cell *matHeaderCellDef class="text-muted fs-08 fw-400 max-1280-hidden">SKU</th>
+                  <td mat-cell *matCellDef="let element" class="max-1280-hidden font-family-def">
+                      <p class="mb-0 text-muted fs-09">{{ element.sku }}</p>
+                  </td>
+              </ng-container>
+
+              <!-- product Column -->
+              <ng-container matColumnDef="product">
+                <th mat-header-cell *matHeaderCellDef class="text-muted fs-08 fw-400"> PRODUCTO </th>
+                <td mat-cell *matCellDef="let element" class="font-family-def">
+                    <span class="name-data">
+                      {{ element.name || 'Sin información' }}
+                    </span>
+                </td>
+              </ng-container>
+
+              <!-- qty column -->
+              <ng-container matColumnDef="qty">
+                <th mat-header-cell *matHeaderCellDef class="text-muted fs-08 fw-400"> CANTIDAD </th>
+                <td mat-cell *matCellDef="let element" class="font-family-def">
+                    <p class="mb-0 ms-4 fs-11 fw-500">{{ element.qty || 0 }}</p>
+                </td>
+              </ng-container>
+
+              <!-- status column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="text-muted fs-08 fw-400 max-600-hidden"> ESTADO </th>
+                <td mat-cell *matCellDef="let element" class="max-600-hidden font-family-def">
+                  <span class="badge rounded-pill cap fs-07"
+                        [style.color]="getStatus(element.status)?.color"
+                        [style.background-color]="getStatus(element.status)?.bgColor">
+                    {{ getStatus(element.status)?.status }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- edit Column -->
+              <ng-container matColumnDef="edit">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element; let i = index;">
+                      <button mat-icon-button 
+                              color="primary"
+                              (click)="addProduct($event, element.id_product, this.dataSource.data[i].qty)"
+                              [disabled]="(this.info.status == 0) || ((this.employee && this.info.seller && !this.employee.list_of_permissions.includes(this.edit_enterprise_control))?((this.info.seller != this.employee.id)):false) || (element.status == 1)">
+                          <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
+                      </button>
+                  </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)" class="bill-row"></tr>
+          </table>            
+      </div>
+      <!-- No products -->
+      <div class="d-flex justify-content-center align-items-center p-4" *ngIf="!dataSource.data.length">
+        <h4>Todavía no agregaste ningún producto</h4>
+      </div>
+      <!-- new products -->
+      <div class="d-flex justify-content-start mt-4 mb-3">
+        <button mat-stroked-button 
+                color="primary"
+                type="button"
+                (click)="addProduct($event)"
+                [disabled]="(this.info.status == 0) || ((this.employee && this.info.seller && !this.employee.list_of_permissions.includes(this.edit_enterprise_control))?((this.info.seller != this.employee.id)):false) || (dataSource.data.length > 9)">
+          + Agregar producto
+        </button>
+      </div>
+      <!-- footer -->
+      <div class="b-t pt-3 pb-2">
+        <span class="text-muted fs-09">Total de items:  </span>
+        <span class="fw-500">{{ this.dataSource.data.length }}</span>
+      </div>
+    </mat-card-content>
+</mat-card>

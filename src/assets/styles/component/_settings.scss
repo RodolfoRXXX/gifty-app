@@ -1,0 +1,276 @@
+
+
+.container-sidenav {
+    min-height: calc(100vh - 64px);
+}
+
+.content-sidenav {
+    background: #fff;
+    .page-breadcrumb {
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        .breadcrumb-item a {
+            color: $themeAccent;
+        }
+    }
+}
+
+.index-container {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .ripple-container {
+        width: 180px;
+        min-width: 180px;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: $sidebar-text;
+        margin: 12.5px;
+        border-left: 4px solid $themecolor;
+        h5 {
+            margin: 5px 0 0;
+            text-align: center;
+        }
+        &:hover {
+            background: none;
+            > h5 {
+              color: $themecolor;
+            }
+            > mat-icon {
+                font-weight:600;
+              }
+          }
+    }
+    a:hover {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    }
+}
+
+.card-setting {
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-user-data {
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.user-data-container {
+    flex-flow: row wrap;
+    box-sizing: border-box;
+    display: flex;
+    padding-top: 20px;
+    mat-form-field {
+        width: 100%;
+    }
+    .user-data-input {
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .user-data-input-mid {
+        flex: 1 1 50%;
+        box-sizing: border-box;
+        max-width: 50%;
+        margin-bottom: 0.5rem;
+    }
+    .work-hour {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        .work-hour-day {
+            width: 100%;
+            padding-left: 15px;
+        }
+        .work-hour-range {
+            display: flex;
+            justify-content: space-between;
+            
+            mat-form-field {
+                margin-left: 15px;
+            }
+        }
+    }
+}
+
+.mid-user-data-container {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px 10px 0;
+    .mid-user-data-input {
+        width: 100%;
+        padding: 10px 10px 0;
+        mat-form-field {
+            width: 100%;
+        }
+    }
+}
+
+//Edit-image
+
+.card-image {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-edit-image {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.box-image {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .spinner-load-image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 2;
+        mat-spinner {
+            height: 20%!important;
+            width: 20%!important;
+        }
+    }
+    .label-image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        display: none;
+        p {
+            display: block;
+            font-weight: 400;
+            text-align: center;
+        }
+    }
+    .user-image {
+        border-radius: 5%;
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
+    &:hover .user-image {
+        filter: blur(2px);
+    }
+    &:hover .label-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+    }
+}
+
+.box-image-error {
+    height: 20px;
+    padding-left: 20px;
+    .error-image {
+        font-size: 0.9rem;
+        color: red;
+    }
+}
+
+#user-image {
+    display: none;
+}
+
+.image-data-input {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+    padding-left: 20px;
+    & button {
+        margin-right: 10px;
+    }
+    & mat-icon {
+        position: relative;
+        top: 3px;
+    }
+}
+.text-data-input {
+    padding-left: 20px;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+//Edit-password
+
+.user-password-container {
+    display: flex;
+    flex-direction: column;
+    mat-form-field {
+        width: 100%;
+    }
+    .user-data-input {
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+
+//Billing
+
+.billing-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 80px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-recharge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 100%;
+}
+
+.mat-mdc-table .mat-mdc-row {
+    cursor: pointer;
+    &:hover {
+        background: rgb(238, 236, 236)!important;
+    }
+}
+
+.bill-filter-input {
+    margin-top: 20px;
+    width: 100%;
+    font-size: 14px;
+}

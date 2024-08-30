@@ -1,0 +1,45 @@
+
+.customer-column {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .image-customer {
+        border-radius: 50%;
+        background-color: #ecedee !important;
+        color: #8a8d93 !important;
+        position: relative;
+        span {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(228, 224, 224);
+            color: #767575;
+            border-radius: 50%;
+        }
+    }
+    .text-customer {
+        display: flex;
+        flex-direction: column;
+        .name-customer {
+            --bs-text-opacity: 1;
+            color: #878290 !important;
+            white-space: nowrap !important;
+            font-weight: 500 !important;
+        }
+        .email-customer {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.8rem;
+        }
+    }
+    .text-customer-box {
+        min-width: 150px;
+        max-width: 300px;
+    }
+}

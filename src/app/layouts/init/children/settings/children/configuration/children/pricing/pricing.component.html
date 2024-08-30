@@ -1,0 +1,47 @@
+<!-- Payment plans -->
+
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+  <mat-card class="card">
+    <mat-card-content>
+      <!-- Título -->
+        <h2 class="text-center mb-3 mt-0 mt-md-4">Precio de los planes</h2>
+        <!-- Subtítulo -->
+        <p class="text-center mb-4">
+          Tenemos los planes que mejor se adaptan a la medida de tu empresa. Podés cambiar de plan en cualquier momento!
+        </p>
+        <!-- Cards con opciones comerciales -->
+        <div class="row g-2 mt-4">
+          <div class="col-12 col-md-4 mb-3" *ngFor="let item of planData ? planData : []">
+              <div class="card border rounded shadow-none h-100 p-3 pt-6 d-flex flex-column justify-content-between"
+                  [ngClass]="(item.id == 2)?'border-primary':''">
+                <!-- image -->
+                <div class="mb-3 mt-5 text-center">
+                  <img [src]="item.image" height="100" alt="">
+                </div>
+                <!-- name -->
+                <div class="mb-3">
+                  <h4 class="text-center cap mb-1">{{ item.name }}</h4>
+                  <p class="text-center">{{ item.description }}</p>
+                </div>
+                <!-- price -->
+                <div class="text-center mb-3 mt-4">
+                  <div class="d-flex flex-column align-items-center justify-content-center mb-4">
+                    <h1 class="mb-0"><span class="fs-09">$</span>{{ item.price }}<span class="fs-08">/mes</span></h1>
+                    <small class="text-muted fs-08">(K equivale a 1000)</small>
+                  </div>
+                </div>
+                <!-- features -->
+                <div class="mb-3">
+                  <ul>
+                    <li class="fs-09 mb-2" *ngFor="let feature of item.features">{{ feature }}</li>
+                  </ul>
+                </div>
+                <button mat-flat-button color="primary" class="w-100 mt-2" *ngIf="enterprise?(enterprise.plan != item.id):true">Contratar</button>
+                <button mat-stroked-button color="primary" class="w-100 mt-2" *ngIf="enterprise && enterprise.plan == item.id">Tu plan actual</button>
+              </div>
+          </div>
+        </div>        
+    </mat-card-content>
+</mat-card>
+</div>

@@ -1,0 +1,54 @@
+<!-- Edit order -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Títulos -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3 gap-4 gap-md-0">
+        <div class="d-flex flex-column justify-content-center">
+            <h4 class="mb-1">
+                Remito {{ order?(order.nroRemito):'nuevo' }}
+                <span class="badge rounded-pill border cap fs-09 ms-1"
+                [ngClass]="(order)?((order.status == 0)?'bg-label-success':'bg-label-danger'):'bg-label-none'">
+                    {{ (order)?((order.status == 1)?'Pendiente':'Finalizado'):'Sin información' }}
+                </span>
+            </h4>
+            <p class="mb-0">Creado el <span class="fw-500">{{ (order?order.date:getDateNow()) | date:'dd/MM/yyyy' }}</span></p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <button mat-flat-button color="primary" (click)="changeState(detail, this.id_order, order.status)" [disabled]="!detail || hasChange">
+                Editar estado
+            </button>
+            <button mat-stroked-button color="primary" (click)="getView()" [disabled]="order?(order.status == 1):true">
+                <ng-container *ngIf="!loadPDF; else loadingSpinner">
+                  Generar Vista
+                </ng-container>
+                <ng-template #loadingSpinner>
+                  <mat-spinner diameter="20"></mat-spinner>
+                </ng-template>
+            </button>
+            <button mat-stroked-button color="warn" type="button" (click)="resetAll()">
+                Reset
+            </button>
+            <button mat-stroked-button color="primary" type="submit" (click)="onSubmit()" [disabled]="dataForm.invalid || this.dataForm.dirty || loading || !hasChange">
+                <ng-container *ngIf="!loading; else loadingSpinner">
+                  Guardar
+                </ng-container>
+                <ng-template #loadingSpinner>
+                  <mat-spinner diameter="20"></mat-spinner>
+                </ng-template>
+            </button>
+        </div>        
+    </div>
+    <!-- Información -->
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-12 col-lg-8">
+            <app-order-main [data]="{ detail: detail, edit: editRegister }" [info]="info" (setDetail)="setDetail($event)"></app-order-main>
+            <app-order-observation [observation]="observation" [info]="info" (setObservation)="setObservation($event)"></app-order-observation>
+        </div>
+        <!-- Segunda columna -->
+        <div class="col-12 col-lg-4">
+            <app-order-customer-detail [customer]="customer" [info]="info" (setCustomer)="setCustomer($event)"></app-order-customer-detail>
+            <app-order-shipping-address [shipment]="shipment" [info]="info" (setShipment)="setShipment($event)"></app-order-shipping-address>
+        </div>
+    </div>
+</div>

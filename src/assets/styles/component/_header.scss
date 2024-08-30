@@ -1,0 +1,72 @@
+/*******************
+ Topbar
+*******************/
+mat-toolbar {
+    box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.5);
+    &.topbar {
+      padding: 0px 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .sidenav-header {
+      min-width: 120px;
+    }
+    .logo-header {
+      text-align: center;
+      .navbar-brand {
+        display: flex;
+        line-height: 18px;
+        align-items: center;
+        .dark-logo {
+          display: none;
+        }
+        b {
+          margin-right: 5px;
+        }
+      }
+    }
+    .btn-header-login {
+      padding: 4px!important;
+    }
+    .name-header {
+      font-size: 14px;
+      line-height: 14px;
+      font-weight: 500;
+      text-align: left;
+      text-transform: capitalize;
+    }
+    .role-header {
+      font-size: 8.5px;
+      line-height: 9px;
+      text-align: left;
+      text-transform: capitalize;
+    }
+    .profile-pic-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 100%;
+      margin-left: 8px;
+    }
+  
+    .profile-pic-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+    }
+  }
+  /*******************
+   Topbar
+  *******************/
+  .topbar {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .example-sidenav-container {
+    flex: 1;
+  }
+  
+  .example-sidenav-container {
+    flex: 1 0 auto;
+  }
+  

@@ -1,0 +1,17 @@
+
+.card-data {
+    mat-card-content {
+        padding-bottom: 15px;
+        padding-top: 15px;
+        .name-data {
+            --bs-text-opacity: 1;
+            color: #6f6f6f !important;
+            white-space: nowrap !important;
+            font-weight: 500 !important;
+        }
+    }
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none!important;
+}

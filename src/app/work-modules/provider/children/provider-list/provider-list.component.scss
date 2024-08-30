@@ -1,0 +1,38 @@
+
+
+.box-list {
+    padding-top: 10px;
+    .btn-addprovider {
+        margin: 5px 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.mat-mdc-table .mdc-data-table__header-row {
+    font-size: 0.8rem;
+}
+
+.loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    p {
+        align-items: center;
+        margin: 30px 0;
+    }
+}
+
+.recharge {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    padding: 20px 0 10px;
+    p {
+        align-items: center;
+        margin-bottom: 10px;
+    }
+}
