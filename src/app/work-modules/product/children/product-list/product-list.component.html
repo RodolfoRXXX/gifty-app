@@ -92,7 +92,7 @@
 
     <!-- Product List Table -->
     <mat-card class="card mb-6">
-        <mat-card-content class="mat-card-content">
+        <mat-card-content>
             <!-- Filters -->
             <mat-accordion>
                 <mat-expansion-panel>
@@ -177,7 +177,7 @@
             <!-- Table of products -->
             <div class="box-list" *ngIf="!empty_products">
                 <div class="row justify-content-end">
-                    <div class="btn-addProduct col-md-4">
+                    <div class="btn-add col-md-4">
                         <a mat-flat-button color="primary" routerLink="../add-product" *ngIf="this.permissions.includes(add_product_admin)">
                             + Agregar Producto
                         </a>
