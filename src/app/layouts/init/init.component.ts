@@ -36,9 +36,9 @@ export class InitComponent implements OnInit {
     this._auth.isActive();
     this._conector.getUpdate().subscribe( state => {
       if(this.update) {
-        this.update = !this.update;
+        //this.update = !this.update;
       } else {
-        this.update = state;
+        //this.update = state;
       }
     } );
     
@@ -58,10 +58,10 @@ export class InitComponent implements OnInit {
     this.breakpointObserver
         .observe(['(min-width: 992px)'])
         .subscribe((state: BreakpointState) => {
+          //para tamaños de pantalla mayores a 992 es TRUE, para menores es FALSE
           state.matches?(this.screenLarge = true):(this.screenLarge = false);
           this._conector.setScreenState(this.screenLarge);
           this._conector.setOpenedState(this.screenLarge);
-          this.openSidenav = this.screenLarge;
         })
   }
 
@@ -74,8 +74,8 @@ export class InitComponent implements OnInit {
   }
 
   toggleSidenav() {
-    this.openSidenav = !this.openSidenav;
-    this._conector.setOpenedState(this.openSidenav);
+    this._conector.getOpenedState().subscribe( state => this.opened = state );
+    this._conector.setOpenedState(!this.opened);
   }
 
   ngOnDestroy(): void {

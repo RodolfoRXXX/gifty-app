@@ -41,4 +41,9 @@ export class MainComponent implements OnInit {
     })
   }
 
+  //cierra el sidenav en una pantalla móvil cuando se oprime fuera del sidenav(backdrop)
+  closeSidenav() {
+    this._conector.setOpenedState(false);
+  }
+
 }

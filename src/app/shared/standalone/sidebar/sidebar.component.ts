@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MaterialModule } from 'src/app/material/material/material.module';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MenuItems } from '../../menu-items/menu-items';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
@@ -34,11 +34,11 @@ export class SidebarComponent implements OnInit {
   isOpen!: number;
   linkActive!: number;
   isActive!: number;
+  isMobile!: boolean;
 
   constructor(
     public menuItems: MenuItems,
     private _auth: AuthService,
-    private _router: Router,
     private _conector: ConectorsService
   ) {
     this.getDataUser();
@@ -52,6 +52,8 @@ export class SidebarComponent implements OnInit {
       this.permissions = value.list_of_permissions.split(',')
       this.is_employee = (value.id > 0)?true:false;
     })
+    //largeScreen = true => isMobile = false
+    this._conector.getScreenState().subscribe( largeScreen => this.isMobile = !largeScreen )
   }
 
   getDataUser() {
@@ -68,10 +70,6 @@ export class SidebarComponent implements OnInit {
     } else {
       this.enterprise = '';
     } 
-  }
-
-  redirectTo( URI: string ) {
-    //this._router.navigateByUrl(`init/main/${URI}`);
   }
   setTitle( title: string ) {
     this._conector.setUpdateTitle(title);
@@ -90,6 +88,9 @@ export class SidebarComponent implements OnInit {
     this.linkActive = item
     this.isOpen = item;
     (item == 0)?this.isActive = 0:''
+    if(this.isMobile) {
+      this._conector.setOpenedState(false);
+    }
   }
 
   //_isLinkActive() => es una función llamada por un emisor de eventos((isActiveChange)="") que devuelve TRUE si el link está activo o FALSE en
