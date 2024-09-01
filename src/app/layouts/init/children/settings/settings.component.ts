@@ -35,15 +35,6 @@ export class SettingsComponent implements OnInit {
       this.employee = empty_employee;
     }
 
-    //Ante cambios actualiza los componentes hijos(VER SI FUNCIONA!)
-    this._conector.getUpdate().subscribe( state => {
-      if(this.update) {
-        this.update = !this.update;
-      } else {
-        this.update = state;
-      }
-    });
-
     //Actualiza el título de la vista de acuerdo al componente cargado
     this._conector.getUpdateTitle().subscribe( value => {
       (value)?this.title = value:this.title = ""

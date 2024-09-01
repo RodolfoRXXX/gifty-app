@@ -16,7 +16,6 @@ export class InitComponent implements OnInit {
   openSidenav!: boolean;
   opened: boolean = false;
   mode!: any;
-  update!: boolean;
   title!: string;
   sector!: string;
   employee!: Employee;
@@ -34,14 +33,6 @@ export class InitComponent implements OnInit {
     this.isUserLogged();
     this.isUserAuthenticated()
     this._auth.isActive();
-    this._conector.getUpdate().subscribe( state => {
-      if(this.update) {
-        //this.update = !this.update;
-      } else {
-        //this.update = state;
-      }
-    } );
-    
   }
 
   ngAfterViewChecked() {
