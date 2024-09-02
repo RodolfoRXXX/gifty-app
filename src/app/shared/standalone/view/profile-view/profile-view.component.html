@@ -10,7 +10,7 @@
     class="container-xxl flex-grow-1 container-p-y"
     [ngClass]="{'dialog-profile-width': employee, 'container-box-width': !employee}"
     *ngIf="!load"
-    style="max-height: 95vh;"
+    style="height: 100vh;"
 >
     <!-- Caja si no existe empleado -->
     <div *ngIf="!employee && permissions.includes(edit_employee_control)" class="p-3">

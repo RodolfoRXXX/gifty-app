@@ -9,7 +9,7 @@ import { ProfileViewComponent } from "../../view/profile-view/profile-view.compo
   selector: 'app-dialog-view-profile',
   template: `
     <ng-container *ngIf="dataLoaded">
-      <div class="p-3 pb-0">
+      <div class="p-2 pb-0 background-main">
         <app-profile-view [data]="data_user"></app-profile-view>
       </div>
     </ng-container>
