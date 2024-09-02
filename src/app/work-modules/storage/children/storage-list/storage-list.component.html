@@ -11,13 +11,13 @@
             </div>
             <!-- Table of storages -->
             <div class="box-list" *ngIf="!empty_storage">
-                <div class="d-flex justify-content-between">
+                <div class="filter">
                     <mat-form-field appearance="outline">
                         <mat-label>Filtrar</mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar un depósito" #input>
                     </mat-form-field>
                     <a mat-flat-button color="primary" routerLink="../storage-edit" [disabled]="!this.permissions.includes(admin)">
-                        + <span class="max-500-hidden">Agregar</span> Depósito
+                        + Agregar Depósito
                     </a>
                 </div>
                 <table mat-table [dataSource]="dataSource" class="mt-1" matSort>

@@ -78,3 +78,12 @@
         }
     }
 }
+
+@media (max-width: 500px) {
+    .img-dropzone {
+        padding: 1.5rem!important;
+        .text-file {
+            margin: 0 0 5px 0;
+        }
+    }
+}

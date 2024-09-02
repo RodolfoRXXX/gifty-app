@@ -59,6 +59,20 @@
     }
 }
 
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina los espacios entre celdas */
+}
+
+@media (max-width: 500px) {
+    .name-product {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 .loader {
     width: 100%;
     display: flex;
@@ -84,8 +98,6 @@
 }
 
 .status-container {
-    //margin-bottom: 10px;
-
     .status {
       border-radius: 5px;
       padding: 0 10px;

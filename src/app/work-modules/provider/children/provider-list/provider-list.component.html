@@ -12,13 +12,13 @@
             </div>
             <!-- Table of providers -->
             <div class="box-list" *ngIf="!recharge && resultsLength">
-                <div class="d-flex justify-content-between">
+                <div class="filter">
                     <mat-form-field appearance="outline">
                         <mat-label>Filtrar</mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar un proveedor" #input>
                     </mat-form-field>
                     <a mat-flat-button color="primary" routerLink="../provider-edit">
-                        + <span class="max-500-hidden">Agregar</span> Proveedor
+                        + Agregar Proveedor
                     </a>
                 </div>
                 <table mat-table [dataSource]="dataSource" class="mt-1" matSort>

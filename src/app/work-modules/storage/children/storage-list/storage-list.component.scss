@@ -7,6 +7,18 @@
         display: flex;
         justify-content: flex-end;
     }
+    .filter {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 550px) {
+    .filter {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
 }
 
 .mat-mdc-table .mdc-data-table__header-row {

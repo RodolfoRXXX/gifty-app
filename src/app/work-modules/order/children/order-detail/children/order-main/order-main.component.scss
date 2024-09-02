@@ -8,6 +8,11 @@
             color: #6f6f6f !important;
             white-space: nowrap !important;
             font-weight: 500 !important;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: inline-block;
+            max-width: 100%;
         }
     }
 }
@@ -15,3 +20,25 @@
 .mat-mdc-form-field-subscript-wrapper {
     display: none!important;
 }
+
+table {
+    width: 100%;
+    table-layout: fixed; /* Hace que las celdas mantengan su ancho */
+    border-collapse: collapse; /* Elimina los espacios entre las celdas */
+  }
+  
+  th, td {
+    overflow: hidden;
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  }
+  
+  .bill-row {
+    cursor: pointer;
+  }
+  
+  .badge {
+    padding: 0.25em 0.5em;
+    font-size: 0.75rem;
+  }
+  
