@@ -13,10 +13,6 @@
       right: 10px;
     }
   }
-  .mat-card-image {
-    width: calc(100% + 0px);
-    margin: 0 0px 0px 0px;
-  }
   .mat-card-header {
     padding: 12px;
     border-radius: $radius $radius 0 0;
@@ -48,17 +44,6 @@
     font-size: 15px;
     margin-bottom: 20px;
   }
-  .mat-card-actions {
-    margin: 0px !important;
-  }
-}
-
-// forms
-.mat-form-field-underline {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-.mat-form-field {
-  width: 100%;
 }
 
 //login

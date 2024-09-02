@@ -4,8 +4,8 @@
 <div class="container-xxl flex-grow-1 container-p-y row">
     <!-- Caja que contiene imagen, indicadores básicos y detalles -->
     <div class="col-xl-4 col-lg-5 col-md-5" *ngIf="!load">
-        <div class="card mb-6">
-            <div class="card-body pt-12">
+        <mat-card class="card mb-6">
+            <mat-card-content>
                 <!-- caja de la imagen -->
                 <div class="d-flex align-items-center flex-column">
                     <img [src]="baseURL + enterprise.thumbnail" alt="Enterprise image" class="img-fluid rounded mb-3" width="120" height="120">
@@ -73,8 +73,8 @@
                         Editar detalles
                     </button>
                  </div>
-            </div>
-        </div>
+            </mat-card-content>
+        </mat-card>
     </div>
     <!-- Caja que contiene información de las operaciones -->
     <div class="col-xl-8 col-lg-7 col-md-7">
@@ -90,11 +90,11 @@
             </ul>
         </div>
         <!-- Caja de Descripción -->
-        <div class="row text-nowrap" *ngIf="tabs[0].state == 'active'">
+        <div class="row g-6 text-nowrap" *ngIf="tabs[0].state == 'active'">
             <!-- cards individuales -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body pb-0">
+            <div class="col-lg-6">
+                <mat-card class="card">
+                    <mat-card-content>
                         <div class="card-icon mb-3">
                             <div class="avatar">
                                 <span class="avatar-initial rounded text-heading primary-badge">
@@ -109,12 +109,12 @@
                             </div>
                             <p class="mb-0 text-truncate">Ingreso por ventas en el último mes</p>
                         </div>
-                    </div>
-                </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body pb-0">
+            <div class="col-lg-6">
+                <mat-card class="card">
+                    <mat-card-content>
                         <div class="card-icon mb-3">
                             <div class="avatar">
                                 <span class="avatar-initial rounded text-heading primary-badge">
@@ -129,12 +129,12 @@
                             </div>
                             <p class="mb-0 text-truncate">Valor total de las ventas no facturadas</p>
                         </div>
-                    </div>
-                </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body pb-0">
+            <div class="col-lg-6">
+                <mat-card class="card">
+                    <mat-card-content>
                         <div class="card-icon mb-3">
                             <div class="avatar">
                                 <span class="avatar-initial rounded text-heading primary-badge">
@@ -149,12 +149,12 @@
                             </div>
                             <p class="mb-0 text-truncate">Valor total de todo el stock</p>
                         </div>
-                    </div>
-                </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body pb-0">
+            <div class="col-lg-6">
+                <mat-card class="card">
+                    <mat-card-content>
                         <div class="card-icon mb-3">
                             <div class="avatar">
                                 <span class="avatar-initial rounded text-heading primary-badge">
@@ -169,8 +169,8 @@
                             </div>
                             <p class="mb-0 text-truncate">Total de colaboradores</p>
                         </div>
-                    </div>
-                </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
         </div>
     </div>

@@ -1,23 +1,9 @@
 
 /*============================================================== 
- Para pantallas de menos de 1650px
- ============================================================== */
-
-@media (min-width: 1650px) {
-  .main-container.boxed {
-    max-width: 1920px;
-    margin: 0 auto;
-  }
-}
-/*============================================================== 
   Para pantallas de 1600px o menos
  ============================================================== */
 
 @media (max-width: 1600px) {
-  .main-container.boxed {
-    max-width: 1300px;
-    margin: 0 auto;
-  }
 
   .hide {
     display: none;
@@ -74,19 +60,6 @@
  ============================================================== */
 
 @media (min-width: 1024px) {
-  .card-group {
-    padding: 0 15px;
-    display: flex;
-    flex-flow: row wrap;
-    .mat-card {
-      margin: 15px 0px;
-      flex: 1 0 0%;
-      border-left: 1px solid $border;
-      &:first-child {
-        border: 0px;
-      }
-    }
-  }
 
   .min-1024-hidden {
     display: none!important;
@@ -104,16 +77,6 @@
  ============================================================== */
 
 @media (max-width: 1024px) {
-  .card-group {
-    margin: 15px 0;
-    .mat-card {
-      margin: 0 15px;
-      border-top: 1px solid $border;
-      &:first-child {
-        border: 0px;
-      }
-    }
-  }
 
   .max-1024-hidden {
     display: none!important;
@@ -130,8 +93,6 @@
  ============================================================== */
 
  @media (min-width: 968px) {
-
-  
 
  }
 
@@ -186,13 +147,6 @@
  ============================================================== */
 
 @media (min-width: 768px) {
-  .navbar-header {
-    width: 225px;
-    flex-shrink: 0;
-    .navbar-brand {
-      padding-top: 0px;
-    }
-  }
 
 }
 

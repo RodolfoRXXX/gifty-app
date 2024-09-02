@@ -429,6 +429,10 @@ html body {
 
 .active {
   background-color: $themecolor!important;
+  color: #fff!important;
+  mat-icon {
+    color: #fff!important;
+  }
 }
 
 .border-primary {

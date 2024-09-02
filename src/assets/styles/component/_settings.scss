@@ -19,54 +19,6 @@
     }
 }
 
-.index-container {
-    padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    .ripple-container {
-        width: 180px;
-        min-width: 180px;
-        height: 180px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: $sidebar-text;
-        margin: 12.5px;
-        border-left: 4px solid $themecolor;
-        h5 {
-            margin: 5px 0 0;
-            text-align: center;
-        }
-        &:hover {
-            background: none;
-            > h5 {
-              color: $themecolor;
-            }
-            > mat-icon {
-                font-weight:600;
-              }
-          }
-    }
-    a:hover {
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    }
-}
-
-.card-setting {
-    max-width: 768px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.form-user-data {
-    overflow: hidden;
-    margin-top: 10px;
-}
-
 .user-data-container {
     flex-flow: row wrap;
     box-sizing: border-box;
@@ -202,26 +154,6 @@
     display: none;
 }
 
-.image-data-input {
-    flex: 1 1 100%;
-    box-sizing: border-box;
-    max-width: 100%;
-    margin-bottom: 0.5rem;
-    padding-left: 20px;
-    & button {
-        margin-right: 10px;
-    }
-    & mat-icon {
-        position: relative;
-        top: 3px;
-    }
-}
-.text-data-input {
-    padding-left: 20px;
-    font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.54);
-}
-
 //Edit-password
 
 .user-password-container {
@@ -236,30 +168,6 @@
         max-width: 100%;
         margin-bottom: 0.5rem;
     }
-}
-
-
-//Billing
-
-.billing-loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 80px;
-    right: 0;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.billing-recharge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
-    width: 100%;
 }
 
 .mat-mdc-table .mat-mdc-row {
