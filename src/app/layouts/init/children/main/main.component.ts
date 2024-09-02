@@ -17,10 +17,10 @@ export class MainComponent implements OnInit {
 
   constructor(
     private _actRoute: ActivatedRoute,
-    private _conector: ConectorsService,
+    private _conector: ConectorsService
   ) {
-    this._conector.getOpenedState().subscribe( state => this.opened = state )
-    this._conector.getScreenState().subscribe( state => state?this.mode = 'side':this.mode = 'over' )
+    this._conector.getOpenedState().subscribe( state => this.opened = state );
+    this._conector.getScreenState().subscribe( state => state?this.mode = 'side':this.mode = 'over' );
   }
   ngOnInit(): void {
     //Recibe los datos del resolver y carga los datos en la vista

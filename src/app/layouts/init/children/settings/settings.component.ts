@@ -11,14 +11,13 @@ export class SettingsComponent implements OnInit {
 
   opened: boolean = false;
   mode!: any;
-  update!: boolean;
-  sector!: string;
   title!: string;
+  sector!: string;
   employee!: Employee;
 
   constructor(
-    private _conector: ConectorsService,
     private _actRoute: ActivatedRoute,
+    private _conector: ConectorsService
   ) {
     this._conector.getOpenedState().subscribe( state => this.opened = state );
     this._conector.getScreenState().subscribe( state => state?this.mode = 'side':this.mode = 'over' );
@@ -39,6 +38,11 @@ export class SettingsComponent implements OnInit {
     this._conector.getUpdateTitle().subscribe( value => {
       (value)?this.title = value:this.title = ""
     })
+  }
+
+  //cierra el sidenav en una pantalla móvil cuando se oprime fuera del sidenav(backdrop)
+  closeSidenav() {
+    this._conector.setOpenedState(false);
   }
 
 }
