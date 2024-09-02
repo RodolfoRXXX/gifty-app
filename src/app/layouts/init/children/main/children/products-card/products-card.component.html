@@ -32,8 +32,9 @@
                     </div>
                     </ng-container>
                     <!-- No hay resultados -->
-                    <div class="h-100 d-flex flex-column justify-content-center align-items-center" *ngIf="!results">
-                        <p>Sin información</p>
+                    <div class="h-100 d-flex flex-column justify-content-center align-items-center" *ngIf="!results && !noData && !load">
+                        <p class="d-block" *ngIf="noData">Sin información</p>
+                        <p class="d-block" *ngIf="load">Cargando...</p>
                     </div>
                 </div>
                 <button mat-icon-button aria-label="Date Data" class="btn-date" [matMenuTriggerFor]="menu">

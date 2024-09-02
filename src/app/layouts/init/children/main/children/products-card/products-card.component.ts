@@ -15,6 +15,8 @@ export class ProductsCardComponent implements OnInit {
   range: string = '1M';
   text_range: string = 'Último mes'
   results!: any;
+  load: boolean = true;
+  noData: boolean = false;
 
   constructor(
     private _api: ApiService,
@@ -35,6 +37,8 @@ export class ProductsCardComponent implements OnInit {
   }
 
   private getInfo(id_enterprise?: number): void {
+    this.load = true;
+    this.noData = false;
     merge()
       .pipe(
         startWith({}),
@@ -46,8 +50,11 @@ export class ProductsCardComponent implements OnInit {
         map(data => data)
       )
       .subscribe((data: any) => {
-        if (data) {
+        this.load = false;
+        if (data.status == 1 && data.data.length) {
           this.results = data.data
+        } else {
+          this.noData = true;
         }
       });
   }

@@ -37,6 +37,7 @@ export class BalanceCardComponent implements OnInit {
   };
   load: boolean = true;
   noData: boolean = false;
+  text_range: string = 'Última semana'
 
   constructor(
     private _api: ApiService,
@@ -63,7 +64,7 @@ export class BalanceCardComponent implements OnInit {
 
   private getInfo(id_enterprise?: number): void {
     this.load = true;
-    this.load = false;
+    this.noData = false;
     merge()
       .pipe(
         startWith({}),
@@ -182,5 +183,19 @@ export class BalanceCardComponent implements OnInit {
   setRange(range: string) {
     this.range = range;
     this.getInfo();
+    switch (range) {
+      case 'day':
+        this.text_range = 'Última semana' 
+        break;
+      case 'week':
+        this.text_range = 'Último mes' 
+        break;
+      case 'month':
+        this.text_range = 'Últimos 6 meses' 
+        break;
+      default:
+        this.text_range = 'Última semana' 
+        break;
+    }
   }
 }

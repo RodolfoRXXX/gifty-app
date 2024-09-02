@@ -24,6 +24,9 @@
             white-space: nowrap !important;
             font-weight: 500 !important;
             text-transform: capitalize;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
         .description-product {
             overflow: hidden;

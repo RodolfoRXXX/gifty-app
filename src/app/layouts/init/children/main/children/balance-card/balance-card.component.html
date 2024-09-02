@@ -5,7 +5,7 @@
         <div class="row h-100">
             <!-- Chart -->
             <div class="col-md-7 d-flex flex-column justify-content-between position-relative">
-                <h4 class="mb-4 cap">Balance de ventas totales($)</h4>
+                <h4 class="mb-4 cap">Balance de ventas $ <span class="fs-09 text-muted">({{ text_range }})</span></h4>
                 <p-chart type="bar" [data]="basicData" [options]="basicOptions" *ngIf="!noData && !load"/>
                 <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <p class="d-block" *ngIf="noData">Sin información</p>
