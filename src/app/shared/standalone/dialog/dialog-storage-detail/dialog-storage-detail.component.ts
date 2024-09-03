@@ -26,7 +26,7 @@ export class DialogStorageDetailComponent implements OnInit {
   load = true;
   permissions: string[] = [];
   info_values = { total_art: 0, total_inv: 0 };
-  add_product_admin = environment.EDIT_PRODUCT_CONTROL;
+  info_admin = environment.EDIT_ENTERPRISE_CONTROL;
 
   private employeeSubscription: Subscription | undefined;
 

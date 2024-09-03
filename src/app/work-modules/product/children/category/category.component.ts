@@ -21,7 +21,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'category', 'stock', 'price', 'edit'];
   dataSource = new MatTableDataSource();
   empty_categories: boolean = false;
-  add_product_admin = environment.EDIT_PRODUCT_CONTROL;
+  info_admin = environment.EDIT_ENTERPRISE_CONTROL;
 
   constructor(
     private _api: ApiService,

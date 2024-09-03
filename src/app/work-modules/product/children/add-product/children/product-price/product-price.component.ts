@@ -17,7 +17,7 @@ export class ProductPriceComponent {
   @Output() changeDetected = new EventEmitter<boolean>();
 
   dataForm!: FormGroup;
-  sens_info_admin = environment.EDIT_PROVIDER_CONTROL;
+  info_admin = environment.EDIT_ENTERPRISE_CONTROL;
   loading: boolean = false;
 
   constructor(

@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { Storage } from 'src/app/shared/interfaces/storage.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-storage',
@@ -16,6 +17,7 @@ import { Storage } from 'src/app/shared/interfaces/storage.interface';
 export class ProductStorageComponent {
 
   @Input() product!: Product;
+  @Input() permissions: string[] = [];
   @Output() changeDetected = new EventEmitter<boolean>();
 
   selectedStorage!: Storage | undefined;
@@ -24,6 +26,7 @@ export class ProductStorageComponent {
   id_enterprise!: number;
   storages: Storage[] = [];
   loading: boolean = false;
+  info_admin = environment.EDIT_ENTERPRISE_CONTROL;
 
   constructor(
     private fb: FormBuilder,
@@ -97,13 +100,13 @@ export class ProductStorageComponent {
   setDataForm(product: Product): void {
     this.dataForm.setValue({
       id: product.id || '',
-      storage_location: product.storage_location || ''
+      storage_location: (product.storage_location > 1)?product.storage_location:''
     });
   }
 
   //Errores de formulario
     getErrorStorage(): string {
-      if (this.dataForm.controls['storage_location'].hasError('required')) return 'Tenés que ingresar una ubicación';
+      if (this.dataForm.controls['storage_location'].hasError('required')) return 'Tenés que ingresar un depósito';
       return '';
     }
 
@@ -111,6 +114,7 @@ export class ProductStorageComponent {
     this.setDataForm(this.product);
     this.setSelectedStorage(this.product.storage_location);
     this.dataForm.markAsPristine();
+    this.dataForm.markAsUntouched();
   }
 
   onSubmit(): void {

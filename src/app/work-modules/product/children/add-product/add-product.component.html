@@ -38,10 +38,10 @@
         </div>
         <!-- Segunda columna -->
         <div class="col-12 col-lg-4">
-            <app-product-stock [product]="product" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-stock>
+            <app-product-stock [product]="product" [permissions]="permissions" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-stock>
             <app-product-price [product]="product" [permissions]="permissions" (changeDetected)="handleChange($event)" *ngIf="product.id > 0"></app-product-price>
-            <app-product-filters [product]="product" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-filters>
-            <app-product-storage [product]="product" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-storage>
+            <app-product-filters [product]="product" [permissions]="permissions" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-filters>
+            <app-product-storage [product]="product" [permissions]="permissions" *ngIf="product.id > 0" (changeDetected)="handleChange($event)"></app-product-storage>
         </div>
     </div>
 </div>

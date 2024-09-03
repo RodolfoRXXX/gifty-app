@@ -4,21 +4,18 @@
   <mat-card-header>
     <mat-card-title>Información del Proveedor</mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf="providers">
-    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <mat-card-content>
+    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" *ngIf="providers">
       <!-- Nombre del proveedor -->
-      <div>
-        <mat-form-field appearance="outline" class="w-100 mb-0">
-          <mat-label>Nombre del Proveedor</mat-label>
-          <mat-select formControlName="provider" (valueChange)="changeState($event)">
-            <mat-option [value]="1">Sin proveedor</mat-option>
-            <ng-container *ngFor="let item of providers">
-              <mat-option [value]="item.id">{{item.name}}</mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mb-0">
+        <mat-label>Nombre del Proveedor</mat-label>
+        <mat-select formControlName="provider" (valueChange)="changeState($event)" required>
+          <ng-container *ngFor="let item of providers">
+            <mat-option [value]="item.id">{{item.name}}</mat-option>
+          </ng-container>
+        </mat-select>
         <mat-error *ngIf="dataForm.get('provider')?.hasError('required')" class="fs-09">{{ getErrorProvider() }}</mat-error>
-      </div>
+      </mat-form-field>
       
       <!-- Caja de información del proveedor seleccionado -->
       <div class="w-100 mb-4 p-2 d-flex justify-content-start">
@@ -43,14 +40,16 @@
       
       <!-- Fecha de compra y precio de compra -->
       <div class="row">
+        <!-- Fecha de compra -->
         <mat-form-field appearance="outline" class="col">
           <mat-label>Fecha de compra</mat-label>
-          <input matInput 
-                 type="date"
-                 formControlName="purchase_date"
-                 required>
-          <mat-error *ngIf="dataForm.get('purchase_date')?.hasError('required')" class="fs-09">{{ getErrorPurchaseDate() }}</mat-error>
+          <input matInput [matDatepicker]="picker" formControlName="purchase_date" required>
+            <mat-hint class="fs-08">MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="dataForm.get('purchase_date')?.hasError('required')" class="fs-09">{{ getErrorPurchaseDate() }}</mat-error>
         </mat-form-field>
+        <!-- Precio de compra -->
         <mat-form-field appearance="outline" class="col">
           <mat-label>Precio de compra</mat-label>
           <input matInput 
@@ -71,12 +70,9 @@
         </button>
       </div>
     </form>
-  </mat-card-content>
-  <!-- Caja que se muestra si no hay proveedores creados -->
-  <mat-card-content *ngIf="!providers">
-    <div class="d-flex flex-column justify-content-center align-items-center p-4">
-      <p>No hay proveedores creados</p>
-      <a mat-flat-button color="primary" routerLink="../../provider/provider-edit">
+    <div class="d-flex flex-column justify-content-center align-items-center p-4" *ngIf="!providers">
+      <p class="fs-09 mb-0">No hay proveedores creados</p>
+      <a mat-button color="primary" routerLink="../../provider/provider-edit">
           + Agregar Proveedor
       </a>
     </div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Product } from 'src/app/shared/interfaces/product.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-stock',
@@ -12,10 +13,12 @@ import { Product } from 'src/app/shared/interfaces/product.interface';
 export class ProductStockComponent {
 
   @Input() product!: Product;
+  @Input() permissions: string[] = [];
   @Output() changeDetected = new EventEmitter<boolean>();
 
   dataForm!: FormGroup;
   loading: boolean = false;
+  product_admin = environment.EDIT_PRODUCT_CONTROL;
 
   constructor(
     private fb: FormBuilder,

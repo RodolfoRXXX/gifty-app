@@ -26,7 +26,7 @@ export class StorageListComponent {
   empty_storage: boolean = false;
   load = true;
   recharge = false;
-  admin : string = environment.EDIT_PRODUCT_CONTROL;
+  info_admin : string = environment.EDIT_ENTERPRISE_CONTROL;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

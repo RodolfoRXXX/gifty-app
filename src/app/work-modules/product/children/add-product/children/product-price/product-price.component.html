@@ -5,13 +5,7 @@
     <mat-card-title>Precio del producto</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-      
-      <!-- Caja que muestra si el producto no tiene precio -->
-      <div *ngIf="product.purchase_price == 0">
-        <p class="fs-09">Para definir el precio debe elegir un proveedor y establecer un precio de compra.</p>
-      </div>
-
+    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" *ngIf="product.purchase_price > 0">
       <!-- Caja precio venta -->
       <div *ngIf="product.purchase_price > 0" class="d-flex justify-content-between align-items-center b-all p-2 mb-4" style="border-radius: 4px;">
         <p class="d-block mb-0 text-muted">Precio de venta: </p>
@@ -19,7 +13,7 @@
       </div>
       
       <!-- Caja de modificación del precio en base a precio de compra -->
-      <div class="box-reprice" *ngIf="this.permissions.includes(sens_info_admin) && product.purchase_price > 0">
+      <div class="box-reprice" *ngIf="this.permissions.includes(info_admin)">
 
         <!-- Caja precio de compra -->
         <div class="d-flex flex-column b-all p-2 me-3" style="border-radius: 4px;">
@@ -43,7 +37,7 @@
 
       </div>
       <!-- Botones de reseteo y confirmación -->
-      <div class="submit-btn-box" *ngIf="this.permissions.includes(sens_info_admin)">
+      <div class="submit-btn-box" *ngIf="this.permissions.includes(info_admin)">
         <button mat-stroked-button color="warn" class="me-3" type="button" (click)="resetAll()">
           Reset
         </button>
@@ -52,6 +46,10 @@
         </button>
       </div>
     </form>
+    <!-- Caja que muestra si el producto no tiene precio -->
+    <div *ngIf="product.purchase_price == 0">
+      <p class="fs-09">Para definir el precio de venta debe elegir un proveedor y establecer un precio de compra.</p>
+    </div>
   </mat-card-content>
   <mat-card-footer class="login-footer">
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

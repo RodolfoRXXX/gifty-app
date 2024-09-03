@@ -18,7 +18,8 @@ export class StorageEditComponent {
   dataForm!: FormGroup;
   id_storage!: number;
   activeStatus: boolean = false;
-  loading!: boolean;
+  loading: boolean = false;
+  load: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,6 @@ export class StorageEditComponent {
     private _notify : NotificationService,
     private _router: Router
   ) {
-    this.loading = false;
     this.createDataForm();
   }
 
@@ -49,20 +49,17 @@ export class StorageEditComponent {
 
   changeState(status: number) {
     this.dataForm.patchValue({status: status})
-    console.log(this.dataForm.value)
     if(this.dataForm.controls['id'].value > 0) {
-      this.loading = true;
+      this.load = true;
       this._api.postTypeRequest('profile/edit-storage-activation', this.dataForm.value).subscribe({
         next: (res: any) => {
-          this.loading =  false;
+          this.load =  false;
           if(res.status == 1){
             //Accedió a la base de datos y no hubo problemas
             if(res.data.changedRows == 1){
               //Modificó el campo
               this._notify.showSuccess(`El depósito está ${(status == 1)?"activado":"desactivado"}!`);
-              setTimeout(() => {
-                this.rechargeComponent();
-              }, 1500);
+              this.getStorage(this.id_storage);
             } else{
               //No hubo modificación
               this._notify.showError('No se detectaron cambios. Volvé a realizar la operación.')
@@ -74,7 +71,7 @@ export class StorageEditComponent {
         },
         error: (error) => {
           //Error de conexión, no pudo consultar con la base de datos
-          this.loading =  false;
+          this.load =  false;
           this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
         }
       })
@@ -196,11 +193,6 @@ export class StorageEditComponent {
     }
   }
 
-  //Navegar a la misma ruta para recargar el componente
-  rechargeComponent() {
-    window.location.reload();
-  }
-
   onSubmit() {
     this.loading =  true;
     if(this.dataForm.controls['id'].value > 0) {
@@ -213,8 +205,10 @@ export class StorageEditComponent {
             if(res.data.changedRows == 1){
               //Modificó datos depósito
               this._notify.showSuccess('El depósito se modificó con éxito!');
+              this.getStorage(this.id_storage);
+              this.dataForm.markAsPristine();
               setTimeout(() => {
-                this._router.navigate(['init/main/storage/storage-list']);
+                //this._router.navigate(['init/main/storage/storage-list']);
               }, 2000);
             } else{
               //No hubo modificación

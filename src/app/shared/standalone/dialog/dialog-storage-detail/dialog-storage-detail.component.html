@@ -67,7 +67,7 @@
         
         <!-- Caja con botón para editar información -->
         <div class="d-flex justify-content-center">
-        <button mat-flat-button color="primary" class="w-100" (click)="editStorage(storage['id'])" [disabled]="!this.permissions.includes(add_product_admin)">
+        <button mat-flat-button color="primary" class="w-100" (click)="editStorage(storage['id'])" [disabled]="!this.permissions.includes(info_admin)">
             <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
             Editar detalles
         </button>

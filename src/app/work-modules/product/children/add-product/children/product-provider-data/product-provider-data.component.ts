@@ -95,16 +95,17 @@ export class ProductProviderDataComponent implements OnInit {
       id: ['', Validators.required],
       provider: ['', Validators.required],
       purchase_date: ['', Validators.required],
-      purchase_price: [0.00, Validators.required]
+      purchase_price: ['', Validators.required]
     });
   }
 
   setDataForm(product: Product): void {
     this.dataForm.setValue({
       id: product.id || '',
-      provider: product.provider || '',
+      //por defecto el provider se crea con valor 1(sin proveedor), pero para modificar este campo debe tener un valor diferente
+      provider: (product.provider > 1)?product.provider:'',
       purchase_date: product.purchase_date || '',
-      purchase_price: product.purchase_price || 0.00
+      purchase_price: (product.purchase_price > 0)?product.purchase_price:''
     });
   }
 
@@ -126,6 +127,7 @@ export class ProductProviderDataComponent implements OnInit {
     this.setDataForm(this.product);
     this.setSelectedProvider(this.product.provider);
     this.dataForm.markAsPristine();
+    this.dataForm.markAsUntouched();
   }
 
   onSubmit(): void {

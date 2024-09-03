@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Product } from 'src/app/shared/interfaces/product.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-filters',
@@ -12,12 +13,14 @@ import { Product } from 'src/app/shared/interfaces/product.interface';
 export class ProductFiltersComponent {
 
   @Input() product!: Product;
+  @Input() permissions: string[] = [];
   @Output() changeDetected = new EventEmitter<boolean>();
 
   dataForm!: FormGroup;
   loading: boolean = false;
   filters!: any[];
   chips: string[] = [];
+  info_admin = environment.EDIT_ENTERPRISE_CONTROL;
 
   constructor(
     private fb: FormBuilder,

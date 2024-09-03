@@ -13,7 +13,7 @@
       <div class="box-list" *ngIf="!empty_categories">
         <div class="row justify-content-end">
           <div class="btn-add col-md-4">
-            <a mat-flat-button color="primary" routerLink="../add-category" [disabled]="!permissions.includes(add_product_admin)">
+            <a mat-flat-button color="primary" routerLink="../add-category" *ngIf="permissions.includes(info_admin)">
               + Agregar Categoría
             </a>
           </div>
@@ -58,7 +58,7 @@
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef>EDITAR</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button aria-label="Edit category" (click)="editCategory(element.id)"  [disabled]="!permissions.includes(add_product_admin)">
+              <button mat-icon-button aria-label="Edit category" (click)="editCategory(element.id)"  [disabled]="!permissions.includes(info_admin)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
@@ -76,7 +76,7 @@
       <!-- No categories -->
       <div class="recharge" *ngIf="empty_categories">
         <p>No hay categorías</p>
-        <a mat-flat-button color="primary" routerLink="../add-category" *ngIf="permissions.includes(add_product_admin)">
+        <a mat-flat-button color="primary" routerLink="../add-category" *ngIf="permissions.includes(info_admin)">
           + Agregar Categoría
         </a>
       </div>

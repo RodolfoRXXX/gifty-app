@@ -4,22 +4,19 @@
   <mat-card-header>
     <mat-card-title>Ubicación del producto</mat-card-title>
   </mat-card-header>
-  <mat-card-content *ngIf="storages">
-    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <mat-card-content>
+    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" *ngIf="storages">
       
       <!-- Ubicación -->
-      <div>
-        <mat-form-field appearance="outline" class="w-100 mb-0">
-          <mat-label>Ubicación del producto</mat-label>
-          <mat-select formControlName="storage_location" (valueChange)="changeState($event)">
-            <mat-option [value]="1">Sin ubicación</mat-option>
-            <ng-container *ngFor="let item of storages">
-              <mat-option [value]="item.id" [disabled]="item.status == 0">{{item.name}}</mat-option>
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 mb-0">
+        <mat-label>Ubicación del producto</mat-label>
+        <mat-select formControlName="storage_location" (valueChange)="changeState($event)">
+          <ng-container *ngFor="let item of storages">
+            <mat-option [value]="item.id" [disabled]="item.status == 0">{{item.name}}</mat-option>
+          </ng-container>
+        </mat-select>
         <mat-error *ngIf="dataForm.get('storage_location')?.hasError('required')" class="fs-09">{{ getErrorStorage() }}</mat-error>
-      </div>
+      </mat-form-field>
       <!-- Caja de información del proveedor seleccionado -->
       <div class="w-100 mb-4 p-2 d-flex justify-content-start">
         <div class="d-flex flex-column">
@@ -42,12 +39,9 @@
         </button>
       </div>
     </form>
-  </mat-card-content>
-  <!-- Caja que se muestra si no hay depósitos creados -->
-  <mat-card-content *ngIf="!storages">
-    <div class="d-flex flex-column justify-content-center align-items-center p-4">
-      <p>No hay depósitos creados</p>
-      <a mat-flat-button color="primary" routerLink="../../storage/storage-edit">
+    <div class="d-flex flex-column justify-content-center align-items-center p-4" *ngIf="!storages">
+      <p class="fs-09 mb-0">No hay depósitos creados</p>
+      <a mat-button color="primary" routerLink="../../storage/storage-edit" *ngIf="this.permissions.includes(info_admin)">
           + Agregar Depósito
       </a>
     </div>
