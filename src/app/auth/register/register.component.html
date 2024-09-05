@@ -3,16 +3,16 @@
         <mat-card class="mat-card">
             <mat-card-content class="mat-card-content">
                 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                    <div class="text-center">
-                        <img src="assets/images/logo-icon.png" alt="homepage">
-                        <h4 class="m-t-0 mb-4">Registrate</h4>
+                    <div class="text-center mt-1">
+                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
+                        <h4 class="mt-1 mb-4">Bienvenido a Bamboo!</h4>
                     </div>
                     <div class="text-center">
                         <h4 class="m-t-0 mb-2">Todo empieza aquí</h4>
-                        <p class="text-left">Manejá tu negocio de una forma más fácil y divertida!</p>
+                        <p class="text-center fs-09">Registrate para empezar a vivir la experiencia Bamboo!</p>
                     </div>
                     <div class="form-auth">
-                        <div class="form-input-100">
+                        <div class="form-input-100 mb-1">
                             <mat-form-field appearance="fill">
                                 <mat-label>Ingresá tu correo</mat-label>
                                 <input matInput placeholder="algo@ejemplo.com"
@@ -21,7 +21,7 @@
                                 <mat-error *ngIf="this.registerForm.controls['email']!.errors" class="fs-08">{{getEmailErrorMessage()}}</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="form-input-100">
+                        <div class="form-input-100 mb-1">
                             <mat-form-field appearance="fill">
                                 <mat-label>Ingresá una contraseña</mat-label>
                                 <input matInput [type]="hide_1 ? 'password' : 'text'"
@@ -34,7 +34,7 @@
                             </mat-form-field>
                             <div *ngIf="this.registerForm.errors?.['no_equal']">Las contraseñas no coinciden</div>
                         </div>
-                        <div class="form-input-100">
+                        <div class="form-input-100 mb-1">
                             <mat-form-field appearance="fill">
                                 <mat-label>Confirmá tu contraseña</mat-label>
                                 <input matInput [type]="hide_2 ? 'password' : 'text'"
@@ -46,7 +46,7 @@
                                 <mat-error *ngIf="this.registerForm.controls['password']!.errors" class="fs-08">{{getPasswordErrorMessage()}}</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="form-input-100">
+                        <div class="form-input-100 mb-0">
                             <mat-form-field appearance="fill">
                                 <mat-label>Busca tu empresa</mat-label>
                                 <mat-select formControlName="id_enterprise" required>
@@ -57,7 +57,7 @@
                                 <mat-error *ngIf="this.registerForm.controls['id_enterprise'].hasError('required')" class="fs-08">Tenés que elegir una empresa</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="form-input-100 pb-2">
+                        <div class="form-input-100 fs-08 pb-2 mb-0">
                             <mat-checkbox formControlName="agree_policy">Acepto la <span class="text-main fw-bolder">política de privacidad y términos</span></mat-checkbox>
                         </div>
                         <div class="form-input-100">
