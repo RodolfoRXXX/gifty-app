@@ -259,7 +259,10 @@ export class SecurityComponent implements OnInit {
           if(res.changedRows == 1){
             //Modificó el usuario
             this._notify.showSuccess('Nombre de usuario actualizado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this._auth.getRememberOption());
+            //Modificar el localstorage
+            let data = JSON.parse(this._auth.getDataFromLocalStorage())
+            data.name = res.data
+            this._auth.setUserData(data)
             this._api.postTypeRequest('user/envio-email', this.formMsg.value).subscribe();
             setTimeout(() => {
               window.location.reload();
