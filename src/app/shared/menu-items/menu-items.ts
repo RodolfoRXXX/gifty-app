@@ -30,7 +30,8 @@ const MENUMANAGEMENT = [
     { state: '', name: 'Stock', type: '', icon: 'assignment', children: [
         { state: 'product/product-list', name: 'Lista de productos', type: '', icon: '' },
         { state: 'product/add-product', name: 'Edición de producto', type: environment.EDIT_PRODUCT_CONTROL, icon: '' },
-        { state: 'product/category', name: 'Categorías', type: '', icon: '' }
+        { state: 'product/category-list', name: 'Categorías', type: '', icon: '' },
+        { state: 'product/storage-list', name: 'Depósitos', type: '', icon: '' }
     ] },
     { state: '', name: 'Proveedores', type: environment.EDIT_PROVIDER_CONTROL, icon: 'group', children: [
         { state: 'provider/provider-list', name: 'Lista de proveedores', type: '', icon: '' },

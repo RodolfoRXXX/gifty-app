@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductComponent } from './product.component';
 import { ProductListComponent } from './children/product-list/product-list.component';
 import { AddProductComponent } from './children/add-product/add-product.component';
-import { CategoryComponent } from './children/category/category.component';
-import { AddCategoryComponent } from './children/add-category/add-category.component';
+import { CategoryListComponent } from './children/category-list/category-list.component';
+import { CategoryEditComponent } from './children/category-edit/category-edit.component';
 import { is_epdc } from 'src/app/guards/operation.guard';
 
 const routes: Routes = [
@@ -26,12 +26,12 @@ const routes: Routes = [
           canActivate: [is_epdc]
         },
         {
-          path: 'category',
-          component: CategoryComponent
+          path: 'category-list',
+          component: CategoryListComponent
         },
         {
-          path: 'add-category',
-          component: AddCategoryComponent,
+          path: 'category-edit',
+          component: CategoryEditComponent,
           canActivate: [is_epdc]
         },
         { 

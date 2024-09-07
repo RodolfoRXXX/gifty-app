@@ -7,11 +7,11 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Category } from 'src/app/shared/interfaces/category.interface';
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss']
+  selector: 'app-category-edit',
+  templateUrl: './category-edit.component.html',
+  styleUrls: ['./category-edit.component.scss']
 })
-export class AddCategoryComponent implements OnInit {
+export class CategoryEditComponent implements OnInit {
 
   id_enterprise!: number;
   category!: Category;
@@ -147,7 +147,7 @@ export class AddCategoryComponent implements OnInit {
               //Modificó datos empresa
               this._notify.showSuccess('La categoría se modificó con éxito!');
               setTimeout(() => {
-                this._router.navigate(['init/main/product/category']);
+                this._router.navigate(['init/main/product/category-list']);
               }, 2000);
             } else{
               //No hubo modificación
@@ -175,7 +175,7 @@ export class AddCategoryComponent implements OnInit {
               //Modificó datos empresa
               this._notify.showSuccess('Nueva categoría creada con éxito!');
               setTimeout(() => {
-                this._router.navigate(['init/main/product/category']);
+                this._router.navigate(['init/main/product/category-list']);
               }, 2000);
             } else{
               //Ya existe dicha categoría

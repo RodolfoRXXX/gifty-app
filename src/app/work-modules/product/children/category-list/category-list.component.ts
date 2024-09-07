@@ -8,11 +8,11 @@ import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-category-list',
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.scss']
 })
-export class CategoryComponent implements OnInit, AfterViewInit {
+export class CategoryListComponent implements OnInit, AfterViewInit {
 
   employee!: Employee;
   permissions: string[] = [];
@@ -83,7 +83,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   editCategory(id_category: number) {
-    this._router.navigate(['init/main/product/add-category'], { queryParams: { id_category: id_category } });
+    this._router.navigate(['init/main/product/category-edit'], { queryParams: { id_category: id_category } });
   }
 }
 

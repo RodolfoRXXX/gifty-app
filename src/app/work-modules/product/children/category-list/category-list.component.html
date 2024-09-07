@@ -13,7 +13,7 @@
       <div class="box-list" *ngIf="!empty_categories">
         <div class="row justify-content-end">
           <div class="btn-add col-md-4">
-            <a mat-flat-button color="primary" routerLink="../add-category" *ngIf="permissions.includes(info_admin)">
+            <a mat-flat-button color="primary" routerLink="../category-edit" *ngIf="permissions.includes(info_admin)">
               + Agregar Categoría
             </a>
           </div>
@@ -76,7 +76,7 @@
       <!-- No categories -->
       <div class="recharge" *ngIf="empty_categories">
         <p>No hay categorías</p>
-        <a mat-flat-button color="primary" routerLink="../add-category" *ngIf="permissions.includes(info_admin)">
+        <a mat-flat-button color="primary" routerLink="../category-edit" *ngIf="permissions.includes(info_admin)">
           + Agregar Categoría
         </a>
       </div>
