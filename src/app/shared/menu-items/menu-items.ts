@@ -29,7 +29,7 @@ const MENUMANAGEMENT = [
     ] },
     { state: '', name: 'Stock', type: '', icon: 'assignment', children: [
         { state: 'product/product-list', name: 'Lista de productos', type: '', icon: '' },
-        { state: 'product/add-product', name: 'Edición de producto', type: environment.EDIT_PRODUCT_CONTROL, icon: '' },
+        { state: 'product/product-edit', name: 'Edición de producto', type: environment.EDIT_PRODUCT_CONTROL, icon: '' },
         { state: 'product/category-list', name: 'Categorías', type: '', icon: '' },
         { state: 'product/storage-list', name: 'Depósitos', type: '', icon: '' }
     ] },

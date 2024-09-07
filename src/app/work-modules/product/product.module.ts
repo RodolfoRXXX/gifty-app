@@ -4,27 +4,27 @@ import { CommonModule } from '@angular/common';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
 import { ProductListComponent } from './children/product-list/product-list.component';
-import { AddProductComponent } from './children/add-product/add-product.component';
+import { ProductEditComponent } from './children/product-edit/product-edit.component';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { ProductInformationComponent } from './children/add-product/children/product-information/product-information.component';
-import { ProductImageComponent } from './children/add-product/children/product-image/product-image.component';
-import { ProductProviderDataComponent } from './children/add-product/children/product-provider-data/product-provider-data.component';
-import { ProductStockComponent } from './children/add-product/children/product-stock/product-stock.component';
-import { ProductPriceComponent } from './children/add-product/children/product-price/product-price.component';
-import { ProductStorageComponent } from './children/add-product/children/product-storage/product-storage.component';
 import { CategoryListComponent } from './children/category-list/category-list.component';
 import { CategoryEditComponent } from './children/category-edit/category-edit.component';
-import { ProductFiltersComponent } from './children/add-product/children/product-filters/product-filters.component';
+import { ProductInformationComponent } from './children/product-edit/children/product-information/product-information.component';
+import { ProductFiltersComponent } from './children/product-edit/children/product-filters/product-filters.component';
+import { ProductImageComponent } from './children/product-edit/children/product-image/product-image.component';
+import { ProductPriceComponent } from './children/product-edit/children/product-price/product-price.component';
+import { ProductProviderDataComponent } from './children/product-edit/children/product-provider-data/product-provider-data.component';
+import { ProductStockComponent } from './children/product-edit/children/product-stock/product-stock.component';
+import { ProductStorageComponent } from './children/product-edit/children/product-storage/product-storage.component';
 
 
 @NgModule({
   declarations: [
     ProductComponent,
     ProductListComponent,
-    AddProductComponent,
+    ProductEditComponent,
     ProductInformationComponent,
     ProductImageComponent,
     ProductProviderDataComponent,

@@ -272,7 +272,7 @@ export class ProductInformationComponent implements OnInit {
   //Navegar a la misma ruta para recargar el componente
   rechargeComponent(id_product: number = 0) {
     if(id_product > 0) {
-      this._router.navigate(['init/main/product/add-product'], { queryParams: { id_product: id_product } });
+      this._router.navigate(['init/main/product/product-edit'], { queryParams: { id_product: id_product } });
     }
   }
 
@@ -286,7 +286,7 @@ export class ProductInformationComponent implements OnInit {
     } else {
       //SKU ok
       //Acá debe o crear un producto o modificar algún valor
-      //Si el componente se abrió como add-product sin id de referencia de producto debería crear uno
+      //Si el componente se abrió como product-edit sin id de referencia de producto debería crear uno
       //Si el componente se abrió desde el listado de producto para edición, carda un id que es el del producto
       //La diferencia radica en si el id está cargado o no
       if(this.dataForm.controls['id'].value > 0) {

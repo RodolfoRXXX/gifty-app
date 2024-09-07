@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductComponent } from './product.component';
 import { ProductListComponent } from './children/product-list/product-list.component';
-import { AddProductComponent } from './children/add-product/add-product.component';
+import { ProductEditComponent } from './children/product-edit/product-edit.component';
 import { CategoryListComponent } from './children/category-list/category-list.component';
 import { CategoryEditComponent } from './children/category-edit/category-edit.component';
 import { is_epdc } from 'src/app/guards/operation.guard';
@@ -21,8 +21,8 @@ const routes: Routes = [
           component: ProductListComponent
         },
         {
-          path: 'add-product',
-          component: AddProductComponent,
+          path: 'product-edit',
+          component: ProductEditComponent,
           canActivate: [is_epdc]
         },
         {

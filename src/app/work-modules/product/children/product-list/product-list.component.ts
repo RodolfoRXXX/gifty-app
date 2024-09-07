@@ -211,7 +211,7 @@ export class ProductListComponent implements OnInit {
 
   //Redirecciona para editar el producto
   editProduct(id_product: number) {
-    this._router.navigate(['init/main/product/add-product'], { queryParams: { id_product: id_product } });
+    this._router.navigate(['init/main/product/product-edit'], { queryParams: { id_product: id_product } });
   }
 
   //Abre el detalle del producto

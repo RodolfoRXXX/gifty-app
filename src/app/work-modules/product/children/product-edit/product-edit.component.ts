@@ -8,11 +8,11 @@ import { Product, empty_product } from 'src/app/shared/interfaces/product.interf
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.scss']
+  selector: 'app-product-edit',
+  templateUrl: './product-edit.component.html',
+  styleUrls: ['./product-edit.component.scss']
 })
-export class AddProductComponent implements OnInit {
+export class ProductEditComponent implements OnInit {
 
   id_product!: number;
   dataForm!: FormGroup;
