@@ -20,7 +20,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   employee!: Employee;
   resultsLength!: number;
-  displayedColumns: string[] = ['id', 'Customer', 'phone', 'whatsapp', 'address', 'city', 'state', 'country', 'edit'];
+  displayedColumns: string[] = ['id', 'customer', 'phone', 'whatsapp', 'address', 'city', 'state', 'country', 'edit'];
   dataSource = new MatTableDataSource<any>();
   load = true;
   empty: boolean = false;
@@ -65,8 +65,8 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
       this.empty = false;
       this.load = true;
       forkJoin({
-        count: this._api.postTypeRequest('profile/get-count-Customers', { id_enterprise: this.employee.id_enterprise }),
-        customers: this._api.postTypeRequest('profile/get-Customers', { id_enterprise: this.employee.id_enterprise })
+        count: this._api.postTypeRequest('profile/get-count-customers', { id_enterprise: this.employee.id_enterprise }),
+        customers: this._api.postTypeRequest('profile/get-customers', { id_enterprise: this.employee.id_enterprise })
       }).subscribe({
         next: (results: any) => {
           if(results.count.data[0].total > 0) {
@@ -102,12 +102,12 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   //Función que toma la fila clickeada del table eligiendo esa opción
   onRowClicked(row: any) {
     if(row) {
-      this._router.navigate(['init/main/Customer/Customer-detail'], { queryParams: { id_Customer: row.id } });
+      this._router.navigate(['init/main/customer/customer-detail'], { queryParams: { id_customer: row.id } });
     }
   }
 
-  editCustomer(id_Customer: number) {
-    this._router.navigate(['init/main/Customer/Customer-edit'], { queryParams: { id_Customer: id_Customer } });
+  editCustomer(id_customer: number) {
+    this._router.navigate(['init/main/customer/customer-edit'], { queryParams: { id_customer: id_customer } });
   }
 
   openDialogWhatsapp(e: Event,whatsapp: String): void {

@@ -7,12 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { CustomerListComponent } from './children/customer-list/customer-list.component';
+import { CustomerEditComponent } from './children/customer-edit/customer-edit.component';
 
 
 @NgModule({
   declarations: [
     CustomerComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    CustomerEditComponent
   ],
   imports: [
     CommonModule,

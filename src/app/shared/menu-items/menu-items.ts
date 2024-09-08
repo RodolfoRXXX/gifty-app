@@ -33,9 +33,9 @@ const MENUMANAGEMENT = [
         { state: 'product/category-list', name: 'Categorías', type: '', icon: '' },
         { state: 'product/storage-list', name: 'Depósitos', type: '', icon: '' }
     ] },
-    { state: '', name: 'Clientes', type: '', icon: 'storage', children: [
+    { state: '', name: 'Clientes', type: '', icon: 'account_box', children: [
         { state: 'customer/customer-list', name: 'Lista de clientes', type: '', icon: '' },
-        { state: 'customer/customer-edit', name: 'Edición de clientes', type: environment.EDIT_ENTERPRISE_CONTROL, icon: '' }
+        { state: 'customer/customer-edit', name: 'Edición de cliente', type: '', icon: '' }
     ] },
     { state: '', name: 'Proveedores', type: environment.EDIT_PROVIDER_CONTROL, icon: 'group', children: [
         { state: 'provider/provider-list', name: 'Lista de proveedores', type: '', icon: '' },
