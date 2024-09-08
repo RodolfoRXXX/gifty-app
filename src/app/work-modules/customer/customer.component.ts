@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ConectorsService } from 'src/app/services/conectors.service';
 
 @Component({
-  selector: 'app-storage',
+  selector: 'app-customer',
   template: '<router-outlet></router-outlet>'
 })
-export class StorageComponent implements OnInit {
+export class CustomerComponent implements OnInit {
 
   sector!: string;
 
@@ -17,7 +17,7 @@ export class StorageComponent implements OnInit {
 
   ngOnInit(): void {
     //Actualiza el título de la vista de acuerdo al componente cargado
-    this._conector.setUpdateSector('Depósito');
+    this._conector.setUpdateSector('Cliente');
   }
 
 }

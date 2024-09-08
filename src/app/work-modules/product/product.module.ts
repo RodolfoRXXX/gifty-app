@@ -18,6 +18,8 @@ import { ProductPriceComponent } from './children/product-edit/children/product-
 import { ProductProviderDataComponent } from './children/product-edit/children/product-provider-data/product-provider-data.component';
 import { ProductStockComponent } from './children/product-edit/children/product-stock/product-stock.component';
 import { ProductStorageComponent } from './children/product-edit/children/product-storage/product-storage.component';
+import { StorageEditComponent } from './children/storage-edit/storage-edit.component';
+import { StorageListComponent } from './children/storage-list/storage-list.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { ProductStorageComponent } from './children/product-edit/children/produc
     ProductStorageComponent,
     CategoryListComponent,
     CategoryEditComponent,
-    ProductFiltersComponent
+    ProductFiltersComponent,
+    StorageListComponent,
+    StorageEditComponent
   ],
   imports: [
     CommonModule,

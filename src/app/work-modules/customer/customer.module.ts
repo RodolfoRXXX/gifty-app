@@ -1,28 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { StorageRoutingModule } from './storage-routing.module';
-import { StorageComponent } from './storage.component';
-import { StorageListComponent } from './children/storage-list/storage-list.component';
+import { CustomerRoutingModule } from './customer-routing.module';
+import { CustomerComponent } from './customer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MaterialModule } from 'src/app/material/material/material.module';
-import { StorageEditComponent } from './children/storage-edit/storage-edit.component';
+import { CustomerListComponent } from './children/customer-list/customer-list.component';
 
 
 @NgModule({
   declarations: [
-    StorageComponent,
-    StorageListComponent,
-    StorageEditComponent
+    CustomerComponent,
+    CustomerListComponent
   ],
   imports: [
     CommonModule,
-    StorageRoutingModule,
+    CustomerRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     MatTableModule
   ]
 })
-export class StorageModule { }
+export class CustomerModule { }

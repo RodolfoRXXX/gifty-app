@@ -91,7 +91,7 @@ export class DialogStorageDetailComponent implements OnInit {
 
   editStorage(id_storage: number): void {
     this.closeDialog();
-    this.router.navigate(['init/main/storage/storage-edit'], { queryParams: { id_storage } });
+    this.router.navigate(['init/main/product/storage-edit'], { queryParams: { id_storage } });
   }
 
   closeDialog(): void {

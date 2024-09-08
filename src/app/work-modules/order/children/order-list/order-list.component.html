@@ -184,9 +184,9 @@
                     <ng-container matColumnDef="customer">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> CLIENTE </th>
                         <td mat-cell *matCellDef="let element" class="font-family-def font-size-def">
-                            <div class="costumer-column">
+                            <div class="customer-column">
                                 <div class="me-2">
-                                    <div class="avatar image-costumer" matTooltip="{{ element.customer_name }}" matTooltipPosition="above">
+                                    <div class="avatar image-customer" matTooltip="{{ element.customer_name }}" matTooltipPosition="above">
                                         <img class="rounded-circle" [src]="uriImg + element.customer_thumbnail" *ngIf="element.customer_thumbnail != 'no-image.png'">
                                         <span *ngIf="element.customer_thumbnail == 'no-image.png'">
                                             <p class="mb-0">
@@ -195,11 +195,11 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="text-costumer text-costumer-box max-600-hidden">
-                                    <span class="name-costumer">
+                                <div class="text-customer text-customer-box max-600-hidden">
+                                    <span class="name-customer">
                                         {{ element.customer_name || 'Sin información' }}
                                     </span>
-                                    <small class="email-costumer">
+                                    <small class="email-customer">
                                         {{ element.customer_email || 'Sin informción' }}
                                     </small>
                                 </div>

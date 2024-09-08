@@ -33,13 +33,13 @@ const MENUMANAGEMENT = [
         { state: 'product/category-list', name: 'Categorías', type: '', icon: '' },
         { state: 'product/storage-list', name: 'Depósitos', type: '', icon: '' }
     ] },
+    { state: '', name: 'Clientes', type: '', icon: 'storage', children: [
+        { state: 'customer/customer-list', name: 'Lista de clientes', type: '', icon: '' },
+        { state: 'customer/customer-edit', name: 'Edición de clientes', type: environment.EDIT_ENTERPRISE_CONTROL, icon: '' }
+    ] },
     { state: '', name: 'Proveedores', type: environment.EDIT_PROVIDER_CONTROL, icon: 'group', children: [
         { state: 'provider/provider-list', name: 'Lista de proveedores', type: '', icon: '' },
         { state: 'provider/provider-edit', name: 'Edición de proveedor', type: '', icon: '' }
-    ] },
-    { state: '', name: 'Depósito', type: '', icon: 'storage', children: [
-        { state: 'storage/storage-list', name: 'Lista de depósitos', type: '', icon: '' },
-        { state: 'storage/storage-edit', name: 'Edición de depósitos', type: environment.EDIT_ENTERPRISE_CONTROL, icon: '' }
     ] }
 ];
 

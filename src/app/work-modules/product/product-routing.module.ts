@@ -5,6 +5,8 @@ import { ProductListComponent } from './children/product-list/product-list.compo
 import { ProductEditComponent } from './children/product-edit/product-edit.component';
 import { CategoryListComponent } from './children/category-list/category-list.component';
 import { CategoryEditComponent } from './children/category-edit/category-edit.component';
+import { StorageEditComponent } from './children/storage-edit/storage-edit.component';
+import { StorageListComponent } from './children/storage-list/storage-list.component';
 import { is_epdc } from 'src/app/guards/operation.guard';
 
 const routes: Routes = [
@@ -32,6 +34,15 @@ const routes: Routes = [
         {
           path: 'category-edit',
           component: CategoryEditComponent,
+          canActivate: [is_epdc]
+        },
+        {
+          path: 'storage-list',
+          component: StorageListComponent
+        },
+        {
+          path: 'storage-edit',
+          component: StorageEditComponent,
           canActivate: [is_epdc]
         },
         { 

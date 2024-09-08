@@ -26,13 +26,13 @@ const routes: Routes = [
           loadChildren: () => import('../../../../work-modules/product/product.module').then(m => m.ProductModule)
         },
         {
+          path: 'customer',
+          loadChildren: () => import('../../../../work-modules/customer/customer.module').then(m => m.CustomerModule),
+        },
+        {
           path: 'provider',
           loadChildren: () => import('../../../../work-modules/provider/provider.module').then(m => m.ProviderModule),
           canActivate: [is_visdp]
-        },
-        {
-          path: 'storage',
-          loadChildren: () => import('../../../../work-modules/storage/storage.module').then(m => m.StorageModule)
         },
         { 
           path: '**',

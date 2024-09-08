@@ -41,7 +41,7 @@
     </form>
     <div class="d-flex flex-column justify-content-center align-items-center p-4" *ngIf="!storages">
       <p class="fs-09 mb-0">No hay depósitos creados</p>
-      <a mat-button color="primary" routerLink="../../storage/storage-edit" *ngIf="this.permissions.includes(info_admin)">
+      <a mat-button color="primary" routerLink="../../product/storage-edit" *ngIf="this.permissions.includes(info_admin)">
           + Agregar Depósito
       </a>
     </div>
