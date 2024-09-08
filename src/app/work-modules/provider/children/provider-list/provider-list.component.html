@@ -56,7 +56,7 @@
                             <!-- código que muestra el whatsapp del proveedor -->
                             <button mat-icon-button 
                                     color="primary" 
-                                    (click)="openDialogWhatsapp(element.whatsapp)"
+                                    (click)="openDialogWhatsapp($event, element.whatsapp)"
                                     matTooltip="Enviar un mensaje"
                                     [disabled]="element.whatsapp == ''">
                                 <mat-icon style="position: relative; bottom: 2px;">phone_iphone</mat-icon>

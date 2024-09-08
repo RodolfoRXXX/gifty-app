@@ -4,11 +4,12 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { combineLatest, catchError, of as observableOf } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
 import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { DialogConfirmOperationComponent } from 'src/app/shared/standalone/dialog/dialog-confirm-operation/dialog-confirm-operation.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-customer-list',
@@ -19,10 +20,12 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   employee!: Employee;
   resultsLength!: number;
-  displayedColumns: string[] = ['id', 'provider', 'phone', 'whatsapp', 'email', 'address', 'country', 'edit'];
+  displayedColumns: string[] = ['id', 'Customer', 'phone', 'whatsapp', 'address', 'city', 'state', 'country', 'edit'];
   dataSource = new MatTableDataSource<any>();
   load = true;
+  empty: boolean = false;
   recharge = false;
+  uriImg = environment.SERVER;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -34,50 +37,57 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _dialog: MatDialog
   ) {
+    this.initPaginatorLabels();
+  }
+
+  ngOnInit(): void {
+    this._conector.setUpdateTitle('Lista de clientes');
+    this.getDataLocal();
+  }
+
+  private initPaginatorLabels(): void {
     this._paginator.itemsPerPageLabel = "Registros por página";
     this._paginator.firstPageLabel = "Primera página";
-    this._paginator.lastPageLabel = "última página";
+    this._paginator.lastPageLabel = "Última página";
     this._paginator.nextPageLabel = "Próxima página";
     this._paginator.previousPageLabel = "Anterior página";
   }
 
-  ngOnInit(): void {
-    this._conector.setUpdateTitle('Lista de proveedores');
-    this.getDataLocal();
-  }
-
-  getDataLocal(): void {
+  private getDataLocal(): void {
     this._conector.getEmployee().subscribe((item: Employee) => {
       this.employee = item;
-      this.loadProviders();
+      this.loadData();
     });
+  }
+
+  loadData(): void {
+    if (this.employee.id_enterprise) {
+      this.empty = false;
+      this.load = true;
+      forkJoin({
+        count: this._api.postTypeRequest('profile/get-count-Customers', { id_enterprise: this.employee.id_enterprise }),
+        customers: this._api.postTypeRequest('profile/get-Customers', { id_enterprise: this.employee.id_enterprise })
+      }).subscribe({
+        next: (results: any) => {
+          if(results.count.data[0].total > 0) {
+            this.resultsLength = results.count.data.total
+            this.dataSource.data = results.customers.data
+            this.dataSource.paginator = this.paginator;
+          } else {
+            this.empty = true;
+          }
+          this.load = false;
+        },
+        error: () => {
+          this.load = false;
+        }
+      });
+    }
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  loadProviders() {
-    this.load = true;
-    combineLatest([
-      this._api.postTypeRequest('profile/get-count-providers', { id_enterprise: this.employee.id_enterprise }),
-      this._api.postTypeRequest('profile/get-providers', { id_enterprise: this.employee.id_enterprise })
-    ]).pipe(
-      catchError(() => {
-        this.recharge = true;
-        return observableOf(null);
-      })
-    ).subscribe(([countResponse, providersResponse]: any) => {
-      this.recharge = false;
-      this.load = false;
-      if (countResponse) {
-        this.resultsLength = countResponse.data[0].total;
-      }
-      if (providersResponse) {
-        this.dataSource.data = providersResponse.data;
-      }
-    });
   }
 
   applyFilter(event: Event) {
@@ -86,21 +96,22 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   }
 
   rechargeData() {
-    this.loadProviders();
+    this.loadData();
   }
 
   //Función que toma la fila clickeada del table eligiendo esa opción
   onRowClicked(row: any) {
     if(row) {
-      this._router.navigate(['init/main/provider/provider-detail'], { queryParams: { id_provider: row.id } });
+      this._router.navigate(['init/main/Customer/Customer-detail'], { queryParams: { id_Customer: row.id } });
     }
   }
 
-  editProvider(id_provider: number) {
-    this._router.navigate(['init/main/provider/provider-edit'], { queryParams: { id_provider: id_provider } });
+  editCustomer(id_Customer: number) {
+    this._router.navigate(['init/main/Customer/Customer-edit'], { queryParams: { id_Customer: id_Customer } });
   }
 
-  openDialogWhatsapp(whatsapp: String): void {
+  openDialogWhatsapp(e: Event,whatsapp: String): void {
+    e.stopPropagation();
     const dialogRef = this._dialog.open(DialogConfirmOperationComponent,
       { data: { 
                 text: `Estás por entrar a una conversación con ${whatsapp}`,

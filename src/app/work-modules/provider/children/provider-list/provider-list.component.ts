@@ -101,7 +101,8 @@ export class ProviderListComponent implements OnInit, AfterViewInit {
     this._router.navigate(['init/main/provider/provider-edit'], { queryParams: { id_provider: id_provider } });
   }
 
-  openDialogWhatsapp(whatsapp: String): void {
+  openDialogWhatsapp(e: Event, whatsapp: String): void {
+    e.stopPropagation();
     const dialogRef = this._dialog.open(DialogConfirmOperationComponent,
       { data: { 
                 text: `Estás por entrar a una conversación con ${whatsapp}`,
