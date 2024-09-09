@@ -8,13 +8,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { CustomerListComponent } from './children/customer-list/customer-list.component';
 import { CustomerEditComponent } from './children/customer-edit/customer-edit.component';
+import { CustomerEditInfoComponent } from './children/customer-edit/children/customer-edit-info/customer-edit-info.component';
+import { CustomerEditImageComponent } from './children/customer-edit/children/customer-edit-image/customer-edit-image.component';
 
 
 @NgModule({
   declarations: [
     CustomerComponent,
     CustomerListComponent,
-    CustomerEditComponent
+    CustomerEditComponent,
+    CustomerEditInfoComponent,
+    CustomerEditImageComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ export interface Customer {
     id_enterprise: number,
     thumbnail: string,
     name: string,
+    cuit: string,
     email: string,
     phone: string,
     mobile: string,

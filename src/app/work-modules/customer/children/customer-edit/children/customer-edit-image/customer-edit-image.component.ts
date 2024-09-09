@@ -1,20 +1,20 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ImageService } from 'src/app/services/image.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { Enterprise } from 'src/app/shared/interfaces/enterprise.interface';
+import { Customer } from 'src/app/shared/interfaces/customer.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-enterprise-edit-image',
-  templateUrl: './enterprise-edit-image.component.html',
-  styleUrls: ['./enterprise-edit-image.component.scss']
+  selector: 'app-customer-edit-image',
+  templateUrl: './customer-edit-image.component.html',
+  styleUrls: ['./customer-edit-image.component.scss']
 })
-export class EnterpriseEditImageComponent {
+export class CustomerEditImageComponent {
 
-  @Input() enterprise!: Enterprise;
+  @Input() customer!: Customer;
+  @Output() changeDetected = new EventEmitter<boolean>();
 
   isDragOver = false;
   imageSrc: string | ArrayBuffer | null = null;
@@ -27,16 +27,15 @@ export class EnterpriseEditImageComponent {
   constructor(
     private _image: ImageService,
     private _api: ApiService,
-    private _notify: NotificationService,
-    private _auth: AuthService
+    private _notify: NotificationService
   ) {
     this.createDataForm();
   }
   
   // Toma los cambios del Input de entrada y actualiza la data
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['enterprise']) {
-      this.setDataForm(changes['enterprise'].currentValue)
+    if (changes['customer']) {
+      this.setDataForm(changes['customer'].currentValue)
     }
   }
   
@@ -44,6 +43,9 @@ export class EnterpriseEditImageComponent {
   createDataForm(): void {
     this.dataForm = new FormGroup({
       id: new FormControl('', [
+        Validators.required
+      ]),
+      id_enterprise: new FormControl('', [
         Validators.required
       ]),
       thumbnail: new FormControl('', [
@@ -56,16 +58,17 @@ export class EnterpriseEditImageComponent {
   }
 
   // Setea los valores del formulario
-  setDataForm(enterprise: Enterprise): void {
-    if (enterprise) {
+  setDataForm(customer: Customer): void {
+    if (customer) {
       this.dataForm.patchValue({
-        id: (enterprise.id > 0)?enterprise.id:'',
+        id: (customer.id > 0)?customer.id:'',
+        id_enterprise: (customer.id_enterprise > 0)?customer.id_enterprise:'',
         thumbnail: '',
-        prev_thumb: (enterprise.thumbnail != '')?enterprise.thumbnail:''
+        prev_thumb: (customer.thumbnail != '')?customer.thumbnail:''
       });
   
-      if (enterprise.thumbnail) {
-        this.imageSrc = this.uriImg + enterprise.thumbnail;
+      if (customer.thumbnail) {
+        this.imageSrc = this.uriImg + customer.thumbnail;
       } else {
         this.imageSrc = ''; // Limpia la imagen si no hay una disponible
       }
@@ -153,7 +156,7 @@ export class EnterpriseEditImageComponent {
 
   //Elimina todo lo que el reset básico no limpia
   resetAll() {
-    this.setDataForm(this.enterprise)
+    this.setDataForm(this.customer)
     this.error_image = '';
   }
 
@@ -161,21 +164,16 @@ export class EnterpriseEditImageComponent {
   onSubmit() {
     if(this.dataForm.controls['id'].value > 0) {
       this.loading = true;
-      this._api.postTypeRequest('profile/update-enterprise-image', this.dataForm.value).subscribe({
+      this._api.postTypeRequest('profile/edit-customer-image', this.dataForm.value).subscribe({
         next: (res: any) => {
           this.loading =  false;
           if(res.status == 1){
             //Accedió a la base de datos y no hubo problemas
             if(res.changedRows == 1){
               //Modificó la imagen
-              this._notify.showSuccess('La imagen de la empresa se ha modificado con éxito!');
-              //Modificar el localstorage
-              let data = JSON.parse(this._auth.getDataFromLocalStorage())
-              data.enterprise_thumbnail = res.data
-              this._auth.setUserData(data)
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
+              this._notify.showSuccess('La imagen del cliente se ha modificado con éxito!');
+              this.changeDetected.emit(true);
+              this.dataForm.markAsPristine();
             } else{
               //No hubo modificación
               this._notify.showError('No se detectaron cambios. Ingresá una imagen diferente a la actual.')
