@@ -75,9 +75,9 @@
                             <!-- código que muestra el whatsapp del cliente -->
                             <button mat-icon-button 
                                     color="primary" 
-                                    (click)="openDialogWhatsapp($event, element.whatsapp)"
+                                    (click)="openDialogWhatsapp($event, element.mobile)"
                                     matTooltip="Enviar un mensaje"
-                                    [disabled]="element.whatsapp == ''">
+                                    [disabled]="element.mobile == ''">
                                 <mat-icon style="position: relative; bottom: 2px;">phone_iphone</mat-icon>
                             </button>
                         </td>

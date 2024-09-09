@@ -110,7 +110,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
     this._router.navigate(['init/main/customer/customer-edit'], { queryParams: { id_customer: id_customer } });
   }
 
-  openDialogWhatsapp(e: Event,whatsapp: String): void {
+  openDialogWhatsapp(e: Event, whatsapp: String): void {
     e.stopPropagation();
     const dialogRef = this._dialog.open(DialogConfirmOperationComponent,
       { data: { 
