@@ -1,1 +1,205 @@
-<p>customer-detail works!</p>
+<!-- Profile View -->
+
+<!-- Loader -->
+<div class="loader" *ngIf="load">
+    <p>Cargando...</p>
+</div>
+
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y row" *ngIf="!load && customer">
+    <!-- Caja que contiene imagen, indicadores básicos y detalles -->
+    <div class="col-xl-4 col-lg-5 col-md-5">
+        <mat-card class="card mb-6">
+            <mat-card-content>
+                <div class="d-flex align-items-center flex-column">
+                    <img
+                        [src]="baseURL + customer.thumbnail"
+                        alt="User image"
+                        class="img-fluid rounded mb-3"
+                        width="120"
+                        height="120"
+                    />
+                    <div class="text-center mb-3">
+                        <h4 class="mb-0 cap">
+                            {{ customer.name }}
+                        </h4>
+                        <span class="fs-09 text-muted cap">{{ customer.email || 'Sin información' }}</span>
+                    </div>
+                </div>
+                <!-- caja con indicadores básicos y el nombre -->
+                <div class="d-flex justify-content-center flex-wrap mb-6 gap-0 gap-md-3 gap-lg-4 mt-0">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar">
+                            <span class="avatar-initial rounded text-heading primary-badge">
+                                <span class="material-symbols-outlined">outlined_flag</span>
+                            </span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">{{ (customer.created | date:'dd/MM/yyyy') || 'Sin información' }}</h5>
+                            <span class="text-muted fs-08">Fecha inicio actividades</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- caja con información básica -->
+                <h5 class="border-bottom text-capitalize pb-3 mt-4 mb-3">detalles</h5>
+                <ul class="list-unstyled mb-4">
+                    <li class="mb-2">
+                        <span class="h6 me-1">Estado: </span>
+                        <span class="badge rounded-pill cap fs-08" [ngClass]="customer.status == 1?'bg-label-success':'bg-label-danger'">
+                            {{ (customer.status == 1)?'Activo':'inactivo' }}
+                        </span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">Móvil: </span>
+                        <span>{{ customer.mobile || 'Sin información' }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">Teléfono: </span>
+                        <span>{{ customer.phone || 'Sin información' }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">Dirección: </span>
+                        <span>{{ customer.address || 'Sin información' }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">Ciudad: </span>
+                        <span>{{ customer.city || 'Sin información' }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">Provincia: </span>
+                        <span>{{ customer.state || 'Sin información' }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6 me-1">País: </span>
+                        <span>{{ customer.country || 'Sin información' }}</span>
+                    </li>
+                </ul>
+                <!-- Caja con botón para editar información -->
+                <div class="d-flex justify-content-center">
+                    <button mat-flat-button color="primary" (click)="editCustomer(customer.id)">
+                        <mat-icon style="position: relative; bottom: 0">edit</mat-icon>
+                        Editar
+                    </button>
+                </div>
+            </mat-card-content>
+            <mat-card-footer class="login-footer mt-3">
+                <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+    <!-- Caja que contiene información de las operaciones -->
+    <div class="col-xl-8 col-lg-7 col-md-7">
+        <!-- Tabs para ver otras opciones -->
+        <div class="nav-align-tab mb-3">
+            <ul class="nav nav-pills flex-md-row mb-6 row-gap-2">
+                <li class="nav-item me-3" *ngFor="let item of tabs, let i = index">
+                    <button class="nav-link" [ngClass]="item.state" mat-button (click)="setTab(i)">
+                        <mat-icon style="position: relative; bottom: 0;">{{ item.icon }}</mat-icon>
+                        <span>{{ item.name }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <!-- Conjunto de cards con información -->
+            <!-- Cards detalle cliente -->
+            <div class="row g-6 text-nowrap" *ngIf="tabs[0].state == 'active'">
+                <!-- Compras totales($) -->
+                <div class="col-lg-6">
+                    <mat-card class="card">
+                        <mat-card-content>
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded text-heading primary-badge">
+                                        <span class="material-symbols-outlined">paid</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-3">Compras realizadas</h5>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <h5 class="text-primary mb-1 ms-1">${{ card_values.total || 0 }}</h5>
+                                </div>
+                                <p class="mb-0 text-truncate">Monto total comprado últimos 6 meses</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <!-- Pedidos pendientes($) -->
+                <div class="col-lg-6">
+                    <mat-card class="card">
+                        <mat-card-content>
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded text-heading primary-badge">
+                                        <span class="material-symbols-outlined">move_to_inbox</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-3">Pedidos pendientes</h5>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <h5 class="text-primary mb-1 ms-1">${{ card_values.pending || 0 }}</h5>
+                                </div>
+                                <p class="mb-0 text-truncate">Pedidos pendientes no entregados</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <!-- Devoluciones(%) -->
+                <div class="col-lg-6">
+                    <mat-card class="card">
+                        <mat-card-content>
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded text-heading primary-badge">
+                                        <span class="material-symbols-outlined">orders</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-3">Devoluciones</h5>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <h5 class="text-primary mb-1 ms-1">${{ card_values.return || 0 }}</h5>
+                                </div>
+                                <p class="mb-0 text-truncate">Pedidos devueltos</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <!-- Frecuencia de compra -->
+                <div class="col-lg-6">
+                    <mat-card class="card">
+                        <mat-card-content>
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded text-heading primary-badge">
+                                        <span class="material-symbols-outlined">bolt</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title mb-1">Frecuencia de compra</h5>
+                                <div class="d-flex align-items-baseline gap-1">
+                                    <span class="badge rounded-pill cap fs-08" [ngClass]="card_values.frecuency > 0.5?'bg-label-danger':'bg-label-blue'">
+                                        <span class="material-symbols-outlined me-1">
+                                            {{ (card_values.frecuency > 0.5)?'local_fire_department':'ac_unit' }}
+                                        </span>
+                                        <span style="position: relative; top: -5px;">{{ (card_values.frecuency > 0.5)?'Alta':'Baja' }}</span>
+                                    </span>
+                                </div>
+                                <p class="mb-0 text-truncate">Promedio de compras últimos {{ days/30 | number: '1.0-0' }} meses</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <!-- Tabla de compras del cliente -->
+            <div class="row g-2" *ngIf="tabs[1].state == 'active'">
+                <mat-card class="card col-12 col-xl-6" *ngIf="false">
+                    <mat-card-content class="pb-2">
+                        
+                    </mat-card-content>
+                </mat-card>
+            </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { CustomerListComponent } from './children/customer-list/customer-list.co
 import { CustomerEditComponent } from './children/customer-edit/customer-edit.component';
 import { CustomerEditInfoComponent } from './children/customer-edit/children/customer-edit-info/customer-edit-info.component';
 import { CustomerEditImageComponent } from './children/customer-edit/children/customer-edit-image/customer-edit-image.component';
+import { CustomerDetailComponent } from './children/customer-detail/customer-detail.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { CustomerEditImageComponent } from './children/customer-edit/children/cu
     CustomerListComponent,
     CustomerEditComponent,
     CustomerEditInfoComponent,
-    CustomerEditImageComponent
+    CustomerEditImageComponent,
+    CustomerDetailComponent
   ],
   imports: [
     CommonModule,
