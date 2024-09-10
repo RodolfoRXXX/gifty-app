@@ -267,6 +267,7 @@ export class ProductInformationComponent implements OnInit {
     this.exist_sku = '';
     this.setDataForm(this.product)
     this.dataForm.markAsPristine();
+    this.dataForm.markAsUntouched();
   }
 
   //Navegar a la misma ruta para recargar el componente
@@ -300,7 +301,7 @@ export class ProductInformationComponent implements OnInit {
                 //Modificó datos empresa
                 this._notify.showSuccess('Producto actualizado con éxito!');
                 this.changeDetected.emit(true);
-                this.dataForm.markAsPristine();
+                this.resetAll();
               } else{
                 //No hubo modificación
                 this._notify.showError('No se detectaron cambios. Ingresá valores diferentes a los actuales.')
@@ -321,7 +322,6 @@ export class ProductInformationComponent implements OnInit {
         this._api.postTypeRequest('profile/create-product', this.dataForm.value).subscribe({
           next: (res: any) => {
             this.loading =  false;
-            console.log(res)
             if(res.status == 1){
               //Accedió a la base de datos y no hubo problemas
               if(res.data.affectedRows == 1){
@@ -334,13 +334,13 @@ export class ProductInformationComponent implements OnInit {
               }
             } else{
               //Problemas de conexión con la base de datos(res.status == 0)
-              this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favores.' + res);
+              this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
             }
           },
           error: (error: any) => {
             //Error de conexión, no pudo consultar con la base de datos
             this.loading =  false;
-            this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.' + error);
+            this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
           }
         })
       }
