@@ -21,9 +21,8 @@
               <mat-label>Nombre del Producto</mat-label>
               <input matInput 
                     placeholder="Buscá el nombre de tu producto" 
-                    (blur)="onBlur()" 
-                    (focus)="searchAll()" 
-                    (keyup)="applyFilter($event)" 
+                    (blur)="onBlur()"
+                    (keyup)="getText($event)"
                     #input
                     formControlName="name" 
                     required>       
@@ -101,7 +100,7 @@
             <button mat-stroked-button 
                     color="primary" 
                     type="submit" 
-                    [disabled]="(this.dataForm.status == 'INVALID') || loading || !this.dataForm.dirty || this.dataForm.pristine || this.getSku() !== this.dataForm.controls['sku'].value">
+                    [disabled]="(this.dataForm.status == 'INVALID') || loading || dataForm.untouched || this.dataForm.pristine || this.getSku() !== this.dataForm.controls['sku'].value">
               Guardar
             </button>
           </div>

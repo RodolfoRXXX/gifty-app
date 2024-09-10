@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { merge, startWith, map, switchMap, catchError, of as observableOf, firstValueFrom } from 'rxjs';
+import { catchError, of as observableOf, firstValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
@@ -121,59 +121,45 @@ export class ProductInformationComponent implements OnInit {
     }
 
   //Carga todas las opciones de producto
-    searchAll() {
-      merge()
-        .pipe(
-          startWith({}),
-          switchMap(() => {
-            return this._api.postTypeRequest('profile/get-products-listOfName', { id_enterprise: this.id_enterprise})
-                          .pipe(catchError(async () => {observableOf(null)}));
-          }),
-          map((response: any) => {
-            if (response && response.data) {
-              // Filtramos y eliminamos elementos duplicados basados en 'name' y 'category'
-              const uniqueData = this.filterUniqueData(response.data);
-              return uniqueData;
-            } else {
-              return []; // Retornamos un array vacío si no hay datos o response.data no existe
-            }
-          })
-        )
-        .subscribe((uniqueData: any[]) => {
-            // Asignamos los datos únicos al dataSource (suponiendo que dataSource es un MatTableDataSource o similar)
-            this.dataSource.data = uniqueData;
-            this.inputBoxName = true;
-          });
+  getText(event: Event) {
+    const data = (event.target as HTMLInputElement).value;
+    if(data.length > 1) {
+      this.getOptions(data);
+    } else {
+      this.inputBoxName = false;
     }
-    private filterUniqueData(data: any[]): any[] {
-      const uniqueMap = new Map<string, any>();
-      data.forEach(item => {
-        const key = `${item.name}_${item.category}`; // Construimos una clave única
-        if (!uniqueMap.has(key)) {
-          uniqueMap.set(key, item); // Agregamos el objeto al Map si no existe la clave
+  }
+
+  //Carga todas las opciones de producto
+  getOptions(text: string) {
+    this._api.postTypeRequest('profile/get-products-options', { id_enterprise: this.employee.id_enterprise, text: text })
+      .pipe(
+        catchError(async () => observableOf(null))
+      )
+      .subscribe((response: any) => {
+        if (response && response.data) {
+          this.dataSource.data = response.data;
+          this.inputBoxName = true;
+        } else {
+          this.dataSource.data = []; // Retornamos un array vacío si no hay datos o response.data no existe
+          this.inputBoxName = false;
         }
       });
-      return Array.from(uniqueMap.values()); // Convertimos el Map de nuevo a un array de valores únicos
-    }
-    //Filtra el listado de productos de acuerdo a lo ingresado en el input
-    applyFilter(event: Event) {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-    //Cuando se clickea fuera del input de nombre esta función oculta el table con los productos
-    onBlur() {
-      setTimeout(() => {
-        this.inputBoxName = false;
-      }, 100);
-      
-    }
-    //Función que toma la fila clickeada del table eligiendo esa opción
-    onRowClicked(row: any) {
-      this.dataForm.patchValue({
-        name: row.name,
-        category: row.category
-      })
-    }
+  }
+
+  //Cuando se clickea fuera del input de nombre esta función oculta el table con los productos
+  onBlur() {
+    setTimeout(() => {
+      this.inputBoxName = false;
+    }, 100);  
+  }
+  //Función que toma la fila clickeada del table eligiendo esa opción
+  onRowClicked(row: any) {
+    this.dataForm.patchValue({
+      name: row.name,
+      category: row.category
+    })
+  }
 
   //Función que verifica el SKU
   checkSKU(): void {
@@ -265,7 +251,12 @@ export class ProductInformationComponent implements OnInit {
   resetAll() {
     this.sku = '';
     this.exist_sku = '';
-    this.setDataForm(this.product)
+    this.dataForm.reset();
+    if(this.product.id > 0) {
+      this.setDataForm(this.product)
+    } else {
+      this.dataForm.patchValue({id_enterprise : this.id_enterprise})
+    }
     this.dataForm.markAsPristine();
     this.dataForm.markAsUntouched();
   }
