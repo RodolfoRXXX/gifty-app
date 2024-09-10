@@ -321,6 +321,7 @@ export class ProductInformationComponent implements OnInit {
         this._api.postTypeRequest('profile/create-product', this.dataForm.value).subscribe({
           next: (res: any) => {
             this.loading =  false;
+            console.log(res)
             if(res.status == 1){
               //Accedió a la base de datos y no hubo problemas
               if(res.data.affectedRows == 1){
@@ -333,13 +334,13 @@ export class ProductInformationComponent implements OnInit {
               }
             } else{
               //Problemas de conexión con la base de datos(res.status == 0)
-              this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+              this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favores.' + res);
             }
           },
           error: (error: any) => {
             //Error de conexión, no pudo consultar con la base de datos
             this.loading =  false;
-            this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+            this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.' + error);
           }
         })
       }
