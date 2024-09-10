@@ -13,7 +13,13 @@
         <span class="d-block fs-09 text-muted">Hagamos algunas cosas increíbles!</span>
       </h3>
       <p class="w-100 text-right mb-0 fs-07 fw-300" style="color: #fff">
-        Imagen de <a [href]="img?img.user.links.html:''" target="_blank">{{ img?img.user.name:'' }}</a> por <a href="https://unsplash.com" target="_blank">Unsplash</a>
+        Imagen de <a [href]="img?img.user.links.html:''" target="_blank"></a>
+        <a [href]="img?'https://unsplash.com/@' + img.user.username + '?utm_source=Bamboo-image&utm_medium=referral':''" target="_blank">
+          {{ img?img.user.name:'' }}
+        </a> por 
+        <a href="https://unsplash.com/?utm_source=Bamboo-image&utm_medium=referral" target="_blank">
+          Unsplash
+        </a>
       </p>
     </div>
   </mat-card-content>

@@ -17,7 +17,7 @@
         <div class="row g-2 mt-3" *ngIf="newCustomer">
             <div class="customer-column col">
                 <div class="me-2">
-                    <div class="avatar image-customer">
+                    <div class="avatar image-customer" (click)="getClient($event, newCustomer.id)" matTooltip="Ver detalle">
                         <img class="rounded-circle" [src]="uriImg + newCustomer.thumbnail" *ngIf="newCustomer.thumbnail != 'no-image.png'">
                         <span *ngIf="newCustomer.thumbnail == 'no-image.png'">
                             <p class="mb-0">

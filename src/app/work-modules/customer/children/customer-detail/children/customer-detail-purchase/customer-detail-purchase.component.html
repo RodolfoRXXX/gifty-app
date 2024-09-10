@@ -1,0 +1,140 @@
+<!-- Cards con una tabla de las compras del cliente -->
+
+<mat-card class="card col-12">
+    <mat-card-content class="pb-2">
+        <!-- Filters -->
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="fw-500">
+                        Filtro
+                    </mat-panel-title>
+                    <mat-panel-description style="overflow: auto;">
+                        <mat-chip-set class="ms-1" aria-label="filter-chips" *ngFor="let item of chips | keyvalue">
+                                <mat-chip class="soft-grey-background me-1 fw-500" *ngIf="item.value">
+                                    <span class="cap fw-500">{{ item.value }}</span>
+                                    <button matChipRemove (click)="delete(item.key)">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip>
+                        </mat-chip-set>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <!-- Filtro dateTime -->
+                    <mat-form-field class="col-md-6" appearance="outline">
+                        <mat-label>Elegí una fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" (dateChange)="add($event.value, 'dateTime')">
+                        <mat-hint class="fs-08">MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <!-- Filtro por Estado -->
+                    <mat-form-field class="col-md-6" appearance="outline">
+                        <mat-label>Estado</mat-label>
+                        <mat-select #state (valueChange)="add($event, 'state')">
+                            <mat-option [value]="{id: 1, name: 'Pendiente'}">
+                                <span class="badge rounded-pill cap bg-label-danger">
+                                    Pendiente
+                                </span>
+                            </mat-option>
+                            <mat-option [value]="{id: 0, name: 'Finalizado'}">
+                                <span class="badge rounded-pill cap bg-label-success">
+                                    Finalizado
+                                </span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- Filtro por vendedor -->
+                <div class="row" *ngIf="employee.list_of_permissions.includes(edit_enterprise_control)">
+                    <mat-form-field class="col-md-6" appearance="outline">
+                        <mat-label>Vendedor</mat-label>
+                        <mat-select #sellerF (valueChange)="add($event, 'sellerF')">
+                            <ng-container *ngFor="let item of sellers">
+                                <mat-option [value]="{id: item.id_employee, name: getEmployeeDisplayName(item)}" *ngIf="item.role">
+                                    <mat-icon>{{ item.icon_role }}</mat-icon>
+                                    <span class="cap">{{ getEmployeeDisplayName(item) }}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <!-- Loader -->
+        <div class="loader" *ngIf="load">
+            <p>Cargando...</p>
+        </div>
+        <!-- Table of orders -->
+        <div class="box-list" *ngIf="!empty_orders">
+            <table mat-table [dataSource]="dataSource" class="mt-1" matSort>
+            
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fs-09">Nro</th>
+                    <td mat-cell *matCellDef="let element" class="font-family-def font-size-def">
+                        <p class="mb-0" style="color: rgb(72, 72, 222);">{{ element.nroRemito }}</p>
+                    </td>
+                </ng-container>
+            
+                <!-- date Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="max-500-hidden fs-09"> FECHA </th>
+                    <td mat-cell *matCellDef="let element" class="max-500-hidden font-family-def font-size-def"> 
+                        <p class="mb-0">{{ element.date | date:'dd/MM/yyyy' }}</p>
+                    </td>
+                </ng-container>
+                    
+                <!-- total Column -->
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fs-09"> TOTAL </th>
+                    <td mat-cell *matCellDef="let element" class="font-family-def font-size-def">
+                        ${{ element.total | number: '1.2-2' }}
+                    </td>
+                </ng-container>
+
+                <!-- sellers Column -->
+                <ng-container matColumnDef="seller">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="max-1150-hidden fs-09" [style.display]="(employee.list_of_permissions.includes(this.edit_enterprise_control))?'':'none'"> VENDEDOR </th>
+                    <td mat-cell *matCellDef="let element" class="max-1150-hidden font-family-def font-size-def" [style.display]="(employee.list_of_permissions.includes(this.edit_enterprise_control))?'':'none'">
+                        <span class="cap fw-500">{{ element.employee_name || 'Sin información' }}</span>
+                    </td>
+                </ng-container>
+
+                <!-- status column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="max-1280-hidden fs-09"> ESTADO </th>
+                    <td mat-cell *matCellDef="let element" class="max-1280-hidden font-family-def font-size-def">
+                        <span class="badge rounded-pill cap fs-08"
+                                [ngClass]="(element.status == 'Pendiente')?'bg-label-danger':'bg-label-success'">
+                            {{ element.status }}
+                        </span>
+                    </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)" class="bill-row"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Búsqueda sin resultados para "{{chips.dateTime || chips.status || chips.seller}}"</td>
+                </tr>
+            </table>
+            <mat-paginator class="m-t-15" [length]="resultsLength" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons aria-label="paginador"></mat-paginator>              
+        </div>
+        <!-- Recharge button -->
+        <div class="recharge" *ngIf="recharge">
+            <!-- Botón para recargar los datos -->
+            <button mat-raised-button color="accent" (click)="rechargeData()">Recargar los datos</button>
+        </div>
+        <!-- No orders -->
+        <div class="recharge" *ngIf="empty_orders">
+            <!-- Botón para agregar un pedido -->
+            <p>No hay pedidos</p>
+            <a mat-flat-button color="primary" routerLink="../order-detail">
+                + Crear Pedido
+            </a>
+        </div>
+    </mat-card-content>
+</mat-card>

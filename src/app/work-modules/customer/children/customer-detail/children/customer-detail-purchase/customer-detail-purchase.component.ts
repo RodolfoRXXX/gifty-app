@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDatepickerInput } from '@angular/material/datepicker';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
@@ -14,19 +14,20 @@ import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.scss']
+  selector: 'app-customer-detail-purchase',
+  templateUrl: './customer-detail-purchase.component.html',
+  styleUrl: './customer-detail-purchase.component.scss'
 })
-export class OrderListComponent implements OnInit, AfterViewInit {
+export class CustomerDetailPurchaseComponent implements OnInit, AfterViewInit {
 
+  @Input() id_customer!: number;
   @ViewChild('dateTime') dateTime!: ElementRef;
   @ViewChild('sellerF') sellerF!: ElementRef;
   @ViewChild('state') state!: ElementRef;
 
   employee!: Employee;
   sellers!: any;
-  displayedColumns: string[] = ['id', 'date', 'customer', 'seller', 'status'];
+  displayedColumns: string[] = ['id', 'date', 'total', 'seller', 'status'];
   dataSource = new MatTableDataSource();
   empty_orders = false;
   resultsLength!: number;
@@ -36,8 +37,6 @@ export class OrderListComponent implements OnInit, AfterViewInit {
   chips: any = {};
   chips_arr: any = {};
   permissions: string[] = [];
-  card_values: any = { open_orders: null, close_orders: null, pending_products: null, delivered_products: null };
-  uriImg = environment.SERVER;
   edit_enterprise_control = environment.EDIT_ENTERPRISE_CONTROL;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -78,7 +77,6 @@ export class OrderListComponent implements OnInit, AfterViewInit {
         this.getSellers(item.id_enterprise)
       }
       this.loadData()
-      this.getDataCard(this.employee.id_enterprise)
     })
   }
   private getSellers(id_enterprise: number) {
@@ -88,49 +86,17 @@ export class OrderListComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  private getDataCard(id_enterprise: number): void {
-    const date_limit = calculateDateLimit(365);
-    const requestData = { id_enterprise, date_limit, seller: this.seller }; 
-    forkJoin({
-      orders: this._api.postTypeRequest('profile/get-orders-data-orders', requestData),
-      products: this._api.postTypeRequest('profile/get-orders-data-products', requestData)
-    }).subscribe({
-      next: (results: any) => {
-        const { orders, products } = results;
-        this.card_values = {
-          open_orders: orders.status === 1 ? orders.data[0].open_orders : 0,
-          close_orders: orders.status === 1 ? orders.data[0].close_orders : 0,
-          pending_products: 0,
-          delivered_products: 0
-        };
-        if ((products.status === 1) && products.data.length) {
-          products.data.forEach((element: any) => {
-            if (element.status_value === '1') {
-              this.card_values.delivered_products = element.count_status;
-            } else if (element.status_value === '2') {
-              this.card_values.pending_products = element.count_status;
-            }
-          });
-        }
-        this.loadCards = false;
-      },
-      error: () => {
-        this.loadCards = false;
-      }
-    });
-  }
   
-
   //Función que trae los valores desde la DB
   loadData(): void {
-    if (this.employee.id_enterprise) {
+    if (this.employee.id_enterprise && this.id_customer) {
       this.empty_orders = false;
       this.load = true;
       forkJoin({
         count: this._api.postTypeRequest('profile/get-count-orders', 
-          { id_enterprise: this.employee.id_enterprise, dateTime: this.chips_arr.dateTime, sellerF: this.chips_arr.sellerF, state: this.chips_arr.state, seller: this.seller }),
+          { id_enterprise: this.employee.id_enterprise, dateTime: this.chips_arr.dateTime, sellerF: this.chips_arr.sellerF, state: this.chips_arr.state, seller: this.seller, customer: this.id_customer }),
         orders: this._api.postTypeRequest('profile/get-orders', 
-          { id_enterprise: this.employee.id_enterprise, dateTime: this.chips_arr.dateTime, sellerF: this.chips_arr.sellerF, state: this.chips_arr.state, seller: this.seller })
+          { id_enterprise: this.employee.id_enterprise, dateTime: this.chips_arr.dateTime, sellerF: this.chips_arr.sellerF, state: this.chips_arr.state, seller: this.seller, customer: this.id_customer })
       }).subscribe({
         next: (results: any) => {
           if(results.count.data[0].total > 0) {
@@ -140,6 +106,11 @@ export class OrderListComponent implements OnInit, AfterViewInit {
               } else {
                 element.status = 'Finalizado'
               }
+              //sumar el total de cada compra
+              element.total = 0;
+              JSON.parse(element.detail).forEach((item: any) => {
+                element.total += item.price
+              });
             });
             this.resultsLength = results.count.data.total
             this.dataSource.data = results.orders.data
@@ -215,17 +186,9 @@ export class OrderListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getInitials(name: string): string {
-    const names = name.trim().split(' ');
-    const firstInitial = names[0].charAt(0).toUpperCase();
-    const secondInitial = names[1] ? names[1].charAt(0).toUpperCase() : '';
-    return firstInitial + secondInitial;
-  }
-
   //Recarga la información
   rechargeData() {
     this.loadData();
   }
 
 }
-

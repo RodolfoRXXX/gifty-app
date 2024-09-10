@@ -65,6 +65,7 @@ export class GreetingCardComponent implements OnInit {
 
     if (storedHour && parseInt(storedHour, 10) === currentHour && localStorage.getItem('imageData')) {
       this.img = JSON.parse(localStorage.getItem('imageData')!);
+      console.log(this.img)
       return;
     }
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
@@ -28,7 +29,8 @@ export class OrderCustomerDetailComponent {
   constructor(
     private _api: ApiService,
     private _dialog: MatDialog,
-    private _conector: ConectorsService
+    private _conector: ConectorsService,
+    private _router: Router
   ) {
     this.getDataLocal().then( (employee: Employee) => {
       this.employee = employee;
@@ -69,6 +71,11 @@ export class OrderCustomerDetailComponent {
           this.setCustomer.emit(result.id);
         }
       });
+  }
+
+  getClient(e: Event, id_customer: number) {
+    e.stopPropagation();
+    this._router.navigate(['init/main/customer/customer-detail'], { queryParams: { id_customer: id_customer } });
   }
 
 }

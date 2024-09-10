@@ -11,6 +11,7 @@ import { CustomerEditComponent } from './children/customer-edit/customer-edit.co
 import { CustomerEditInfoComponent } from './children/customer-edit/children/customer-edit-info/customer-edit-info.component';
 import { CustomerEditImageComponent } from './children/customer-edit/children/customer-edit-image/customer-edit-image.component';
 import { CustomerDetailComponent } from './children/customer-detail/customer-detail.component';
+import { CustomerDetailPurchaseComponent } from './children/customer-detail/children/customer-detail-purchase/customer-detail-purchase.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { CustomerDetailComponent } from './children/customer-detail/customer-det
     CustomerEditComponent,
     CustomerEditInfoComponent,
     CustomerEditImageComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    CustomerDetailPurchaseComponent
   ],
   imports: [
     CommonModule,

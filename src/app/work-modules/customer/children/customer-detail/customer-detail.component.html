@@ -195,11 +195,7 @@
             </div>
             <!-- Tabla de compras del cliente -->
             <div class="row g-2" *ngIf="tabs[1].state == 'active'">
-                <mat-card class="card col-12 col-xl-6" *ngIf="false">
-                    <mat-card-content class="pb-2">
-                        
-                    </mat-card-content>
-                </mat-card>
+                <app-customer-detail-purchase [id_customer]="id_customer"></app-customer-detail-purchase>
             </div>
     </div>
 </div>
