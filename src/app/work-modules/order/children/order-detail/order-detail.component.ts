@@ -11,6 +11,7 @@ import { Order } from 'src/app/shared/interfaces/order.interface';
 import { DialogOrderEditStateComponent } from 'src/app/shared/standalone/dialog/dialog-order-edit-state/dialog-order-edit-state.component';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { GetJsonDataService } from 'src/app/services/get-json-data.service';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -33,6 +34,7 @@ export class OrderDetailComponent implements OnInit {
   observation!: string;
   info = {status: 1, seller: 0};
   editRegister = [];
+  order_status!: any[];
 
   hasChange: boolean = false;
   loading: boolean = false;
@@ -44,9 +46,13 @@ export class OrderDetailComponent implements OnInit {
     private _api: ApiService,
     private _notify: NotificationService,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _getJson: GetJsonDataService,
   ) {
     this.createDataForm();
+    this._getJson.getData('order_status.json').subscribe((data: any) => {
+      this.order_status = data;
+    });
   }
 
   ngOnInit(): void {
@@ -90,6 +96,11 @@ export class OrderDetailComponent implements OnInit {
   //cambia el estado del remito - edita el estado de sus productos
   changeState(detail: string, id_order: number, status: any) {
     this._dialog.open(DialogOrderEditStateComponent, { data: { detail: detail, id_order: id_order, status: status }});
+  }
+
+  //devuelve el status, usado para el selector de estado
+  getStatus(statusId: number) {
+    return this.order_status.find(value => value.id === statusId);
   }
 
   //función que genera la vista del remito en pdf
@@ -150,13 +161,14 @@ export class OrderDetailComponent implements OnInit {
           { text: 'Productos', style: 'subheader', margin: [0, 10, 0, 5] },
           {
             table: {
-              widths: ['auto', 'auto', '*'],
+              widths: ['auto', 'auto', '*', 'auto'],
               body: (() => {
                 const body = [
                   [
                     { text: 'Código', style: 'tableHeader' },
                     { text: 'Cantidad', style: 'tableHeader' },
-                    { text: 'Descripción', style: 'tableHeader' }
+                    { text: 'Descripción', style: 'tableHeader' },
+                    { text: 'Estado', style: 'tableHeader' }
                   ]
                 ];
       
@@ -166,13 +178,14 @@ export class OrderDetailComponent implements OnInit {
                   body.push([
                     item.sku,
                     item.qty,
-                    item.name
+                    item.name,
+                    this.getStatus(item.status)?.status
                   ]);
                 });
       
                 // Rellenar con filas vacías hasta alcanzar 10 filas
                 for (let i = rows.length; i < 10; i++) {
-                  body.push([{text: '-', style: ''}, {text: '', style: ''}, {text: '', style: ''}]);
+                  body.push([{text: '-', style: ''}, {text: '', style: ''}, {text: '', style: ''}, {text: '', style: ''}]);
                 }
       
                 return body;
