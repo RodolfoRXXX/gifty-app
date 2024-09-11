@@ -7,14 +7,22 @@
   <mat-card-content>
     <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" *ngIf="product.state == 'activo'">
       <!-- Stock del producto -->
-      <mat-form-field appearance="outline" class="w-100 mb-0" *ngIf="this.permissions.includes(product_admin)">
-        <mat-label>Stock físico</mat-label>
-        <input matInput placeholder="Editá el stock" 
-                type="number"
-                formControlName="stock_real"
-                required>
-        <mat-error *ngIf="dataForm.get('stock_real')?.hasError('required')" class="fs-09">{{ getErrorStock() }}</mat-error>
-      </mat-form-field>
+      <div class="row p-2">
+        <button mat-icon-button type="button" class="col-auto" aria-label="add button" (click)="incrementStock()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-form-field appearance="outline" class="col" *ngIf="this.permissions.includes(product_admin)">
+          <mat-label>Agregar</mat-label>
+          <input matInput placeholder="Editá el stock" 
+                 type="number"
+                 formControlName="increment"
+                 required>
+          <mat-error *ngIf="dataForm.get('increment')?.hasError('required')" class="fs-09">{{ getErrorStock() }}</mat-error>
+        </mat-form-field>
+        <button mat-icon-button type="button" class="col-auto" aria-label="remove button" (click)="decrementStock()">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>      
       <!-- Caja de vista de stock -->
       <div class="mb-4 d-flex justify-content-around">
         <!-- Caja stock físico -->
@@ -39,7 +47,7 @@
         <button mat-stroked-button color="warn" class="me-3" type="button" (click)="resetAll()">
           Reset
         </button>
-        <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.untouched || dataForm.pristine">
+        <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || (dataForm.get('increment')?.value == 0)">
           Guardar
         </button>
       </div>

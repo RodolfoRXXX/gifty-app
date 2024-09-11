@@ -37,22 +37,38 @@ export class ProductStockComponent {
   createDataForm(): void {
     this.dataForm = this.fb.group({
       id: ['', Validators.required],
-      stock_real: ['', Validators.required],
-      stock_available: [0, Validators.required]
+      increment: [0, [Validators.required, Validators.min(0)]],
+      stock_real: [0, Validators.required],
+      stock_available: [0]
     });
   }
 
   setDataForm(product: Product): void {
     this.dataForm.setValue({
       id: product.id || '',
+      increment: 0,
       stock_real: product.stock_real || 0,
       stock_available: product.stock_available || 0
     });
   }
 
+  // Método para incrementar el valor del stock
+  incrementStock() {
+    const currentValue = this.dataForm.get('increment')?.value || 0; // Si el valor es null o vacío, inicializa en 0
+    this.dataForm.get('increment')?.setValue(currentValue + 1);
+  }
+
+  // Método para decrementar el valor del stock
+  decrementStock() {
+    const currentValue = this.dataForm.get('increment')?.value || 0; // Si el valor es null o vacío, inicializa en 0
+    if (currentValue > 0) {  // Evita valores negativos
+      this.dataForm.get('increment')?.setValue(currentValue - 1);
+    }
+  }
+
   //Errores de formulario
     getErrorStock(): string {
-      if (this.dataForm.controls['stock_real'].hasError('required')) return 'Tenés que ingresar un valor';
+      if (this.dataForm.controls['increment'].hasError('required')) return 'Tenés que ingresar un valor';
       return '';
     }
 
@@ -73,7 +89,7 @@ export class ProductStockComponent {
               //Modificó la imagen
               this._notify.showSuccess('El stock se ha modificado con éxito!');
               this.changeDetected.emit(true);
-              this.dataForm.markAsPristine();
+              this.resetAll();
             } else{
               //No hubo modificación
               this._notify.showError('No se detectaron cambios. Ingresá información diferente a la actual.')

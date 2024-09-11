@@ -265,6 +265,8 @@ export class ProductInformationComponent implements OnInit {
   rechargeComponent(id_product: number = 0) {
     if(id_product > 0) {
       this._router.navigate(['init/main/product/product-edit'], { queryParams: { id_product: id_product } });
+      this.dataForm.markAsPristine();
+      this.dataForm.markAsUntouched();
     }
   }
 
