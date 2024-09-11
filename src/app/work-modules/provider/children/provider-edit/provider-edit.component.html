@@ -42,8 +42,7 @@
               <mat-label>Whatsapp</mat-label>
               <input matInput
                       type="number"
-                      formControlName="whatsapp" 
-                      required>
+                      formControlName="whatsapp">
               <mat-error *ngIf="this.dataForm.controls['whatsapp']!.errors" class="fs-09">{{getErrorWhatsapp()}}</mat-error>
             </mat-form-field>
             <!-- Email -->
@@ -81,7 +80,7 @@
             <button mat-stroked-button color="warn" class="me-3" type="button" (click)="resetAll()">
               Reset
             </button>
-            <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.untouched || dataForm.pristine">
+            <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.pristine">
               Guardar
             </button>
           </div>

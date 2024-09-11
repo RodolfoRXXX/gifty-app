@@ -14,7 +14,8 @@
                     <mat-label>Nombre completo</mat-label>
                     <input matInput
                             type="text"
-                            formControlName="name">
+                            formControlName="name"
+                            required>
                     <mat-error class="fs-08" *ngIf="this.dataForm.controls['name']!.errors">{{getErrorName()}}</mat-error>
                 </mat-form-field>
                 <!-- cuit -->
@@ -97,7 +98,7 @@
                 <button mat-stroked-button color="warn" type="button" class="me-2" (click)="resetAll()">
                     Reset
                 </button>
-                <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.untouched || dataForm.pristine">
+                <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.pristine">
                     Guardar
                 </button>
             </div>

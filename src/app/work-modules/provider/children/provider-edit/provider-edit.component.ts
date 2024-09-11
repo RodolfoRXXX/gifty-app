@@ -76,7 +76,6 @@ export class ProviderEditComponent implements OnInit {
           Validators.maxLength(50)
         ]),
         whatsapp: new FormControl('', [
-          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(50)
         ]),
@@ -85,7 +84,7 @@ export class ProviderEditComponent implements OnInit {
           Validators.minLength(5),
           Validators.maxLength(50),
           (control: AbstractControl):ValidationErrors|null => {
-            return !this.emailReg.test(control.value) ? {error_format: {value: control.value}} : null;}
+            return (!this.emailReg.test(control.value)&&(!control.value)) ? {error_format: {value: control.value}} : null;}
         ]),
         address: new FormControl('', [
           Validators.minLength(5),
@@ -131,7 +130,6 @@ export class ProviderEditComponent implements OnInit {
   }
   getErrorWhatsapp() {
     //whatsapp
-    if(this.dataForm.controls['whatsapp'].hasError('required')) return 'Tenés que ingresar un valor';
     if(this.dataForm.controls['whatsapp'].hasError('minlength')) return 'Este valor debe tener más de 4 caracteres';
     if(this.dataForm.controls['whatsapp'].hasError('maxlength')) return 'Este valor debe tener menos de 50 caracteres';
       return ''
@@ -166,6 +164,15 @@ export class ProviderEditComponent implements OnInit {
       this.dataForm.reset()
       this.dataForm.patchValue({id_enterprise: this.id_enterprise})
     }
+    this.dataForm.markAsPristine();
+  }
+
+  //Navegar a la misma ruta para recargar el componente
+  rechargeComponent(id_provider: number = 0) {
+    if(id_provider > 0) {
+      this._router.navigate(['init/main/provider/provider-edit'], { queryParams: { id_provider: id_provider } });
+      this.dataForm.markAsPristine();
+    }
   }
 
   onSubmit() {
@@ -180,9 +187,8 @@ export class ProviderEditComponent implements OnInit {
             if(res.data.changedRows == 1){
               //Modificó datos proveedor
               this._notify.showSuccess('El proveedor se modificó con éxito!');
-              setTimeout(() => {
-                this._router.navigate(['init/main/provider/provider-list']);
-              }, 2000);
+              this.getProvider(this.id_provider)
+              this.dataForm.markAsPristine();
             } else{
               //No hubo modificación
               this._notify.showError('No se detectaron cambios. Ingresá valores diferentes a los actuales.')
@@ -208,9 +214,7 @@ export class ProviderEditComponent implements OnInit {
             if(res.data.affectedRows == 1){
               //Creó un nuevo proveedor
               this._notify.showSuccess('Nuevo proveedor creado con éxito!');
-              setTimeout(() => {
-                this._router.navigate(['init/main/provider/provider-list']);
-              }, 2000);
+              this.rechargeComponent(res.data.insertId);
             } else{
               //Ya existe dicho proveedor
               this._notify.showWarn('El proveedor que intentas crear ya existe.')

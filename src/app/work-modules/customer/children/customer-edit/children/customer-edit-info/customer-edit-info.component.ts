@@ -75,8 +75,7 @@ export class CustomerEditInfoComponent implements OnInit {
       ]),
       email: new FormControl('', [
         (control: AbstractControl):ValidationErrors|null => {
-          return (!this.emailReg.test(control.value)&&(!control.value)) ? {error_format: {value: control.value}} : null;},
-        Validators.minLength(5),
+          return (!this.emailReg.test(control.value)&&(control.value.length)) ? {error_format: {value: control.value}} : null;},
         Validators.maxLength(100)
       ]),
       phone: new FormControl('', [
@@ -115,7 +114,7 @@ export class CustomerEditInfoComponent implements OnInit {
     if(customer) {
       this.dataForm.setValue({
         id: (customer.id > 0)?customer.id:0,
-        id_enterprise: (customer.id_enterprise > 0)?customer.id_enterprise:'',
+        id_enterprise: (customer.id_enterprise > 0)?customer.id_enterprise:0,
         name: (customer.name != '')?customer.name:'',
         cuit: (customer.cuit != '')?customer.cuit:'',
         email: (customer.email != '')?customer.email:'',
@@ -200,6 +199,7 @@ export class CustomerEditInfoComponent implements OnInit {
   rechargeComponent(id_customer: number = 0) {
     if(id_customer > 0) {
       this._router.navigate(['init/main/customer/customer-edit'], { queryParams: { id_customer: id_customer } });
+      this.dataForm.markAsPristine();
     }
   }
 
@@ -217,7 +217,7 @@ export class CustomerEditInfoComponent implements OnInit {
                 //Modificó datos cliente
                 this._notify.showSuccess('Cliente actualizado con éxito!');
                 this.changeDetected.emit(true);
-                this.dataForm.markAsPristine();
+                this.resetAll();
               } else{
                 //No hubo modificación
                 this._notify.showError('No se detectaron cambios. Ingresá valores diferentes a los actuales.')

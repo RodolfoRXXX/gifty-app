@@ -18,11 +18,13 @@
                     <mat-error class="fs-08" *ngIf="this.dataForm.controls['name']!.errors">{{getErrorName()}}</mat-error>
                 </mat-form-field>
                 <!-- Cuit -->
-                <mat-form-field appearance="outline" class="col-12 col-sm-4">
-                    <mat-label>CUIT(sin guiones)</mat-label>
-                        <input matInput placeholder="00-12345678-9"
-                                formControlName="cuit" 
-                                >
+                <mat-form-field appearance="outline" class="col-12 col-md-4">
+                    <mat-label>Cuit</mat-label>
+                    <input matInput 
+                            #message 
+                            maxlength="11"
+                            formControlName="cuit">
+                    <mat-hint class="fs-08" align="end">{{message.value.length}} / 11</mat-hint>
                     <mat-error class="fs-08" *ngIf="this.dataForm.controls['cuit']!.errors">{{getErrorCuit()}}</mat-error>
                 </mat-form-field>
             </div>
@@ -96,7 +98,7 @@
                 <button mat-stroked-button color="warn" class="me-3" type="button" (click)="resetAll()">
                     Reset
                 </button>
-                <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || dataForm.untouched || dataForm.pristine">
+                <button mat-stroked-button color="primary" type="submit" [disabled]="dataForm.invalid || loading || dataForm.pristine">
                     Guardar
                 </button>
             </div>

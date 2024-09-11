@@ -1,8 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { ConectorsService } from 'src/app/services/conectors.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Employee } from 'src/app/shared/interfaces/employee.interface';
 
@@ -23,9 +21,7 @@ export class ProfileInformationComponent {
 
   constructor(
     private _api: ApiService,
-    private _conector: ConectorsService,
-    private _notify: NotificationService,
-    private _auth: AuthService
+    private _notify: NotificationService
   ) {
     this.createDataForm();
   }
@@ -154,7 +150,8 @@ export class ProfileInformationComponent {
 
   //Reseta todo a los valores iniciales
   resetAll() {
-    this.setDataForm(this.employee)
+    this.setDataForm(this.employee);
+    this.dataForm.markAsPristine();
   }
 
   onSubmit() {
@@ -162,15 +159,12 @@ export class ProfileInformationComponent {
     this._api.postTypeRequest('profile/update-employee-personal', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
-        console.log(res)
         if(res.status == 1){
           //Accedió a la base de datos y no hubo problemas
           if(res.data.affectedRows == 1){
             //Modificó la info
             this._notify.showSuccess('Información actualizada con éxito!');
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            this.resetAll();
           } else{
             //No hubo modificación
             this._notify.showError('No se detectaron cambios. Ingresá valores diferentes.');
