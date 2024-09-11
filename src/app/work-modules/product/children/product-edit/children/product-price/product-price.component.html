@@ -24,17 +24,14 @@
         </div>
 
         <!-- Valor por el cual se multiplica el precio de compra -->
-        <div>
-          <mat-form-field appearance="outline" class="mb-0">
-            <mat-label>Factor</mat-label>
-            <input matInput 
-                    type="number"
-                    [value]="(this.dataForm.get('sale_price')?.value)/(this.dataForm.get('purchase_price')?.value) | number:'1.2-4'"
-                    (change)="setFactor($event)"
-                    [disabled]="product.purchase_price == 0">
-          </mat-form-field>
-        </div>
-
+        <mat-form-field appearance="outline" class="mb-0">
+          <mat-label>Factor</mat-label>
+          <input matInput 
+                  type="number"
+                  [value]="(this.dataForm.get('sale_price')?.value)/(this.dataForm.get('purchase_price')?.value) | number:'1.2-4'"
+                  (change)="setFactor($event)"
+                  [disabled]="product.purchase_price == 0">
+        </mat-form-field>
       </div>
       <!-- Botones de reseteo y confirmación -->
       <div class="submit-btn-box" *ngIf="this.permissions.includes(info_admin)">

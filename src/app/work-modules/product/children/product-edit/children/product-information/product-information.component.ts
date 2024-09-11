@@ -258,7 +258,6 @@ export class ProductInformationComponent implements OnInit {
       this.dataForm.patchValue({id_enterprise : this.id_enterprise})
     }
     this.dataForm.markAsPristine();
-    this.dataForm.markAsUntouched();
   }
 
   //Navegar a la misma ruta para recargar el componente
@@ -266,7 +265,6 @@ export class ProductInformationComponent implements OnInit {
     if(id_product > 0) {
       this._router.navigate(['init/main/product/product-edit'], { queryParams: { id_product: id_product } });
       this.dataForm.markAsPristine();
-      this.dataForm.markAsUntouched();
     }
   }
 

@@ -101,7 +101,7 @@
             <button mat-stroked-button 
                     color="primary" 
                     type="submit" 
-                    [disabled]="(this.dataForm.status == 'INVALID') || loading || dataForm.untouched || this.dataForm.pristine || this.getSku() !== this.dataForm.controls['sku'].value">
+                    [disabled]="this.dataForm.invalid || loading || this.dataForm.pristine || this.getSku() !== this.dataForm.controls['sku'].value">
               Guardar
             </button>
           </div>
