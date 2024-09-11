@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { merge, startWith, map, switchMap, catchError, of as observableOf } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
 import { GetJsonDataService } from 'src/app/services/get-json-data.service';
 import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { Enterprise } from 'src/app/shared/interfaces/enterprise.interface';
+import { DialogChangePlanComponent } from 'src/app/shared/standalone/dialog/dialog-change-plan/dialog-change-plan.component';
 
 @Component({
   selector: 'app-pricing',
@@ -21,7 +23,8 @@ export class PricingComponent implements OnInit {
   constructor(
     private _api: ApiService,
     private _conector: ConectorsService,
-    private _getJson: GetJsonDataService
+    private _getJson: GetJsonDataService,
+    private _dialog: MatDialog
   ) {
     this.load = true;
     this._getJson.getData('plan_detail.json').subscribe((data: any) => {
@@ -39,6 +42,10 @@ export class PricingComponent implements OnInit {
       this.employee = item;
     });
     return this.employee.id_enterprise;
+  }
+
+  changePlan(idPlan: number) {
+    const dialogRef = this._dialog.open(DialogChangePlanComponent, { data: { idPlan: idPlan } });
   }
 
   getEnterprise() {

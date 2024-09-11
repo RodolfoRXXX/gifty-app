@@ -34,8 +34,7 @@ const routes: Routes = [
       },
       { 
         path: 'configuration',
-        loadChildren: () => import('./children/configuration/configuration.module').then(m => m.ConfigurationModule),
-        canActivate: [is_eddle_settings] 
+        loadChildren: () => import('./children/configuration/configuration.module').then(m => m.ConfigurationModule)
       },
       { 
         path: '**',

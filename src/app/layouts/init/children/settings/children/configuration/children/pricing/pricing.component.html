@@ -37,8 +37,8 @@
                     <li class="fs-09 mb-2" *ngFor="let feature of item.features">{{ feature }}</li>
                   </ul>
                 </div>
-                <button mat-flat-button color="primary" class="w-100 mt-2" *ngIf="enterprise?(enterprise.plan != item.id):true">Contratar</button>
-                <button mat-stroked-button color="primary" class="w-100 mt-2" *ngIf="enterprise && enterprise.plan == item.id">Tu plan actual</button>
+                <button mat-flat-button color="primary" class="w-100 mt-2" (click)="changePlan(item.id)" *ngIf="enterprise?(enterprise.plan != item.id):true">Contratar</button>
+                <button mat-stroked-button color="primary" class="w-100 mt-2" disabled *ngIf="enterprise && enterprise.plan == item.id">Tu plan actual</button>
               </div>
           </div>
         </div>        

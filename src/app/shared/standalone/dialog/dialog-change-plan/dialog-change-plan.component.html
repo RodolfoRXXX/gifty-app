@@ -1,0 +1,48 @@
+ 
+<div class="card storageDetail">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="mb-0">
+            Elegiste el plan
+        </h4>
+        <a mat-icon-button class="" routerLink="#" aria-label="close-button" (click)="closeDialog()">
+            <mat-icon style="position: relative; top: -2px;">close</mat-icon>
+        </a>
+    </div>
+    <div class="card border rounded shadow-none h-100 p-3 pt-6 d-flex flex-column justify-content-between border-primary">
+        <!-- image -->
+        <div class="mb-1 mt-2 text-center">
+            <img [src]="selectedPlan?selectedPlan.image:''" height="100" alt="">
+        </div>
+        <!-- name -->
+        <div class="mb-1">
+            <h4 class="text-center cap mb-1">{{ selectedPlan?selectedPlan.name:'' }}</h4>
+            <p class="text-center">{{ selectedPlan?selectedPlan.description:'' }}</p>
+        </div>
+    </div>
+    
+    <!-- Caja con botón para continuar con la contratación -->
+    <div class="d-flex justify-content-center" *ngIf="id_enterprise > 1">
+        <button mat-flat-button color="primary" class="w-100">
+            Continuar
+        </button>
+    </div>
+    <!-- Caja que toma datos para crear empresa, rol y empleado -->
+    <div *ngIf="id_enterprise == 1">
+        <p class="fs-09 text-muted">Para continuar tenés que crear una empresa</p>
+        <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Escribí el nombre"
+                        formControlName="name" 
+                        required>
+                <mat-error class="fs-08" *ngIf="this.dataForm.controls['name']!.errors">{{getNameError()}}</mat-error>
+            </mat-form-field>
+            <button mat-flat-button color="primary" class="w-100" [disabled]="dataForm.invalid || loading || dataForm.pristine">
+                Crear
+            </button>
+        </form>
+    </div>
+    <mat-card-footer class="login-footer">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-footer>
+</div>
