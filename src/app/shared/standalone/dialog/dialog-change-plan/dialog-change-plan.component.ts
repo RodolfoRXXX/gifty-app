@@ -7,6 +7,7 @@ import { Storage } from 'src/app/shared/interfaces/storage.interface';
 import { GetJsonDataService } from 'src/app/services/get-json-data.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   standalone: true,
@@ -31,9 +32,10 @@ export class DialogChangePlanComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogChangePlanComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private apiService: ApiService,
+    private _api: ApiService,
     private _auth: AuthService,
-    private _getJson: GetJsonDataService
+    private _getJson: GetJsonDataService,
+    private _notify: NotificationService
   ) {
     this._getJson.getData('plan_detail.json').subscribe((data: any[]) => {
       if(data) {
@@ -49,7 +51,12 @@ export class DialogChangePlanComponent implements OnInit {
 
   getDataLocal(): void {
     const data = JSON.parse(this._auth.getDataFromLocalStorage());
+    console.log(data)
     this.id_enterprise = data.id_enterprise;
+    this.dataForm.patchValue({
+      id_user: data.id,
+      plan: this.data.idPlan
+    })
     console.log(data)
   }
 
@@ -63,19 +70,62 @@ export class DialogChangePlanComponent implements OnInit {
 
   createDataForm() {
     this.dataForm = new FormGroup({
+      id_user: new FormControl(0, [
+        Validators.required
+      ]),
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(35)
       ]),
-      plan: new FormControl(this.data.idPlan, [
+      plan: new FormControl(0, [
         Validators.required
       ])
     });
   }
 
   onSubmit() {
-    console.log(this.dataForm.value)
+    this.loading =  true;
+      this._api.postTypeRequest('profile/create-new-enterprise', this.dataForm.value).subscribe({
+        next: (res: any) => {
+          console.log(res)
+          this.loading =  false;
+          if(res.status == 1){
+            //Accedió a la base de datos y no hubo problemas
+            if(res.data != 'existente'){
+              //Modificó la imagen
+              this._notify.showSuccess(`¡Felicitaciones! Creaste a ${this.dataForm.get('name')?.value}!`);
+              //Modificar el localstorage
+              let data = JSON.parse(this._auth.getDataFromLocalStorage())
+              data.enterprise = this.dataForm.get('name')?.value
+              data.id_enterprise = res.data.id_enterprise
+              this._auth.setUserData(data)
+              setTimeout(() => {
+                this.closeDialog();
+                window.location.reload();
+              }, 2000);
+            } else{
+              //No hubo modificación
+              this._notify.showError('La empresa que intentas crear ya existe.')
+            }
+          } else{
+              //Problemas de conexión con la base de datos(res.status == 0)
+              this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+          }
+        },
+        error: (error) => {
+          //Error de conexión, no pudo consultar con la base de datos
+          this.loading =  false;
+          this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+        }
+      })
+  }
+
+  redirect() {
+    setTimeout(() => {
+      this.closeDialog();
+      window.location.reload();
+    }, 2000);
   }
 
   closeDialog(): void {

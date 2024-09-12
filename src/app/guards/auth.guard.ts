@@ -77,40 +77,24 @@ import { AuthService } from '../services/auth.service';
   }
 
   //Guard para cuidar ruta de usuarios no verificados
-  export const is_active: CanActivateFn =
-    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-      return isActive();
+    const checkActive = (): Observable<boolean> => {
+      const _authSvc = inject(AuthService);
+      return _authSvc.isActive$;
     };
-
-  const isActive = () : | boolean | UrlTree | Observable< boolean | UrlTree > | Promise< boolean | UrlTree > => {
-    const _authSvc = inject(AuthService);
-    const _router  = inject(Router);
-    return _authSvc.isActive$.pipe(
-      tap( (isActive : boolean) => {
-        if(!isActive) {
-          _router.navigate(['init/verify']);
-        }
-      } )
-    )
-  }
-
-  //Guard para cuidar la ruta init si el usuario no está verificado
-  export const isNot_active: CanActivateFn =
-    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-      return isNotActive();
+    
+    export const is_active: CanActivateFn = (route, state) => {
+      const _router = inject(Router);
+      return checkActive().pipe(
+        map(isActive => isActive ? true : _router.createUrlTree(['init/verify']))
+      );
     };
-
-  const isNotActive = () : | boolean | UrlTree | Observable< boolean | UrlTree > | Promise< boolean | UrlTree > => {
-    const _authSvc = inject(AuthService);
-    const _router  = inject(Router);
-    const state = _authSvc.isActive$;
-    const change_sign = pipe(
-      map( (value:boolean) => value = (value !== true)),
-      tap( (value:boolean) => (!value)?_router.navigate(['init']):'' )
-    );
-    const fx = change_sign(state);
-    return fx;
-  }
+    
+    export const isNot_active: CanActivateFn = (route, state) => {
+      const _router = inject(Router);
+      return checkActive().pipe(
+        map(isActive => !isActive ? true : _router.createUrlTree(['init']))
+      );
+    };
 
   //Guard para confirmar si el usuario es un empleado
   export const is_employee: CanActivateFn =
@@ -138,7 +122,7 @@ import { AuthService } from '../services/auth.service';
             }
         })
     );
-};
+  };
 
 
   //Guard para evitar que un empleado acceda al componente de "empleado bloqueado"
@@ -168,3 +152,61 @@ import { AuthService } from '../services/auth.service';
       })
     );
   }
+
+
+  //Guard para confirmar si la empresa está activa
+  export const is_active_enterprise: CanActivateFn =
+    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+      return isActiveEnterprise();
+    };
+
+  const isActiveEnterprise = (): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
+    const _apiSvc = inject(ApiService);
+    const _authSvc = inject(AuthService);
+    const _router = inject(Router);
+
+    const id_enterprise = JSON.parse(_authSvc.getDataFromLocalStorage()).id_enterprise;
+
+    if (!id_enterprise) return _router.parseUrl('init/blocked');
+
+    return _apiSvc.postTypeRequest('profile/get-enterprise', { id: id_enterprise }).pipe(
+        switchMap((response: any) => {
+            const enterprise = response.data?.[0];
+            if (enterprise && enterprise.status === 1) {
+                return of(true);
+            } else {
+                _router.navigate(['init/blocked']);
+                return of(false);
+            }
+        })
+    );
+  };
+
+
+  //Guard para confirmar si la empresa está activa
+  export const isNot_active_enterprise: CanActivateFn =
+    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+      return isNotActiveEnterprise();
+    };
+
+  const isNotActiveEnterprise = (): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
+    const _apiSvc = inject(ApiService);
+    const _authSvc = inject(AuthService);
+    const _router = inject(Router);
+
+    const id_enterprise = JSON.parse(_authSvc.getDataFromLocalStorage()).id_enterprise;
+
+    if (!id_enterprise) return _router.parseUrl('init/blocked');
+
+    return _apiSvc.postTypeRequest('profile/get-enterprise', { id: id_enterprise }).pipe(
+        switchMap((response: any) => {
+            const enterprise = response.data?.[0];
+            if (!enterprise || enterprise.status === 0) {
+                return of(true);
+            } else {
+                _router.navigate(['init']);
+                return of(false);
+            }
+        })
+    );
+  };

@@ -2,11 +2,23 @@
     <div class="d-flex flex-column align-items-center">
         <mat-card class="mat-card card-image">
             <mat-card-content class="mat-card-content">
-                <mat-card-title class="mat-card-title">
+                <mat-card-title class="mat-card-title text-center">
                     Cuenta bloqueada
                 </mat-card-title>
                 <mat-card-subtitle class="mat-card-subtitle">
-                    Comunicate con tu administrador para desbloquear la cuenta
+                    <div class="p-2" *ngIf="!loading">
+                        <!-- empleado inexistente o inhabilitado -->
+                        <p class="mb-0" *ngIf="status == 'no_employee'">Comunicate con tu administrador para desbloquear la cuenta</p>
+
+                        <!-- empresa inexistente -->
+                        <p class="mb-0" *ngIf="status == 'no_enterprise'">La empresa no existe</p>
+
+                        <!-- empresa inhabilitada -->
+                        <p class="mb-0" *ngIf="status == 'not_available'">La empresa está deshabilitada</p>
+                    </div>
+                    <div class="d-flex justify-content-center p-2" *ngIf="loading">
+                        Cargando...
+                    </div>
                 </mat-card-subtitle>
             </mat-card-content>
         </mat-card>

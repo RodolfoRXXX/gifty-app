@@ -22,7 +22,7 @@
     
     <!-- Caja con botón para continuar con la contratación -->
     <div class="d-flex justify-content-center" *ngIf="id_enterprise > 1">
-        <button mat-flat-button color="primary" class="w-100">
+        <button mat-flat-button color="primary" class="w-100" (click)="redirect()">
             Continuar
         </button>
     </div>
