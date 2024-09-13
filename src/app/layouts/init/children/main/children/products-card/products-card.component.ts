@@ -51,7 +51,7 @@ export class ProductsCardComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.load = false;
-        if (data.status == 1 && data.data.length) {
+        if (data.status == 1 && data.data != '') {
           this.results = data.data
         } else {
           this.noData = true;

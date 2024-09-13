@@ -5,8 +5,18 @@
     <div class="d-flex flex-column align-items-start justify-content-between info">
         <p class="text-muted mb-2">Estado de mi plan</p>
         <div class="w-100 p-2 rounded border">
-          <h1 class="primary-color">
+          <!-- Al día -->
+          <h1 class="primary-color" *ngIf="remains >= 0">
               {{remains}}<span class="fs-07 text-muted"> días restantes</span>
+          </h1>
+          <!-- Atrasado -->
+          <h1 class="warn-color position-relative d-flex flex-column align-items-center" *ngIf="remains < 0">
+            <span>{{remains*(-1)}}<span class="fs-07 text-muted"> días atrasados</span></span>
+            <span class="text-muted fs-07 warn-color" 
+                  style="position: absolute; bottom: -30px; font-style: italic;" 
+                  *ngIf="remains < 0 && remains > -10">
+              Tu cuenta se suspenderá en {{ 10 + remains }} días
+            </span>
           </h1>
           <div class="d-flex justify-content-start align-items-center mb-2">
               <p class="mb-0 text-muted fs-09 me-2">Estado del plan: </p>
@@ -21,8 +31,8 @@
             </span>
           </div>
           <div class="d-flex justify-content-start align-items-center">
-            <p class="mb-0 text-muted fs-09 me-2">Período abonado: </p>
-            <span class="fw-500">{{ period }}</span>
+            <p class="mb-0 text-muted fs-09 me-2">Vencimiento: </p>
+            <span class="fw-500">{{ dateDue }}</span>
           </div>
         </div>
     </div>

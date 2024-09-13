@@ -67,12 +67,25 @@
                     </ul>
                 </div>
                 <!-- Caja con botón para editar información -->
-                 <div class="d-flex justify-content-center">
-                    <button mat-flat-button color="primary" class="w-100" (click)="editEnterprise()">
-                        <mat-icon style="position: relative; bottom: 2px;">edit</mat-icon>
-                        Editar detalles
+                <div class="d-flex justify-content-center">
+                    <button mat-flat-button color="primary" (click)="editEnterprise()">
+                        <mat-icon style="position: relative; bottom: 0">edit</mat-icon>
+                        Editar
                     </button>
-                 </div>
+                    <button mat-stroked-button 
+                            [color]="(enterprise.status == 1)?'warn':'primary'" 
+                            class="ms-2"
+                            (click)="activateEnterprise(enterprise.id, enterprise.status)"
+                            [disabled]="!activeAccount">
+                        <ng-container *ngIf="!loading; else loadingSpinner">
+                            <span *ngIf="(enterprise.status == 0)">Activar</span>
+                            <span *ngIf="(enterprise.status == 1)">Suspender</span>
+                        </ng-container>
+                        <ng-template #loadingSpinner>
+                          <mat-spinner diameter="20"></mat-spinner>
+                        </ng-template>
+                    </button>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>

@@ -32,7 +32,7 @@
                     </div>
                     </ng-container>
                     <!-- No hay resultados -->
-                    <div class="h-100 d-flex flex-column justify-content-center align-items-center" *ngIf="!results && !noData && !load">
+                    <div class="h-100 d-flex flex-column justify-content-center align-items-center" *ngIf="!results">
                         <p class="d-block" *ngIf="noData">Sin información</p>
                         <p class="d-block" *ngIf="load">Cargando...</p>
                     </div>

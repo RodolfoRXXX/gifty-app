@@ -73,6 +73,47 @@ export function calculateDateLimit(daysAgo: number): string {
   return `${year}-${month}-${day}`;
 }
 
+//Función que devuelve cuantos días faltan para la fecha entregada mas un prámetro
+    //recibe: 30(un número entero) y una fecha => '2024-05-26 09:30:35'
+    //devuelve: la cantidad de días a partir del día de hoy para cumplir esa fecha
+export function calcularDiasRestantes(diasASumar: number, fechaInicial: string): number {
+    // Convertir la fecha proporcionada a un objeto Date
+    const fecha: Date = new Date(fechaInicial);
+    
+    // Sumar los días a la fecha proporcionada
+    fecha.setDate(fecha.getDate() + diasASumar);
+    
+    // Obtener la fecha actual
+    const hoy: Date = new Date();
+    
+    // Calcular la diferencia en milisegundos
+    const diferenciaMilisegundos: number = fecha.getTime() - hoy.getTime();
+    
+    // Convertir la diferencia de milisegundos a días
+    const diasRestantes: number = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+    
+    return diasRestantes;
+}
+
+//Función que devuelve la fecha resultado de la fecha actual MAS un parámetro
+    //recibe: 30(un número entero) y una fecha => '2024-05-26 09:30:35'
+    //devuelve: la fecha '2024-06-26' => que es la fecha más los días pasados como parámetro
+export function calcularNuevaFecha(diasASumar: number, fechaInicial: string): string {
+  // Convertir la fecha proporcionada a un objeto Date
+  const fecha: Date = new Date(fechaInicial);
+  
+  // Sumar los días a la fecha proporcionada
+  fecha.setDate(fecha.getDate() + diasASumar);
+  
+  // Formatear la fecha al formato DD-MM-YYYY
+  const dia: string = String(fecha.getDate()).padStart(2, '0'); // Asegura que tenga dos dígitos
+  const mes: string = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0, por eso se suma 1
+  const anio: string = String(fecha.getFullYear());
+  
+  // Retornar la fecha en formato DD-MM-YYYY
+  return `${dia}/${mes}/${anio}`;
+}
+
 //Función que devuelve la cantidad de días desde la fecha actual hasta fin de mes
     //no recibe datos
     //entrega un número entero que son la cantidad de días

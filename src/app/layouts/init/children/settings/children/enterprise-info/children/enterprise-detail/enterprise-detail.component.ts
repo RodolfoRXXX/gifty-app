@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { calculateDateLimit } from 'src/app/shared/functions/date.function';
+import { calcularDiasRestantes, calculateDateLimit } from 'src/app/shared/functions/date.function';
 import { Enterprise } from 'src/app/shared/interfaces/enterprise.interface';
 import { environment } from 'src/environments/environment';
 
@@ -16,7 +16,9 @@ export class EnterpriseDetailComponent implements OnInit {
 
   enterprise!: Enterprise;
   load: boolean = true;
+  loading: boolean = false;
   date_limit!: string;
+  activeAccount!: boolean;
   card_values: any = { total_employees: null, total_stock: null, pending: null, total_sale: null };
   tabs : any = [
     {name: 'Descripción', icon: 'edit', state: 'active'}
@@ -43,6 +45,7 @@ export class EnterpriseDetailComponent implements OnInit {
       const resolverData = data['enterprise'];
       if (resolverData && resolverData.data && resolverData.data.length > 0) {
         this.enterprise = resolverData.data[0];
+        this.activeAccount = (calcularDiasRestantes(30, this.enterprise.updatedPayment) >= -10)
         this.load = false;
       } else {
         this.handleNoEnterprise();
@@ -86,6 +89,45 @@ export class EnterpriseDetailComponent implements OnInit {
 
   editEnterprise(): void {
     this._router.navigate(['init/settings/enterprise-info/enterprise-edit']);
+  }
+
+  //Navegar a la misma ruta para recargar el componente
+  rechargeComponent() {
+    window.location.reload();
+  }
+
+  activateEnterprise(id_enterprise: number, status: number) {
+    if(id_enterprise > 0) {
+      this.loading = true;
+      setTimeout(() => {
+        this._api.postTypeRequest('profile/change-enterprise-state', {id_enterprise: id_enterprise, status: +!status}).subscribe({
+          next: (res: any) => {
+            this.loading =  false;
+            if(res.status == 1){
+              //Accedió a la base de datos y no hubo problemas
+              if(res.data.affectedRows == 1){
+                //Modificó la imagen
+                this._notify.showSuccess(`La empresa se ${(status == 0)?'activó':'suspendió'}!`);
+                setTimeout(() => {
+                  this.rechargeComponent();
+                }, 2000);
+              } else{
+                //No hubo modificación
+                this._notify.showError('No se detectaron cambios. Volvé a realizar la operación.')
+              }
+            } else{
+                //Problemas de conexión con la base de datos(res.status == 0)
+                this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+            }
+          },
+          error: (error) => {
+            //Error de conexión, no pudo consultar con la base de datos
+            this.loading =  false;
+            this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
+          }
+        })
+      }, 2000);
+    }
   }
 
 }

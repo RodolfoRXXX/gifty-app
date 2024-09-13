@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { diasHastaFinDeMes, esMismoOMesPosterior, getMonthNameForDate } from 'src/app/shared/functions/date.function';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { calcularDiasRestantes, calcularNuevaFecha } from 'src/app/shared/functions/date.function';
 import { Enterprise } from 'src/app/shared/interfaces/enterprise.interface';
 
 @Component({
@@ -7,17 +7,13 @@ import { Enterprise } from 'src/app/shared/interfaces/enterprise.interface';
   templateUrl: './plan-remains.component.html',
   styleUrl: './plan-remains.component.scss'
 })
-export class PlanRemainsComponent implements OnInit {
+export class PlanRemainsComponent {
 
   @Input() enterprise!: Enterprise;
   remains: number = 0;
-  period!: string;
+  dateDue!: string;
   statusPlan!: string;
   statusAccount!: string;
-
-  ngOnInit(): void {
-    this.remains = diasHastaFinDeMes();
-  }
 
   //Toma los cambios del Input de entrada y actualiza el formulario
   ngOnChanges(changes: SimpleChanges) {
@@ -29,9 +25,10 @@ export class PlanRemainsComponent implements OnInit {
   }
 
   setCard() {
-    this.period = getMonthNameForDate(this.enterprise.updatedPayment)
+    this.remains = calcularDiasRestantes(30, this.enterprise.updatedPayment)
+    this.dateDue = calcularNuevaFecha(30, this.enterprise.updatedPayment)
     this.statusAccount = (this.enterprise.status == 1)?'Activo':'Inactivo';
-    this.statusPlan = (esMismoOMesPosterior(this.enterprise.updatedPayment))?'Al día':'Atrasado';
+    this.statusPlan = (this.remains >= 0)?'Al día':'Atrasado';
   }
 
 }

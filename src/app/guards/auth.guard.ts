@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, map, of, pipe, switchMap, tap } from 'rxjs';
+import { Observable, catchError, map, of, pipe, switchMap, tap } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
+import { calcularDiasRestantes } from '../shared/functions/date.function';
 
   //Guard para cuidar rutas de usuarios no logueados
   export const is_logged: CanActivateFn =
@@ -155,30 +156,51 @@ import { AuthService } from '../services/auth.service';
 
 
   //Guard para confirmar si la empresa está activa
-  export const is_active_enterprise: CanActivateFn =
-    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-      return isActiveEnterprise();
-    };
-
-  const isActiveEnterprise = (): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
+  export const is_active_enterprise: CanActivateFn = (route, state) => {
+    return isActiveEnterprise();
+  };
+  
+  const isActiveEnterprise = (): Observable<boolean | UrlTree> => {
     const _apiSvc = inject(ApiService);
     const _authSvc = inject(AuthService);
     const _router = inject(Router);
-
-    const id_enterprise = JSON.parse(_authSvc.getDataFromLocalStorage()).id_enterprise;
-
-    if (!id_enterprise) return _router.parseUrl('init/blocked');
-
+  
+    const id_enterprise = JSON.parse(_authSvc.getDataFromLocalStorage())?.id_enterprise;
+  
+    if (!id_enterprise) return of(_router.parseUrl('init/blocked'));
+  
     return _apiSvc.postTypeRequest('profile/get-enterprise', { id: id_enterprise }).pipe(
-        switchMap((response: any) => {
-            const enterprise = response.data?.[0];
-            if (enterprise && enterprise.status === 1) {
-                return of(true);
-            } else {
-                _router.navigate(['init/blocked']);
-                return of(false);
+      switchMap((response: any) => {
+        const enterprise = response.data?.[0];
+  
+        if (enterprise) {
+          if (enterprise.status === 1) {
+            const diasRestantes = calcularDiasRestantes(30, enterprise.updatedPayment);
+            if (diasRestantes < -10) {
+              return _apiSvc.postTypeRequest('profile/change-enterprise-state', {
+                id_enterprise: enterprise.id,
+                status: 0
+              }).pipe(
+                switchMap(() => of(_router.parseUrl('init/blocked'))),
+                catchError(() => {
+                  console.error('Error updating enterprise status');
+                  return of(_router.parseUrl('init/blocked')); // Redirigir a la página bloqueada en caso de error
+                })
+              );
             }
-        })
+            return of(true); // La empresa está activa y no necesita actualizarse
+          } else if (enterprise.status === 0) {
+            return of(_router.parseUrl('init/blocked')); // Empresa inactiva, redirigir a bloqueado
+          }
+        }
+  
+        // Redirigir si la empresa no está encontrada o hay algún problema
+        return of(_router.parseUrl('init/blocked'));
+      }),
+      catchError(() => {
+        console.error('Error fetching enterprise data');
+        return of(_router.parseUrl('init/blocked')); // Redirigir a la página bloqueada en caso de error al obtener datos
+      })
     );
   };
 
