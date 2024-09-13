@@ -35,7 +35,7 @@ export class BlockedComponent {
       }).subscribe({
         next: (results: any) => {
           this.loading = false;
-          if (results.enterprise?.data) {
+          if (results.enterprise?.data && results.enterprise.data[0].id > 1) {
             // Verificar si la empresa está habilitada
             if (results.enterprise.data[0].status === 0) {
               this.status = 'not_available';

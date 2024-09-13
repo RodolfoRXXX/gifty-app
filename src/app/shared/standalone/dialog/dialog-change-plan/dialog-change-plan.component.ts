@@ -51,13 +51,11 @@ export class DialogChangePlanComponent implements OnInit {
 
   getDataLocal(): void {
     const data = JSON.parse(this._auth.getDataFromLocalStorage());
-    console.log(data)
     this.id_enterprise = data.id_enterprise;
     this.dataForm.patchValue({
       id_user: data.id,
       plan: this.data.idPlan
     })
-    console.log(data)
   }
 
   getNameError() {
@@ -88,7 +86,6 @@ export class DialogChangePlanComponent implements OnInit {
     this.loading =  true;
       this._api.postTypeRequest('profile/create-new-enterprise', this.dataForm.value).subscribe({
         next: (res: any) => {
-          console.log(res)
           this.loading =  false;
           if(res.status == 1){
             //Accedió a la base de datos y no hubo problemas
