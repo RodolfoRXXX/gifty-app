@@ -42,7 +42,7 @@
                 mat-flat-button
                 color="primary"
                 class="w-100"
-                [disabled]="user.state == '0' || dataForm.invalid"
+                [disabled]="user.state == '0' || dataForm.invalid || loading"
                 type="submit"
             >
                 <mat-icon style="position: relative; bottom: 0">power_settings_new</mat-icon>

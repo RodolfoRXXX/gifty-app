@@ -109,7 +109,15 @@ export class CategoryEditComponent implements OnInit {
       this.dataForm.reset()
       this.dataForm.patchValue({id_enterprise: this.id_enterprise})
     }
-    
+    this.dataForm.markAsPristine();
+  }
+
+  //Navegar a la misma ruta para recargar el componente
+  rechargeComponent(id_category: number = 0) {
+    if(id_category > 0) {
+      this._router.navigate(['init/main/product/category-edit'], { queryParams: { id_category: id_category } });
+      this.dataForm.markAsPristine();
+    }
   }
 
   //Función que pasa un color de hexadecimal a RGBA
@@ -146,9 +154,7 @@ export class CategoryEditComponent implements OnInit {
             if(res.data.changedRows == 1){
               //Modificó datos empresa
               this._notify.showSuccess('La categoría se modificó con éxito!');
-              setTimeout(() => {
-                this._router.navigate(['init/main/product/category-list']);
-              }, 2000);
+              this.resetAll();
             } else{
               //No hubo modificación
               this._notify.showError('No se detectaron cambios. Ingresá valores diferentes a los actuales.')
@@ -174,9 +180,7 @@ export class CategoryEditComponent implements OnInit {
             if(res.data.affectedRows == 1){
               //Modificó datos empresa
               this._notify.showSuccess('Nueva categoría creada con éxito!');
-              setTimeout(() => {
-                this._router.navigate(['init/main/product/category-list']);
-              }, 2000);
+              this.rechargeComponent(res.data.insertId);
             } else{
               //Ya existe dicha categoría
               this._notify.showWarn('La categoría que intentas crear ya existe.')
