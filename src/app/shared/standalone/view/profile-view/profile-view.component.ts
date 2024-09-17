@@ -186,16 +186,17 @@ export class ProfileViewComponent implements OnInit, OnChanges {
 
   //Crea un nuevo empleado
   createEmployee() {
+    this.loading = true;
     if(this.dataForm.valid) {
       this._api.postTypeRequest('profile/create-employee', this.dataForm.value).subscribe({
         next: (res: any) => {
-          this.loading =  false;
           if(res.status == 1){
             //Accedió a la base de datos y no hubo problemas
             if(res.data.affectedRows == 1){
               //Creó un nuevo empleado
               this._notify.showSuccess('Nuevo empleado creado con éxito!');
               setTimeout(() => {
+                this.loading =  false;
                 this.rechargeComponent();
               }, 2000);
             } else{
