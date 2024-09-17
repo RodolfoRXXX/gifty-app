@@ -1,11 +1,11 @@
 <!-- Balance Card -->
 
-<mat-card class="card mb-6">
+<mat-card class="card mb-6" style="min-height: 310px!important;">
     <mat-card-content class="h-100">
         <div class="row h-100">
             <!-- Chart -->
             <div class="col-md-7 d-flex flex-column justify-content-between position-relative">
-                <h4 class="mb-4 cap">Balance de ventas $ <span class="fs-09 text-muted">({{ text_range }})</span></h4>
+                <h4 class="mb-4 cap">Balance de ventas $ <br><span class="fs-09 text-muted mt-1">({{ text_range }})</span></h4>
                 <p-chart type="bar" [data]="basicData" [options]="basicOptions" *ngIf="!noData && !load"/>
                 <div class="h-100 d-flex flex-column justify-content-center align-items-center">
                     <p class="d-block" *ngIf="noData">Sin información</p>
@@ -25,7 +25,7 @@
                 <!-- Value -->
                 <h4 class="mb-4 cap">Detalle de cada período</h4>
                 <!-- Better -->
-                <div class="d-flex align-items-center mb-4">
+                <div class="d-flex align-items-center mb-10">
                     <div class="avatar">
                         <span class="avatar-initial rounded text-heading bg-label-success">
                             <span class="material-symbols-outlined">sentiment_very_satisfied</span>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <!-- Worst -->
-                <div class="d-flex align-items-center mb-4">
+                <div class="d-flex align-items-center mb-10">
                     <div class="avatar">
                         <span class="avatar-initial rounded text-heading bg-label-danger">
                             <span class="material-symbols-outlined">sentiment_dissatisfied</span>

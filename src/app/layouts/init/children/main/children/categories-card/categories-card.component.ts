@@ -105,14 +105,16 @@ export class CategoriesCardComponent implements OnInit {
     const textColor = documentStyle.getPropertyValue('--text-color');
 
     this.basicOptions = {
-      cutout: '60%',
+      cutout: '0%',
       plugins: {
         legend: {
           labels: {
             color: textColor
           }
         }
-      }
+      },
+      maintainAspectRatio: false,  // Desactiva la proporción para ajustar mejor al contenedor
+      responsive: true,
     };
   }
 

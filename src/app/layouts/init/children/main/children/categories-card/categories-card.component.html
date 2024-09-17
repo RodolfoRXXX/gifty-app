@@ -1,15 +1,25 @@
 <!-- Categories Card -->
 
-<mat-card class="card mb-6">
-    <mat-card-content>
-        <!-- Donut -->
-        <div class="d-flex flex-column justify-content-between position-relative">
-            <h4 class="mb-4 cap">Stock por Categorías($)</h4>
-            <p-chart type="doughnut" [data]="basicData" [options]="basicOptions" *ngIf="!noData && !load" />
-            <div class="h-100 d-flex flex-column justify-content-center align-items-center" *ngIf="noData || load">
-                <p class="d-block" *ngIf="noData">Sin información</p>
-                <p class="d-block" *ngIf="load">Cargando...</p>
-            </div>
+<mat-card class="card mb-6" style="min-height: 310px!important;"> 
+    <mat-card-content class="h-100">
+      <!-- Donut -->
+      <div class="d-flex flex-column justify-content-between position-relative h-100">
+        <h4 class="mb-2 cap">Stock por Categorías($)</h4>
+        <div class="chart-container" style="flex-grow: 1;">
+          <p-chart
+            type="doughnut"
+            [data]="basicData"
+            [options]="basicOptions"
+            *ngIf="!noData && !load"
+            style="display: block; height: 100%; width: 100%;"
+          ></p-chart>
         </div>
+        <div class="h-100 d-flex flex-column justify-content-center align-items-center mt-4">
+          <p class="d-block" *ngIf="noData">Sin información</p>
+          <p class="d-block" *ngIf="load">Cargando...</p>
+        </div>
+      </div>
     </mat-card-content>
 </mat-card>
+  
+  
