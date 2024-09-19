@@ -11,6 +11,7 @@ import { ConectorsService } from 'src/app/services/conectors.service';
 import { calculateDateLimit, isNewerThan30Days } from 'src/app/shared/functions/date.function';
 import { Employee } from 'src/app/shared/interfaces/employee.interface';
 import { DialogProductDetailComponent } from 'src/app/shared/standalone/dialog/dialog-product-detail/dialog-product-detail.component';
+import { DialogProductImportComponent } from 'src/app/shared/standalone/dialog/dialog-product-import/dialog-product-import.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -218,6 +219,17 @@ export class ProductListComponent implements OnInit {
   openDialogDetail(id_product: number): void {
       const dialogRef = this._dialog.open(DialogProductDetailComponent, { data: { id_product: id_product } });
   }
+
+  //Abre la ventana de importación
+  openImport(id_enterprise: number): void {
+    const dialogRef = this._dialog.open(DialogProductImportComponent, { data: { id_enterprise: id_enterprise } });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        //que hace cuando la edición o creación de un nuevo se registro se realizó
+        this.rechargeData();
+      }
+    });
+}
 
   //Recarga la información
   rechargeData() {

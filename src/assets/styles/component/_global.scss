@@ -455,6 +455,10 @@ html body {
   border: 1px solid $themecolor!important;
 }
 
+.font-italic {
+  font-style: italic;
+}
+
 .grey-load {
   background: linear-gradient(45deg,
       rgb(229, 229, 229) 0%,   /* Light Gray */

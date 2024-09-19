@@ -1,0 +1,79 @@
+
+<div class="card dialog">
+    <div class="dialog-box">
+        <div class="d-flex justify-content-between align-items-start pb-3">
+            <div class="d-flex flex-column align-items-start" style="max-width: 430px;">
+                <h4 class="mb-0">Importar productos al stock</h4>
+                <p class="mb-0 fs-09 text-muted">Cargá un listado de productos desde un archivo</p>
+                <ul class="mt-1 mb-0">
+                    <li class="fs-08 text-muted warn-color">El formato de la planilla debe incluir 5 campos como encabezado.</li>
+                    <li class="fs-08 text-muted warn-color">Los campos son: <strong class="font-italic">name, description, category, stock_real y sale_price</strong></li>
+                    <li class="fs-08 text-muted warn-color">Tipo de archivos permitidos: <strong class="font-italic">Excel, Cvs</strong></li>
+                </ul>
+            </div>
+            <a mat-icon-button routerLink="#" aria-label="close-button" (click)="closeDialog(false)">
+                <mat-icon>close</mat-icon>
+            </a>
+        </div>
+        <form [formGroup]="dataForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+            <!-- Caja donde colocar o buscar el archivo deseado -->
+            <div class="box-file-upload">
+                <!-- Vista del archivo elegido -->
+                <div class="file-selected" *ngIf="loaded_file">
+        
+                    <!-- imagen del tipo de archivo -->
+                    <div class="success-box" *ngIf="success_file">
+                        <span class="material-symbols-outlined d-block">
+                            download_done
+                        </span>
+                        <h5 class="mt-2">Archivo de {{fileFormat || '' }} cargado correctamente.</h5>
+                        <h5 class="mt-1">Se recuperaron {{ products.length || 0 }} productos.</h5>
+                    </div>
+        
+                    <!-- Error de la imagen -->
+                    <div class="error-box" *ngIf="error_file">
+                        <h5>{{ error_file }}</h5>
+                    </div>
+                </div>
+                <!-- Vista para cargar el archivo -->
+                <div class="file-dropzone"
+                    (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)"
+                    (drop)="onDrop($event)"
+                    [class.dragover]="isDragOver"
+                    *ngIf="!loaded_file">
+        
+                    <!-- caja para arrojar la imagen o cargarla -->
+                    <div class="d-flex justify-content-center">
+                    <div class="avatar">
+                        <span class="material-icons soft-grey-badge">
+                        file_upload
+                        </span>
+                    </div>
+                    </div>
+                    <p class="text-file">Arrastra y suelta tu archivo aquí</p>
+                    <small class="text-muted subtext-file">o</small>
+        
+                    <label for="user-file" class="btn btn-outline-success">
+                        <p class="fs-08 mb-0">Carga desde tu pc</p>
+                    </label>
+        
+                    <input #fileInput type="file" id="user-file" accept="file/*" class="hide" (input)="capture_file($event)">
+                </div>
+            </div>
+            
+            <!-- Botones de reseteo y confirmación -->
+            <div class="d-flex justify-content-end">
+                <button mat-stroked-button color="warn" class="me-3" type="button" (click)="resetAll()">
+                    Reset
+                </button>
+                <button mat-stroked-button color="primary" [disabled]="this.dataForm.invalid || loading">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+    <mat-card-footer class="login-footer">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-footer>
+</div>
