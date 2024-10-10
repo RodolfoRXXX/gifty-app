@@ -4,7 +4,7 @@
             <mat-card-content class="mat-card-content">
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="text-center mt-1">
-                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
+                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33" style="height: 33px;">
                         <h4 class="mt-1 mb-4">Bienvenido a <span class="comfortaa-font fw-bold fs-12">bamboo</span>!</h4>
                     </div>
                     <div class="text-center">
@@ -39,7 +39,7 @@
                             <a routerLink="../forget" class="link">Olvidé mi contraseña!</a>
                         </div>
                         <div class="form-input-100">
-                            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || this.disable_submit">Entrar</button>
+                            <button class="btn btn-outline btn-primary w-64" type="submit" [disabled]="loginForm.invalid || this.disable_submit">Entrar</button>
                         </div>
                         <div class="form-input-100 new-register-link">
                             <span> No tenés una cuenta?
