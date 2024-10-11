@@ -1,68 +1,50 @@
 <div class="login-register">
     <div class="login-register-box">
-        <mat-card class="mat-card">
-            <mat-card-content class="mat-card-content">
-                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-card class="card">
+            <mat-card-content class="pb-2">
+                <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
                     <div class="text-center mt-1">
                         <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
-                        <h4 class="mt-1 mb-4">Bienvenido a <span class="comfortaa-font fw-bold fs-12">bamboo</span>!</h4>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-center">Registrate ahora y viví la experiencia bamboo al máximo!</p>
+                        <h4 class="mt-1 mb-4">Registrate aquí</h4>
                     </div>
                     <div class="form-auth">
-                        <div class="form-input-100 mb-1">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Ingresá tu correo</mat-label>
-                                <input matInput placeholder="algo@ejemplo.com"
+                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                            <mat-label>Ingresá tu correo</mat-label>
+                            <input matInput placeholder="algo@ejemplo.com"
                                        formControlName="email" 
                                        required>
-                                <mat-error *ngIf="this.registerForm.controls['email']!.errors" class="fs-08">{{getEmailErrorMessage()}}</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="form-input-100 mb-1">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Ingresá una contraseña</mat-label>
-                                <input matInput [type]="hide_1 ? 'password' : 'text'"
-                                       [formControl]="passwordFirst"
-                                       required>
-                                <button mat-icon-button matSuffix (click)="hidePassword_1($event)" >
-                                <mat-icon>{{hide_1 ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
-                                <mat-error *ngIf="this.passwordFirst.errors" class="fs-08">{{getPasswordErrorMessageFirst()}}</mat-error>
-                            </mat-form-field>
-                            <div *ngIf="this.registerForm.errors?.['no_equal']">Las contraseñas no coinciden</div>
-                        </div>
-                        <div class="form-input-100 mb-1">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Confirmá tu contraseña</mat-label>
-                                <input matInput [type]="hide_2 ? 'password' : 'text'"
-                                       formControlName="password"
-                                       required>
-                                <button mat-icon-button matSuffix (click)="hidePassword_2($event)" >
-                                <mat-icon>{{hide_2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
-                                <mat-error *ngIf="this.registerForm.controls['password']!.errors" class="fs-08">{{getPasswordErrorMessage()}}</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="form-input-100 mb-0">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Busca tu empresa</mat-label>
-                                <mat-select formControlName="id_enterprise" required>
-                                    <mat-option *ngFor="let enterprise of enterprises" [value]="enterprise.id">
-                                      {{enterprise.name}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="this.registerForm.controls['id_enterprise'].hasError('required')" class="fs-08">Tenés que elegir una empresa</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="form-input-100 fs-08 pb-2 mb-0">
-                            <mat-checkbox formControlName="agree_policy">Acepto la <span class="text-main fw-bolder">política de privacidad y términos</span></mat-checkbox>
-                        </div>
-                        <div class="form-input-100">
-                            <button mat-raised-button color="primary" [disabled]="this.registerForm.invalid || this.disable_submit || !this.registerForm.get('agree_policy')?.value">Crear mi cuenta</button>
-                        </div>
-                        <div class="form-input-100 new-register-link">
+                            <mat-error *ngIf="this.dataForm.controls['email']!.errors" class="fs-08">{{getEmailErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                            <mat-label>Ingresá una contraseña</mat-label>
+                            <input matInput [type]="hide_1 ? 'password' : 'text'"
+                                    [formControl]="passwordFirst"
+                                    required>
+                            <button mat-icon-button matSuffix (click)="hidePassword_1($event)" >
+                            <mat-icon>{{hide_1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="this.passwordFirst.errors" class="fs-08">{{getPasswordErrorMessageFirst()}}</mat-error>
+                        </mat-form-field>
+                        <div *ngIf="this.dataForm.errors?.['no_equal']">Las contraseñas no coinciden</div>
+                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                            <mat-label>Confirmá tu contraseña</mat-label>
+                            <input matInput [type]="hide_2 ? 'password' : 'text'"
+                                    formControlName="password"
+                                    required>
+                            <button mat-icon-button matSuffix (click)="hidePassword_2($event)" >
+                            <mat-icon>{{hide_2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="this.dataForm.controls['password']!.errors" class="fs-08">{{getPasswordErrorMessage()}}</mat-error>
+                        </mat-form-field>
+                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading">
+                            <ng-container *ngIf="!loading; else loadingSpinner">
+                              Crear mi cuenta
+                            </ng-container>
+                            <ng-template #loadingSpinner>
+                              <mat-spinner diameter="20"></mat-spinner>
+                            </ng-template>
+                        </button>
+                        <div class="new-register-link">
                             <span> Ya tenés una cuenta?
                                 <a href="#" class="text-success link fw-bolder">Ingresá!</a>
                             </span>
@@ -70,9 +52,6 @@
                     </div>
                 </form>
             </mat-card-content>
-            <mat-card-footer class="login-footer">
-                <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-            </mat-card-footer>
         </mat-card>          
     </div>
 </div>

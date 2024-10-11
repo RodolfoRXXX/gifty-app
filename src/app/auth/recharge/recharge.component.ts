@@ -14,9 +14,9 @@ export class RechargeComponent {
 
   email!: string;
   pic!: string;
-  rechargeForm!: FormGroup;
-  hide!: boolean;
-  loading!: boolean;
+  dataForm!: FormGroup;
+  hide: boolean = true;
+  loading: boolean = false;
   
   constructor(
     private _auth: AuthService,
@@ -24,14 +24,12 @@ export class RechargeComponent {
     private _router: Router,
     private _notify: NotificationService
   ) {
-    this.hide = true;
-    this.loading = false;
     this.createForm();
     this.setDataUser();
   }
 
   createForm(): void {
-    this.rechargeForm = new FormGroup({
+    this.dataForm = new FormGroup({
       email : new FormControl(''),
       password : new FormControl(''),
       remember_me : new FormControl(true)
@@ -40,7 +38,7 @@ export class RechargeComponent {
 
   onSubmit() {
     this.loading = true;
-    this._api.postTypeRequest('user/recharge', this.rechargeForm.value).subscribe({
+    this._api.postTypeRequest('user/recharge', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
         if(res.status == 1){
@@ -48,7 +46,7 @@ export class RechargeComponent {
           if(res.data.length){
             //Encontró el usuario
             this._notify.showSuccess('Acceso autorizado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.rechargeForm.value.remember_me);
+            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.dataForm.value.remember_me);
             setTimeout(() => {
               this._router.navigate(['init']);
             }, 2000);
@@ -79,7 +77,7 @@ export class RechargeComponent {
         .then( value => {
           this.pic = environment.SERVER + value.thumbnail;
           this.email = value.email;
-          this.rechargeForm.patchValue({
+          this.dataForm.patchValue({
             email: value.email,
             password: value.password
           })

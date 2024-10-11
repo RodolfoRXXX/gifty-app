@@ -15,26 +15,22 @@ export class LoginComponent implements OnInit {
     "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$"
   );
   hide = true;
-  loginForm!: FormGroup;
-  loading!: boolean;
-  disable_submit!: boolean;
+  dataForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private _router: Router,
     private _api: ApiService,
     private _auth: AuthService,
     private _notify: NotificationService
-  ) { 
-    this.loading = false;
-    this.disable_submit = false;
-   }
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
   }
 
   createForm(): void {
-    this.loginForm = new FormGroup({
+    this.dataForm = new FormGroup({
         email : new FormControl('', [
           Validators.required,
           (control: AbstractControl):ValidationErrors|null => {
@@ -54,26 +50,25 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
   getEmailErrorMessage() {
-    if(this.loginForm.controls['email'].hasError('required')) {
+    if(this.dataForm.controls['email'].hasError('required')) {
       return 'Tenés que ingresar un valor'}
-    if(this.loginForm.controls['email'].hasError('error_format')) {
+    if(this.dataForm.controls['email'].hasError('error_format')) {
       return 'No es un correo válido'}
     return ''
   }
   getPasswordErrorMessage() {
-    if(this.loginForm.controls['password'].hasError('required')) {
+    if(this.dataForm.controls['password'].hasError('required')) {
       return 'Tenés que ingresar un valor'}
-    if(this.loginForm.controls['password'].hasError('minlength')) {
+    if(this.dataForm.controls['password'].hasError('minlength')) {
       return 'Min. 4 caracteres'}
-    if(this.loginForm.controls['password'].hasError('maxlength')) {
+    if(this.dataForm.controls['password'].hasError('maxlength')) {
       return 'Max. 10 caracteres'}
     return ''
   }
 
   onSubmit(): void {
-    this.disable_submit = true;
     this.loading = true;
-    this._api.postTypeRequest('user/login', this.loginForm.value).subscribe({
+    this._api.postTypeRequest('user/login', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
         if(res.status == 1){
@@ -81,24 +76,21 @@ export class LoginComponent implements OnInit {
           if(res.data.length){
             //Encontró el usuario
             this._notify.showSuccess('Acceso autorizado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.loginForm.value.remember_me);
+            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.dataForm.value.remember_me);
             setTimeout(() => {
               this._router.navigate(['init']);
             }, 2000);
           } else{
             //No encontró el usuario
-            this.disable_submit = false;
             this._notify.showError('Las credenciales de acceso no son correctas.')
           }
         } else{
           //Problemas de conexión con la base de datos(res.status == 0)
-          this.disable_submit = false;
           this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intente nuevamente por favor.');
         }
       },
       error: (error) => {
         //Error de conexión, no pudo consultar con la base de datos
-        this.disable_submit = false;
         this.loading =  false;
         this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intente nuevamente por favor.');
       }
