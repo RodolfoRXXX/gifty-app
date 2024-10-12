@@ -35,22 +35,20 @@ body {
 .layout-main {
   padding: 6px 10px 0;
   height: 100vh;
-  .layout-container {
-    height: calc(100vh - 70px);
-  }
 }
 
 .mat-drawer-container {
   background: $bodycolor;
 }
 
-html .page-wrapper {
-  height: calc(100vh - 64px);
-  .page-content {
-    padding: 30px 15px 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-  }
+.layout-container {
+  height: calc(100vh - 70px);
+}
+
+.page-content {
+  padding: 30px 15px 20px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 //color text main

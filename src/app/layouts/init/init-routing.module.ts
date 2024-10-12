@@ -30,7 +30,7 @@ const routes: Routes = [
         },
         { 
           path: 'settings', 
-          loadChildren: () => import('./children/settings/settings.module').then(m => m.SettingsModule),
+          loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule),
           resolve: { employee: InitResolver } 
         }
       ]

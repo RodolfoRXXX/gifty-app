@@ -1,12 +1,32 @@
 import { NgModule } from '@angular/core';
 import { isNot_authenticated, isNot_logged, is_authenticated, is_logged } from './guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './layouts/home/home.component';
+import { ProfileComponent } from './layouts/profile/profile.component';
+import { EventComponent } from './layouts/event/event.component';
 
 const routes: Routes = [
         { 
           path: '', 
           redirectTo: 'recharge', 
           pathMatch: 'full' 
+        },
+        {
+          path: 'home',
+          component: HomeComponent
+        },
+        {
+          path: 'profile',
+          component: ProfileComponent
+        },
+        {
+          path: 'event',
+          component: EventComponent
+        },
+        {
+          path: 'settings',
+          loadChildren: () => import('./layouts/settings/settings.module').then(m => m.SettingsModule),
+          canActivate: [is_logged]
         },
         { 
           path: 'login', 
