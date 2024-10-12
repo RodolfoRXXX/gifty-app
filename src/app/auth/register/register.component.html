@@ -36,7 +36,7 @@
                             </button>
                             <mat-error *ngIf="this.dataForm.controls['password']!.errors" class="fs-08">{{getPasswordErrorMessage()}}</mat-error>
                         </mat-form-field>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading">
                             <ng-container *ngIf="!loading; else loadingSpinner">
                               Crear mi cuenta
                             </ng-container>

@@ -2,6 +2,32 @@
 <!-- Main wrapper - style you can find in assets/styles -->
 <!-- ============================================================== -->
 
-<div class="background-main">
-    <router-outlet><app-spinner></app-spinner></router-outlet>
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in assets/styles -->
+<!-- ============================================================== -->
+
+<div class="background-main layout-main">
+    <mat-toolbar color="primary" class="btn-border">
+
+        <!-- ============================================================== -->
+        <!-- Logo - style you can find in header.scss -->
+        <!-- ============================================================== -->
+        <div class="logo-header">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/system/logo-light-icon.png" alt="homepage" class="light-logo" height="33">
+            </a>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- Login or recharge component -->
+        <!-- ============================================================== -->
+        <div class="log-header">
+            <app-header-login *ngIf="!isLogged" [screenLarge]="screenLarge"></app-header-login>
+            <app-header-recharge *ngIf="isLogged" [screenLarge]="screenLarge" [isLogged]="isLogged" [isAuthenticated]="isAuthenticated"></app-header-recharge>
+        </div>
+    </mat-toolbar>
+    <div class="layout-container">
+        <router-outlet><app-spinner></app-spinner></router-outlet>
+    </div>
 </div>

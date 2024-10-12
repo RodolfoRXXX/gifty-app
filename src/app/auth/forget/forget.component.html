@@ -19,7 +19,7 @@
                                     required>
                             <mat-error *ngIf="this.dataForm.controls['email']!.errors" class="fs-08">{{getEmailValidatorErrorMessage()}}</mat-error>
                         </mat-form-field>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading_email">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading_email">
                             <ng-container *ngIf="!loading_email; else loadingSpinner">
                               Entrar
                             </ng-container>
@@ -73,7 +73,7 @@
                             <mat-error *ngIf="this.codeForm.controls['activation_code']!.errors" class="fs-08">{{getCodeErrorMessage()}}</mat-error>
                             <mat-hint class="fs-08" align="end">{{input.value.length}}/10</mat-hint>
                         </mat-form-field>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="codeForm.invalid || this.loading_code">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="codeForm.invalid || this.loading_code">
                             <ng-container *ngIf="!loading_code; else loadingSpinner">
                               Confirmar código
                             </ng-container>
@@ -124,7 +124,7 @@
                             </button>
                             <mat-error *ngIf="this.passwordForm.controls['password']!.errors" class="fs-08">{{getPasswordErrorMessage()}}</mat-error>
                         </mat-form-field>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="passwordForm.invalid || this.loading_password">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="passwordForm.invalid || this.loading_password">
                             <ng-container *ngIf="!loading_password; else loadingSpinner">
                                 Actualizar mi cuenta
                             </ng-container>

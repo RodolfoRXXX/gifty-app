@@ -28,25 +28,16 @@ body {
   font-size: 1rem;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-  background: $white;
-}
-
-.btn {
+.btn-border {
   border-radius: $radius !important;
 }
 
-.main-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.layout-main {
+  padding: 6px 10px 0;
+  height: 100vh;
+  .layout-container {
+    height: calc(100vh - 70px);
+  }
 }
 
 .mat-drawer-container {

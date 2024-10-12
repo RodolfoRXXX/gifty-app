@@ -7,10 +7,10 @@
                         <img class="profile-pic-recharge" [src]="pic" alt="profile-pic">
                     </div>
                     <div class="form-auth">
-                        <h3 class="w-100 mb-3 text-center btn b-all">{{ email }}</h3>
+                        <h3 class="w-100 mb-3 text-center btn-border b-all">{{ email }}</h3>
                         <input type="hidden" formControlName="email" required>
                         <input type="hidden" formControlName="password" required>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="this.loading">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="this.loading">
                             <ng-container *ngIf="!loading; else loadingSpinner">
                               Entrar
                             </ng-container>

@@ -31,7 +31,7 @@
                         <div class="w-50 fs-09 forget-psw-align pb-1">
                             <a routerLink="../forget" class="link">Olvidé mi contraseña!</a>
                         </div>
-                        <button mat-flat-button class="btn" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading">
+                        <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading">
                             <ng-container *ngIf="!loading; else loadingSpinner">
                               Entrar
                             </ng-container>

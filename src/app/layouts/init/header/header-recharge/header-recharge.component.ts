@@ -16,7 +16,6 @@ export class HeaderRechargeComponent implements OnInit {
 
   name!: string;
   pic!: string;
-  role!: any;
   list!: any;
 
   constructor(
@@ -26,16 +25,9 @@ export class HeaderRechargeComponent implements OnInit {
     private cdRef:ChangeDetectorRef,
   ) {
     this.getDataUser();
-    this.role = '';
   }
 
   ngOnInit(): void {
-    this._conector.getEmployee().subscribe( data => {
-      if(data) {
-        this.role = data.name_role;
-      }
-      this.cdRef.detectChanges();
-    })
   }
 
   getDataUser() {

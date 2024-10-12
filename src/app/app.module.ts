@@ -8,11 +8,15 @@ import { MaterialModule } from './material/material/material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
 import { SpinnerComponent } from './shared/spinner.component';
+import { HeaderLoginComponent } from './layouts/init/header/header-login/header-login.component';
+import { HeaderRechargeComponent } from './layouts/init/header/header-recharge/header-recharge.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    HeaderLoginComponent,
+    HeaderRechargeComponent
   ],
   imports: [
     BrowserModule,

@@ -2,15 +2,9 @@
  Topbar
 *******************/
 mat-toolbar {
-    box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.5);
-    &.topbar {
-      padding: 0px 15px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .sidenav-header {
-      min-width: 120px;
-    }
+    padding: 0px 15px;
+    display: flex;
+    justify-content: space-between;
     .logo-header {
       text-align: center;
       .navbar-brand {
@@ -32,12 +26,6 @@ mat-toolbar {
       text-align: left;
       text-transform: capitalize;
     }
-    .role-header {
-      font-size: 8.5px;
-      line-height: 9px;
-      text-align: left;
-      text-transform: capitalize;
-    }
     .profile-pic-btn {
       width: 24px;
       height: 24px;
@@ -50,12 +38,5 @@ mat-toolbar {
       height: 40px;
       border-radius: 100%;
     }
-  }
-  /*******************
-   Topbar
-  *******************/
-  .topbar {
-    position: relative;
-    z-index: 2;
   }
   
