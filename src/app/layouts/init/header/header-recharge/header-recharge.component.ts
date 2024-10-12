@@ -1,42 +1,29 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConectorsService } from 'src/app/services/conectors.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header-recharge',
   templateUrl: './header-recharge.component.html'
 })
-export class HeaderRechargeComponent implements OnInit {
+export class HeaderRechargeComponent {
 
   @Input() screenLarge!: boolean;
   @Input() isAuthenticated!: boolean;
   @Input() isLogged!: boolean;
 
-  name!: string;
   pic!: string;
-  list!: any;
 
   constructor(
     private _auth: AuthService,
-    private _router: Router,
-    private _conector: ConectorsService,
-    private cdRef:ChangeDetectorRef,
+    private _router: Router
   ) {
     this.getDataUser();
   }
 
-  ngOnInit(): void {
-  }
-
   getDataUser() {
     const data = JSON.parse(this._auth.getDataFromLocalStorage());
-    if(data.name.length) {
-      this.name = data.name;
-    }else {
-      this.name = data.email.split("@")[0];
-    }
     this.pic = environment.SERVER + data.thumbnail;
   }
 
