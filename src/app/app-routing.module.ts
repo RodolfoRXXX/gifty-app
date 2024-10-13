@@ -16,15 +16,15 @@ const routes: Routes = [
           component: HomeComponent
         },
         {
-          path: 'profile',
+          path: 'profile/:id',
           component: ProfileComponent
         },
         {
-          path: 'event',
+          path: 'event/:id',
           component: EventComponent
         },
         {
-          path: 'settings',
+          path: 'settings/:id',
           loadChildren: () => import('./layouts/settings/settings.module').then(m => m.SettingsModule),
           canActivate: [is_logged]
         },

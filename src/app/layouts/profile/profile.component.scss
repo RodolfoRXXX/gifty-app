@@ -1,0 +1,17 @@
+
+.profile-card {
+    height: 280px;
+    padding: 0;
+    mat-card-content {
+        padding: 0;
+    }
+    .edit-box {
+        height: 180px;
+        background-color: rgb(245, 157, 57);
+        border-bottom-left-radius: 0!important;
+        border-bottom-right-radius: 0!important;
+    }
+    .info-box {
+        padding: 15px 20px;
+    }
+}
