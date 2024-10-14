@@ -1,21 +1,92 @@
 
 <mat-card class="card profile-card">
     <mat-card-content>
-        <div class="edit-box btn-border">
-            
+        <div class="edit-box btn-border bg-primary">
+            <button class="b-all" mat-icon-button>
+                <span class="material-symbols-outlined align-button-icon text-white">
+                    edit
+                </span>
+            </button>
         </div>
         <div class="info-box">
-            <div>
+            <div class="d-flex justify-content-start">
                 <!-- image -->
-                <div></div>
+                <div class="img-container">
+                    <div class="btn-border img-box">
+                        <img src="../../../assets/images/mario.png" class="btn-border" alt="user image">
+                    </div>
+                </div>
                 <!-- text -->
-                <div></div>
+                <div class="d-flex flex-column align-items-start ms-4">
+                    <p class="mb-0 fw-bold font-22">Mario Gomez</p>
+                    <div class="description-box">
+                        <div class="me-4">
+                            <span class="material-symbols-outlined align-icon">
+                                location_on
+                            </span>
+                            <span>Rosario, Santa Fe</span>
+                        </div>
+                        <div>
+                            <span class="material-symbols-outlined align-icon">
+                                person_check
+                            </span>
+                            <span>232</span> seguidores
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
                 <!-- links -->
-                <div></div>
+                <div class="ms-4">
+                    <button class="b-all ms-2" mat-icon-button>
+                        <span class="material-symbols-outlined align-button-icon">
+                            call
+                        </span>
+                    </button>
+                    <button class="b-all ms-2" mat-icon-button>
+                        <span class="material-symbols-outlined align-button-icon">
+                            photo_camera
+                        </span>
+                    </button>
+                </div>
                 <!-- follow -->
-                <div></div>
+                <div class="ms-4">
+                    <button mat-flat-button class="btn-border d-flex justify-content-center pb-1" color="primary">
+                        <div *ngIf="true">
+                            <span class="material-symbols-outlined align-icon">
+                                person_add
+                            </span>
+                            <span class="status">Seguir</span>
+                        </div>
+                        <div *ngIf="false">
+                            <span class="material-symbols-outlined align-icon">
+                                person_check
+                            </span>
+                            <span class="status">Siguiendo</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </mat-card-content>
 </mat-card>
+
+<div style="max-width: 1280px; margin: auto; ">
+    <h4 class="m-4">Eventos</h4>
+    <div class="event-box flex-wrap gap-4">
+        <!-- Caja "Agregar Evento" -->
+        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box">
+            <h5 class="w-100 text-center add-event-text">
+                + Agregar Evento
+            </h5>
+        </div>
+
+        <!-- Cajas con eventos -->
+        <app-event-card></app-event-card>
+        <app-event-card></app-event-card>
+        <app-event-card></app-event-card>
+        <app-event-card></app-event-card>
+    </div>
+</div>
+
   

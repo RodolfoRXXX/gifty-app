@@ -54,6 +54,12 @@ body {
   margin: 0 auto;
 }
 
+// Align icon
+.align-button-icon {
+  position: relative;
+  bottom: 2px;
+}
+
 //color text main
 
 .primary-color {
@@ -64,6 +70,11 @@ body {
 }
 .warn-color {
   color: $themeWarn!important;
+}
+
+//background color
+.bg-primary {
+  background-color: $themecolor!important;
 }
 
 
@@ -90,7 +101,7 @@ a.link {
   text-decoration: none;
   &:hover,
   &:focus {
-    color: $themecolor;
+    color: $themecolor!important;
   }
 }
 
