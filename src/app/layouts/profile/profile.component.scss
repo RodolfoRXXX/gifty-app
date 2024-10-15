@@ -54,15 +54,15 @@
 
 .add-event {
     border: 1px dashed #aaa; /* Borde punteado */
-    background-color: none;
+    background-color: transparent;
     transition: all 0.3s ease; /* Suavizar la transición en hover */
     cursor: pointer;
 }
 
 /* Estilo de hover para la caja "Agregar Evento" */
 .add-event:hover {
-    border: 0.2px solid #ffffff; /* Cambiar a borde continuo */
-    background-color: #fff; /* Aclarar el fondo */
+    border: 0.2px solid #f8f7f7; /* Cambiar a borde continuo */
+    background-color: #f8f7f7; /* Aclarar el fondo */
     color: #333; /* Cambiar el color del texto */
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
