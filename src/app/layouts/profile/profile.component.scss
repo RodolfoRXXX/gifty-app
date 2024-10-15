@@ -45,6 +45,8 @@
     margin: 0 25px;
     display: flex;
     justify-content: flex-start;
+    height: calc(100vh - 420.4px);
+    overflow-y: auto;
 }
 
 .size-box {
