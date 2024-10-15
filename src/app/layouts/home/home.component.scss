@@ -1,0 +1,107 @@
+
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 85px);
+    max-width: 1280px;
+    margin: auto;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+/* Estilo de la barra de búsqueda */
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Efecto al hacer foco en la barra */
+.search-input:focus {
+    border-color: #007bff;
+}
+
+/* Botón de búsqueda (icono) */
+.search-button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Icono del botón */
+.search-button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Estilos para el botón de limpiar (opcional) */
+.clear-button {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none; /* Solo aparece cuando hay texto */
+}
+
+.clear-button img {
+    width: 18px;
+    height: 18px;
+}
+
+.event-box {
+    display: flex;
+    gap: 15px;
+    position: relative;
+    max-width: 1280px; /* Ancho máximo para que se active el scroll si es superado */
+    overflow-x: hidden; /* Oculta el contenido que desborda inicialmente */
+    white-space: nowrap; /* Evita saltos de línea dentro del contenido */
+    padding-bottom: 15px; /* Espacio inferior */
+    margin: 0 auto; /* Centra el contenedor */
+  }
+  
+  /* Contenido de la caja que puede desplazarse */
+  .marquee-content {
+    display: inline-block;
+    white-space: nowrap; /* Todo el contenido en una línea */
+    position: relative;
+    will-change: transform;
+    animation: marquee 10s linear infinite; /* Animación continua */
+  }
+  
+  /* Animación para desplazamiento automático */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%); /* Inicia fuera de la caja, a la derecha */
+    }
+    100% {
+      transform: translateX(-100%); /* Se mueve a la izquierda */
+    }
+  }
+  
+  /* Opción para ocultar scrollbars */
+  .event-box::-webkit-scrollbar {
+    display: none;
+  }
+  .event-box {
+    -ms-overflow-style: none;  /* Para IE y Edge */
+    scrollbar-width: none; /* Para Firefox */
+  }
