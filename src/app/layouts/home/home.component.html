@@ -8,7 +8,7 @@
     <!-- Search -->
     <div class="search-container" style="width: 100%; padding: auto; margin-bottom: 50px;">
         <!-- Campo de entrada -->
-        <input type="text" id="search-input" class="search-input" placeholder="Buscar...">
+        <input type="text" id="search-input" class="search-input btn-border" placeholder="Buscar...">
         
         <!-- Botón de limpiar (X) -->
         <button class="clear-button" id="clear-button">
@@ -24,9 +24,7 @@
     <!-- Events -->
     <h4 class="text-center mb-3">Próximos eventos</h4>
     <div class="event-box" #eventBox>
-        <!-- Contenido que se desplazará -->
-        <div class="event-content" [ngClass]="{'marquee-content': isOverflowing}" #eventContent>
-            <!-- Cada evento aquí -->
+        <div class="event-content" #eventContent>
             <app-event-card></app-event-card>
             <app-event-card></app-event-card>
             <app-event-card></app-event-card>

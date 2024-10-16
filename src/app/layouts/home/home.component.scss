@@ -21,7 +21,6 @@
     width: 100%;
     padding: 15px 20px;
     border: 2px solid #ddd;
-    border-radius: 25px;
     font-size: 16px;
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -30,7 +29,7 @@
 
 /* Efecto al hacer foco en la barra */
 .search-input:focus {
-    border-color: #007bff;
+    border-color: #afafaf;
 }
 
 /* Botón de búsqueda (icono) */
@@ -67,41 +66,36 @@
     height: 18px;
 }
 
+
+
+/* Estilos del contenedor principal */
 .event-box {
-    display: flex;
-    gap: 15px;
-    position: relative;
-    max-width: 1280px; /* Ancho máximo para que se active el scroll si es superado */
-    overflow-x: hidden; /* Oculta el contenido que desborda inicialmente */
-    white-space: nowrap; /* Evita saltos de línea dentro del contenido */
-    padding-bottom: 15px; /* Espacio inferior */
-    margin: 0 auto; /* Centra el contenedor */
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  cursor: grab;
+}
+
+/* Contenido que será desplazado */
+.event-content {
+  display: inline-flex; /* Usar flex para permitir alineación horizontal */
+  gap: 20px;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 45s linear infinite;
+}
+
+/* Animación para desplazamiento automático */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
   }
-  
-  /* Contenido de la caja que puede desplazarse */
-  .marquee-content {
-    display: inline-block;
-    white-space: nowrap; /* Todo el contenido en una línea */
-    position: relative;
-    will-change: transform;
-    animation: marquee 10s linear infinite; /* Animación continua */
+  100% {
+    transform: translateX(-100%);
   }
-  
-  /* Animación para desplazamiento automático */
-  @keyframes marquee {
-    0% {
-      transform: translateX(100%); /* Inicia fuera de la caja, a la derecha */
-    }
-    100% {
-      transform: translateX(-100%); /* Se mueve a la izquierda */
-    }
-  }
-  
-  /* Opción para ocultar scrollbars */
-  .event-box::-webkit-scrollbar {
-    display: none;
-  }
-  .event-box {
-    -ms-overflow-style: none;  /* Para IE y Edge */
-    scrollbar-width: none; /* Para Firefox */
-  }
+}
+
+
