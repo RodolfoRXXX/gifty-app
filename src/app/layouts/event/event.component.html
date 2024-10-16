@@ -1,1 +1,148 @@
-<p>event works!</p>
+
+<div class="row event-box">
+    <!-- open orders -->
+    <div class="col-md-12 col-xl-8">
+        <mat-card class="card">
+            <mat-card-content>
+                <div class="d-flex flex-column justify-content-between" style="height: 100%;">
+                    <!-- Primera Fila (Contacto) -->
+                    <div class="d-flex justify-content-between align-items-center b-b mb-2 pb-2">
+                        <!-- Foto y nombre -->
+                        <div class="d-flex justify-content-start align-items-center">
+                            <div class="image-container">
+                                <img src="../../../assets/images/mario.png" class="image-user">
+                            </div>
+                            
+                            <!-- Contenedor del texto -->
+                            <div class="text-container flex-grow-1">
+                                <a href="#" class="font-16 fw-semibold">Mario Gomez</a>
+                            </div>
+                        </div>
+                        <!-- Seguir -->
+                        <div>
+                            <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary">
+                                <div *ngIf="true">
+                                    <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
+                                        person_add
+                                    </span>
+                                    <span class="font-14">Seguir</span>
+                                </div>
+                                <div *ngIf="false">
+                                    <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
+                                        person_check
+                                    </span>
+                                    <span class="font-14">Siguiendo</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+        
+                    <!-- Segunda Fila (información) -->
+                    <div class="d-flex justify-content-start align-items-center mb-2">
+                        <!-- Cuadrado a la izquierda (tamaño fijo) -->
+                        <div class="btn-border d-flex flex-column justify-content-center aling-items-center background-main primary-color date-box">
+                            <h6 class="mb-0 text-center">Diciembre</h6>
+                            <h2 class="mb-0 text-center fw-semibold">17</h2>
+                        </div>
+                        
+                        <!-- Texto a la derecha (ajuste automático a dos líneas como máximo) -->
+                        <div class="d-flex flex-column justify-content-between text-box">
+                            <!-- Primera fila de texto (alineada a la derecha) -->
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div class="me-2">
+                                    <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Aniversario</span>
+                                </div>
+                                <div class="">
+                                    <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Faltan 26 días</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
+                            <div class="d-flex align-items-center" style="flex-grow: 1;">
+                                <h3 class="text-left multiline-truncate m-0 fw-semibold">
+                                    Mi Cumpleaños
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tercera Fila (Texto) -->
+                    <div class="mb-2">
+                        <p class="font-14 text-muted">Me encanta poder disfrutar mi cumple con todos mis conocidos</p>
+                    </div>
+
+                    <!-- Cuarta Fila (Avance) -->
+                    <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;">
+                        <p class="font-14 me-2 mb-0 d-block">Meta cumplida: </p>
+                        <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
+                            <mat-progress-bar
+                                class="me-2"
+                                mode="determinate"
+                                [value]="35">
+                            </mat-progress-bar>
+                            <span class="font-16 fw-semibold">35%</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- pending -->
+    <div class="col-md-12 col-xl-4">
+        <h4 class="text-left mb-3">Regalos</h4>
+        <mat-card class="card">
+            <mat-card-content>
+                <div class="gap-container mb-3">
+                    <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border">
+                        <!-- Contenedor de la imagen -->
+                        <div class="image-container">
+                          <img src="../../../assets/images/juan.png" class="image-user">
+                        </div>
+                        
+                        <!-- Contenedor del texto -->
+                        <div class="text-container flex-grow-1">
+                          <p class="font-14 mb-0 text-wrap">
+                            <span class="fw-semibold">Juan Fernandez</span>
+                            <span> te hizo un regalo</span>
+                          </p>
+                        </div>
+                      
+                        <!-- Ícono a la derecha -->
+                        <div>
+                          <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
+                            person_check
+                          </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border">
+                        <!-- Contenedor de la imagen -->
+                        <div class="image-container">
+                          <img src="../../../assets/images/juan.png" class="image-user">
+                        </div>
+                        
+                        <!-- Contenedor del texto -->
+                        <div class="text-container flex-grow-1">
+                          <p class="font-14 mb-0 text-wrap">
+                            <span class="fw-semibold">Juan Fernandez</span>
+                            <span> te hizo un regalo</span>
+                          </p>
+                        </div>
+                      
+                        <!-- Ícono a la derecha -->
+                        <div>
+                          <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
+                            person_check
+                          </span>
+                        </div>
+                    </div>
+                      
+                </div>
+                <button mat-flat-button color="primary" class="btn-border w-100">
+                    Hacer un regalo
+                </button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
