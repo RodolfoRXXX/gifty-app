@@ -115,7 +115,7 @@ hr {
 }
 
 *::-webkit-scrollbar{
-  width: 6px;
+  width: 6px!important;
   border-radius: 20px;
 }
 *::-webkit-scrollbar-thumb  {

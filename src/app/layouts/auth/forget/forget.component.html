@@ -4,15 +4,15 @@
         <mat-card class="card" *ngIf="show_window == 'email'">
             <mat-card-content class="pb-2">
                 <form [formGroup]="dataForm" (ngSubmit)="sendEmail()">
-                    <div class="text-center mt-1">
-                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
+                    <div class="d-flex flex-column align-items-center mt-1">
+                        <img src="assets/images/system/logo-icon.png" alt="homepage" style="height: 33px;">
                         <h4 class="mt-1 mb-3">Reestablecer contraseña</h4>
                     </div>
-                    <p class="text-center font-14">
+                    <p class="text-center font-14 mb-2">
                         Ingresá tu correo y enviaremos un código para reestablecer tu contraseña
                     </p>
                     <div class="form-auth">
-                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                        <mat-form-field class="w-100 mb-1" appearance="fill">
                             <mat-label>Ingresá tu correo</mat-label>
                             <input matInput placeholder="algo@ejemplo.com"
                                     formControlName="email" 
@@ -47,22 +47,22 @@
         <mat-card class="card" *ngIf="show_window == 'code'">
             <mat-card-content class="pb-2">
                 <form [formGroup]="codeForm" (ngSubmit)="sendCode()">
-                    <div class="text-center mt-1">
-                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
+                    <div class="d-flex flex-column align-items-center mt-1">
+                        <img src="assets/images/system/logo-icon.png" alt="homepage" style="height: 33px;">
                         <h4 class="mt-1 mb-3">Verificá tu cuenta</h4>
                     </div>
-                    <p class="text-center font-14">
+                    <p class="text-center font-14 mb-2">
                         Ingresá tu correo electrónico y el código alfanumérico para continuar
                     </p>
                     <div class="form-auth">
-                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                        <mat-form-field class="w-100 mb-1" appearance="fill">
                             <mat-label>Ingresá tu correo</mat-label>
                             <input matInput placeholder="algo@ejemplo.com"
                                     formControlName="email" 
                                     required>
                             <mat-error *ngIf="this.codeForm.controls['email']!.errors" class="fs-08">{{getEmailErrorMessage()}}</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                        <mat-form-field class="w-100 mb-1" appearance="fill">
                             <mat-label>Ingresá el código alfanumérico</mat-label>
                             <input matInput 
                                     #input 
@@ -95,15 +95,15 @@
         <mat-card class="card" *ngIf="show_window == 'password'">
             <mat-card-content class="pb-2">
                 <form [formGroup]="passwordForm" (ngSubmit)="sendPassword()">
-                    <div class="text-center">
-                        <img src="assets/images/system/logo-icon.png" alt="homepage" height="33">
+                    <div class="d-flex flex-column align-items-center mt-1">
+                        <img src="assets/images/system/logo-icon.png" alt="homepage" style="height: 33px;">
                         <h4 class="m-t-0 mb-4">Ingresá tu nueva contraseña</h4>
                     </div>
-                    <p class="text-center font-14">
+                    <p class="text-center font-14 mb-2">
                         Ingresá tu nueva contraseña de acceso y confirmala
                     </p>
                     <div class="form-auth">
-                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                        <mat-form-field class="w-100 mb-1" appearance="fill">
                             <mat-label>Ingresá una contraseña</mat-label>
                             <input matInput [type]="hide_1 ? 'password' : 'text'"
                                     [formControl]="passwordFirst"
@@ -114,7 +114,7 @@
                             <mat-error *ngIf="this.passwordFirst.errors" class="fs-08">{{getPasswordErrorMessageFirst()}}</mat-error>
                         </mat-form-field>
                         <div *ngIf="this.passwordForm.errors?.['no_equal']">Las contraseñas no coinciden</div>
-                        <mat-form-field class="w-100 mb-1" appearance="outline">
+                        <mat-form-field class="w-100 mb-1" appearance="fill">
                             <mat-label>Confirmá tu contraseña</mat-label>
                             <input matInput [type]="hide_2 ? 'password' : 'text'"
                                     formControlName="password"
