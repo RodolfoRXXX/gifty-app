@@ -1,0 +1,79 @@
+<!-- Modal de edición del perfíl -->
+
+<mat-card class="card">
+    <mat-card-content>
+        <h4 class="text-left pb-1 b-b">Editar perfíl</h4>
+        <form class="pt-2" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div class="row p-2" style="margin: auto; ">
+                <!-- Caja para la foto -->
+                <div class="photo-box col-md-12 col-xl-4" (drop)="onFileDrop($event)" (click)="fileInput.click()" (dragover)="onDragOver($event)">
+                    <p *ngIf="!photo">Click o arrastra una foto aquí</p>
+                    <img *ngIf="photo" [src]="photo" alt="Foto" class="uploaded-photo"/>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+                </div>
+
+                <div class="col-md-12 col-xl-8">
+                    <!-- Input de nombre -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+
+                    <!-- Input de ubicación -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ubicación</mat-label>
+                        <input matInput formControlName="location">
+                    </mat-form-field>
+                </div>
+                
+            </div>
+            
+            <!-- Sección de agregar redes sociales -->
+            <div class="mb-3 pb-2 b-b">
+                <h5 class="text-left ms-2 pb-1 mb-2 b-b">Agregar redes sociales</h5>
+                <div class="d-flex justify-content-start align-items-center">
+                    <button class="b-all ms-2" mat-icon-button (click)="showSocialForm = !showSocialForm">
+                        <span class="material-symbols-outlined align-button-icon">
+                            add_circle
+                        </span>
+                    </button>
+                    <button class="b-all ms-2" mat-icon-button color="primary" (click)="showSocialForm = !showSocialForm">
+                        <span class="material-symbols-outlined align-button-icon">
+                            phone
+                        </span>
+                    </button>
+                </div>
+                
+                <div *ngIf="showSocialForm" class="social-form ms-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Red Social</mat-label>
+                        <mat-select formControlName="socialNetwork">
+                            <mat-option *ngFor="let network of availableSocialNetworks" [value]="network">{{ network }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            
+                    <mat-form-field appearance="fill">
+                        <mat-label>Valor</mat-label>
+                        <input matInput formControlName="socialValue">
+                    </mat-form-field>
+
+                    <button class="b-all ms-2" mat-icon-button color="primary" (click)="addSocial()">
+                        <span class="material-symbols-outlined align-button-icon">
+                            save
+                        </span>
+                    </button>
+                </div>
+            
+                <!-- Redes sociales agregadas -->
+                <div *ngFor="let social of addedSocials" class="social-tag">
+                    <button mat-stroked-button>{{ social.network }}: {{ social.value }}</button>
+                </div>
+            </div>
+        
+            <div class="d-flex justify-content-end">
+                <button mat-stroked-button class="me-2" color="warn" type="button">Reset</button>
+                <button mat-flat-button color="primary" type="submit">Enviar</button>
+            </div>
+        </form>               
+    </mat-card-content>
+</mat-card>

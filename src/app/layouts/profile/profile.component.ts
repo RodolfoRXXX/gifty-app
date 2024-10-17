@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { EventCardComponent } from '../components/event-card/event-card.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogProfileEditComponent } from '../components/dialog-profile-edit/dialog-profile-edit.component';
 
 @Component({
   selector: 'app-profile',
@@ -15,5 +17,15 @@ import { EventCardComponent } from '../components/event-card/event-card.componen
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
+
+  constructor(
+    private _dialog: MatDialog
+  ) {}
+
+  //Abrir el modal de edición de perfíl
+  editProfile(id: string) {
+    console.log(id)
+    this._dialog.open(DialogProfileEditComponent, { data: { id:id }});
+  }
 
 }
