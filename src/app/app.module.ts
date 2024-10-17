@@ -10,6 +10,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { SpinnerComponent } from './shared/spinner.component';
 import { HeaderLoginComponent } from './layouts/init/header/header-login/header-login.component';
 import { HeaderRechargeComponent } from './layouts/init/header/header-recharge/header-recharge.component';
+import { NotificationMessageComponent } from './layouts/components/notification-message/notification-message.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { HeaderRechargeComponent } from './layouts/init/header/header-recharge/h
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    
+    NotificationMessageComponent
   ],
   exports: [
     

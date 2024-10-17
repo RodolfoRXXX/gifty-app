@@ -1,0 +1,8 @@
+
+.text-container {
+    display: flex;
+    align-items: center; /* Centra el texto verticalmente */
+    white-space: normal; /* Permite que el texto pase a la segunda línea */
+    text-align: left; /* Alinea el texto a la izquierda */
+    word-wrap: break-word; /* Ajusta el texto dentro del contenedor */
+}

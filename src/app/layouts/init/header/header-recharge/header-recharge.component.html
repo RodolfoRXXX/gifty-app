@@ -16,8 +16,12 @@
 
 
 <mat-menu #notification="matMenu" class="btn-border" xPosition="before">
-    <div class="p-2">
-        <p>No hay notificaciones</p>
+    <div class="gap-container">
+        <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border" *ngIf="false">
+            <p class="fw-semibold text-center w-100">No hay notificaciones</p>
+        </div>
+        
+        <app-notification-message></app-notification-message>
     </div>
 </mat-menu>
 

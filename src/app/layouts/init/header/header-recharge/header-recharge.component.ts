@@ -5,7 +5,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header-recharge',
-  templateUrl: './header-recharge.component.html'
+  templateUrl: './header-recharge.component.html',
+  styleUrl: './header-recharge.component.scss'
 })
 export class HeaderRechargeComponent {
 
