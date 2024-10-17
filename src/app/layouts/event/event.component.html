@@ -1,91 +1,24 @@
 
 <div class="row event-box">
     <!-- Event -->
-    <div class="col-md-12 col-xl-8">
-
+    <div class="col-md-12 col-xl-8 mb-3">
         <!-- Evento -->
         <app-event-box></app-event-box>
 
         <!-- Mensajes -->
-        <h4 class="text-left mb-3 mt-3">Mensajes</h4>
-        <div class="d-flex justify-content-start">
-            <mat-card class="card" style="height: 200px; width: 200px;">
-                <mat-card-content class="p-0" style="height: 100%;">
-                    <div class="d-flex flex-column justify-content-between" style="height: 100%;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="font-12 mb-0"><span class="fw-semibold">Franco</span> dice:</p>
-                            <span class="material-symbols-outlined primary-color" style="font-size: 18px;">
-                                person_check
-                            </span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <p class="font-15 text-center mb-0 fw-semibold">
-                                "Felicidades en este día tan especial. Te dejo un pequeño presente.”
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Hace 2 días</span>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+        <h4 class="text-left mb-1 mt-3">Mensajes</h4>
+        <div class="gap-container p-2">
+          <app-message-card></app-message-card>
+          <app-message-card></app-message-card>
+          <app-message-card></app-message-card>
+          <app-message-card></app-message-card>
+          <app-message-card></app-message-card>
+          <app-message-card></app-message-card>
         </div>
     </div>
     <!-- Regalos -->
     <div class="col-md-12 col-xl-4">
         <h4 class="text-left mb-3">Regalos</h4>
-        <mat-card class="card">
-            <mat-card-content>
-                <div class="gap-container mb-3">
-                    <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border">
-                        <!-- Contenedor de la imagen -->
-                        <div class="image-container">
-                          <img src="../../../assets/images/juan.png" class="image-user">
-                        </div>
-                        
-                        <!-- Contenedor del texto -->
-                        <div class="text-container flex-grow-1">
-                          <p class="font-14 mb-0 text-wrap">
-                            <span class="fw-semibold">Juan Fernandez</span>
-                            <span> te hizo un regalo</span>
-                          </p>
-                        </div>
-                      
-                        <!-- Ícono a la derecha -->
-                        <div>
-                          <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
-                            person_check
-                          </span>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border">
-                        <!-- Contenedor de la imagen -->
-                        <div class="image-container">
-                          <img src="../../../assets/images/juan.png" class="image-user">
-                        </div>
-                        
-                        <!-- Contenedor del texto -->
-                        <div class="text-container flex-grow-1">
-                          <p class="font-14 mb-0 text-wrap">
-                            <span class="fw-semibold">Juan Fernandez</span>
-                            <span> te hizo un regalo</span>
-                          </p>
-                        </div>
-                      
-                        <!-- Ícono a la derecha -->
-                        <div>
-                          <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
-                            person_check
-                          </span>
-                        </div>
-                    </div>
-                      
-                </div>
-                <button mat-flat-button color="primary" class="btn-border w-100">
-                    Hacer un regalo
-                </button>
-            </mat-card-content>
-        </mat-card>
+        <app-gift-box></app-gift-box>
     </div>
 </div>

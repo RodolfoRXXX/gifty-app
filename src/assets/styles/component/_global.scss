@@ -79,7 +79,6 @@ body {
 
 
 // Color Font
-
 .soft-grey-color {
   color: rgb(109, 103, 119);
 }
@@ -109,51 +108,19 @@ a.link {
   background: rgba(0, 0, 0, 0.04)!important;
 }
 
-.img-responsive {
-  width: 100%;
-  height: auto;
-  display: inline-block;
-}
-
 hr {
   border: 0px;
   height: 1px;
   background: $border;
 }
 
-html body .mdi:before,
-html body .mdi-set {
-  line-height: initial;
+*::-webkit-scrollbar{
+  width: 6px;
+  border-radius: 20px;
 }
-code {
-  padding: 0.2rem 0.4rem;
-  font-size: 90%;
-  color: $danger;
-  background-color: $light-danger;
-  border-radius: 0.25rem;
-}
-
-.box {
-  border-radius: $radius;
-  padding: 10px;
-}
-
-.list-inline {
-  margin-left: 0px;
-  padding: 0px;
-  li {
-    display: inline-block;
-    list-style: none;
-    margin-right: 10px;
-    &:last-child {
-      margin-right: 0px;
-    }
-  }
-}
-
-.button-row button {
-  margin-bottom: 5px;
-  margin-right: 5px;
+*::-webkit-scrollbar-thumb  {
+  background-color: $sidebar-text;
+  border-radius: 6px;
 }
 
 html body {
@@ -162,9 +129,6 @@ html body {
   }
 
   // list
-  .clear {
-    clear: both;
-  }
   ol li {
     margin: 5px 0;
   }
@@ -181,10 +145,6 @@ html body {
   }
   .op-3 {
     opacity: 0.3;
-  }
-
-  .rounded {
-    border-radius: $radius;
   }
 
   //   flex

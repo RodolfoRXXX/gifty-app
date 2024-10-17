@@ -4,61 +4,10 @@
     margin: auto;
 }
 
-/* Estilo del contenedor de texto */
-.text-container {
-display: flex;
-align-items: center; /* Centra el texto verticalmente */
-white-space: normal; /* Permite que el texto pase a la segunda línea */
-text-align: left; /* Alinea el texto a la izquierda */
-word-wrap: break-word; /* Ajusta el texto dentro del contenedor */
-}
-
-.image-user {
-    border-radius: 50%;
-    background-color: #ecedee !important;
-    color: #8a8d93 !important;
-    position: relative;
-    width: 35px;
-    height: 35px;
-    object-fit: cover;
-    img {
-        border-radius: 50%;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-}
-
-.align-icon {
-    position: relative;
-    bottom: -4px;
-    margin-right: 4px;
-}
-
-.date-box {
-    height: 80px;
-    width: 80px;
-    flex-shrink: 0;
-    margin-right: 10px;
-}
-
-.text-box {
-    height: 80px;
-    flex-grow: 1;
-    min-width: 0;
-}
-
-.multiline-truncate {
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limita a 2 líneas */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-}
-
 .gap-container {
     display: flex;
-    flex-direction: column; /* Organiza los elementos en una columna */
-    gap: 15px; /* Espacio entre los elementos */
+    justify-content: flex-start;
+    gap: 15px;
+    width: 100%;
+    overflow-x: auto;
 }
