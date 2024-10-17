@@ -1,0 +1,44 @@
+<!-- Modal de edición del evento -->
+
+<mat-card class="p-4">
+    <h4 class="text-left pb-1 b-b">Editar evento</h4>
+    <form class="p-3 pb-0" [formGroup]="form">
+        <!-- Nombre del evento -->
+        <mat-form-field>
+            <mat-label>Nombre del evento</mat-label>
+            <input matInput formControlName="eventName" placeholder="Ej. Mi cumpleaños">
+        </mat-form-field>
+        <!-- Descripción del evento -->
+        <mat-form-field>
+            <mat-label>Descripción adicional</mat-label>
+            <input matInput formControlName="eventDescription" placeholder="Añadir detalles adicionales...">
+        </mat-form-field>
+
+        <!-- Tipo de evento -->
+        <mat-radio-group formControlName="eventType" class="d-block mb-2">
+            <mat-radio-button value="aniversario">Aniversario</mat-radio-button>
+            <mat-radio-button value="deseo">Deseo</mat-radio-button>
+        </mat-radio-group>
+        <!-- Fecha del evento -->
+        <mat-form-field>
+            <mat-label>Fecha del evento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="eventDate" placeholder="Seleccione una fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+  
+        <div class="mb-2">
+            <!-- Agregar meta -->
+            <mat-checkbox class="mb-1" formControlName="addGoal">¿Agregar meta?</mat-checkbox>
+        
+            <mat-form-field *ngIf="form.get('addGoal')?.value">
+                <mat-label>Monto meta</mat-label>
+                <input matInput formControlName="goalAmount" placeholder="Ej. 1000">
+            </mat-form-field>
+        </div>
+  
+      <!-- Botón para enviar -->
+      <button mat-flat-button color="primary" class="w-100">Guardar</button>
+    </form>
+</mat-card>
+  

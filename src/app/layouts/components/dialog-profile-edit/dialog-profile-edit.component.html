@@ -4,9 +4,9 @@
     <mat-card-content>
         <h4 class="text-left pb-1 b-b">Editar perfíl</h4>
         <form class="pt-2" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-            <div class="row p-2" style="margin: auto; ">
+            <div class="row p-2" style="margin: auto;">
                 <!-- Caja para la foto -->
-                <div class="photo-box col-md-12 col-xl-4" (drop)="onFileDrop($event)" (click)="fileInput.click()" (dragover)="onDragOver($event)">
+                <div class="photo-box col-md-12 col-xl-4" style="margin: 0 auto 15px;" (drop)="onFileDrop($event)" (click)="fileInput.click()" (dragover)="onDragOver($event)">
                     <p *ngIf="!photo">Click o arrastra una foto aquí</p>
                     <img *ngIf="photo" [src]="photo" alt="Foto" class="uploaded-photo"/>
                     <input type="file" #fileInput (change)="onFileSelected($event)" hidden>

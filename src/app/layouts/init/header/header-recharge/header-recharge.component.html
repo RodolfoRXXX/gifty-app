@@ -13,25 +13,34 @@
     </button>
 </div>
 
-
-
 <mat-menu #notification="matMenu" class="btn-border" xPosition="before">
     <div class="gap-container">
         <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border" *ngIf="false">
             <p class="fw-semibold text-center w-100">No hay notificaciones</p>
         </div>
-        
         <app-notification-message></app-notification-message>
     </div>
 </mat-menu>
 
 <mat-menu #profile="matMenu" class="btn-border" xPosition="before">
-    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../init/main" routerLinkActive="active" class="fw-500">
-        <mat-icon>dashboard</mat-icon> Tablero </a>
-    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../init/settings" routerLinkActive="active" class="fw-500">
-        <mat-icon>settings</mat-icon> Configuración </a>
+    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../profile/:id" routerLinkActive="active" class="fw-500">
+        <span class="material-symbols-outlined align-icon">
+            person
+        </span>
+        Mi perfíl </a>
+    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../settings/:id" routerLinkActive="active" class="fw-500">
+        <span class="material-symbols-outlined align-icon">
+            settings
+        </span>
+        Configuración </a>
     <button mat-menu-item *ngIf="isLogged && isAuthenticated" (click)="logOff()" class="fw-300">
-        <mat-icon>exit_to_app</mat-icon> Cerrar sesión </button>
+        <span class="material-symbols-outlined align-icon">
+            logout
+        </span>
+        Cerrar sesión </button>
     <button mat-menu-item *ngIf="isLogged && !isAuthenticated" (click)="logOffAll()">
-        <mat-icon>exit_to_app</mat-icon> Olvidar sesión </button>
+        <span class="material-symbols-outlined align-icon">
+            logout
+        </span>
+        Olvidar sesión </button>
 </mat-menu>
