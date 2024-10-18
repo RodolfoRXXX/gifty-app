@@ -40,7 +40,7 @@ export function analyzeData(data: DataItem[]) {
 //Función que genera un código alfanumérico diferente cada vez que se llama, cuya longitud depende del entero que se le pase
     //recibe un entero
     //devuelve un Id con caracteres elegidos al azar de su conjunto
-export function generateUniqueId(length: number = 16): string {
+export function generateUniqueId(length: number = 20): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   const charactersLength = characters.length;

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { MenuItems } from '../../menu-items/menu-items';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
-import { environment } from 'src/environments/environment';
 import { ConectorsService } from 'src/app/services/conectors.service';
 import { Employee } from '../../interfaces/employee.interface';
 
@@ -26,11 +25,7 @@ export class SidebarComponent implements OnInit {
   @Input() setMenu!: string;
   @Input() employee!: Employee;
   name!: string;
-  background_image!: string;
   pic!: string;
-  enterprise!: string;
-  permissions: string[] = [];
-  is_employee!: boolean;
   isOpen!: number;
   linkActive!: number;
   isActive!: number;
@@ -45,13 +40,6 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._conector.getEmployee().subscribe( value => {
-      //la lista de permisos se almacena como un string y luego se lo separa en un array
-      //aunque el string de la DB esté vacío, el split devuelve un array con al menos un valor,
-      //que es el valor vacío, por eso la desigualdad es mayor a 1
-      this.permissions = value.list_of_permissions.split(',')
-      this.is_employee = (value.id > 0)?true:false;
-    })
     //largeScreen = true => isMobile = false
     this._conector.getScreenState().subscribe( largeScreen => this.isMobile = !largeScreen )
   }
@@ -63,13 +51,6 @@ export class SidebarComponent implements OnInit {
     }else {
       this.name = data.email.split("@")[0];
     }
-    this.background_image = environment.SERVER + data.enterprise_thumbnail;
-    this.pic = environment.SERVER + data.thumbnail;
-    if(data.enterprise.length) {
-      this.enterprise = data.enterprise;
-    } else {
-      this.enterprise = '';
-    } 
   }
   setTitle( title: string ) {
     this._conector.setUpdateTitle(title);

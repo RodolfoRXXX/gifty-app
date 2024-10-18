@@ -57,11 +57,11 @@ export class AppComponent {
   }
 
   isUserLogged() {
-    this._auth.isLogged$.subscribe( state => this.isLogged = state )
+    this._auth.isLogged$.subscribe( status => this.isLogged = status )
   }
 
   isUserAuthenticated() {
-    this._auth.isAuthenticated$.subscribe( state => this.isAuthenticated = state )
+    this._auth.isAuthenticated$.subscribe( status => this.isAuthenticated = status )
   }
 
   toggleSidenav() {

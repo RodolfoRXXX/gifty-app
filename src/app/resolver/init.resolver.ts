@@ -14,7 +14,7 @@ export class InitResolver  {
   ) { }
 
   resolve(): Observable<any> {
-    const id = this._auth.getUserId();
-    return this._api.postTypeRequest('profile/get-employee', { id_user: id })
+    //const id = this._auth.getUserId();
+    return this._api.postTypeRequest('profile/get-employee', { id_user: 1 })
   }
 }

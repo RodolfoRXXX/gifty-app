@@ -179,7 +179,7 @@ export class ProfileImageComponent {
             if(res.changedRows == 1){
               //Modificó la imagen
               this._notify.showSuccess('La imagen del producto se ha modificado con éxito!');
-              this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this._auth.getRememberOption());
+              this._auth.setDataInLocalStorage(res.data[0], res.token, res.data[0].status, this._auth.getRememberOption());
               setTimeout(() => {
                 window.location.reload();
               }, 2000);

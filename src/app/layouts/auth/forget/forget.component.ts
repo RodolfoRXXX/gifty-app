@@ -76,7 +76,7 @@ export class ForgetComponent implements OnInit {
           (control: AbstractControl):ValidationErrors|null => {
           return !this.emailReg.test(control.value) ? {error_format: {value: control.value}} : null;}
         ]),
-        activation_code: new FormControl('', [
+        activationCode: new FormControl('', [
           Validators.required,
           Validators.minLength(10)
         ])
@@ -224,7 +224,7 @@ export class ForgetComponent implements OnInit {
               data: '',
               tipo: 'change_pass',
             });
-            if(res.data[0].activation_code === this.codeForm.value.activation_code) {
+            if(res.data[0].activationCode === this.codeForm.value.activationCode) {
               //Código verificado
               this._notify.showSuccess('Verificación exitosa!');
               setTimeout(() => {

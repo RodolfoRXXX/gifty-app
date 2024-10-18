@@ -15,6 +15,7 @@ export class HeaderRechargeComponent {
   @Input() isLogged!: boolean;
 
   pic!: string;
+  profileId!: string;
 
   constructor(
     private _auth: AuthService,
@@ -26,6 +27,7 @@ export class HeaderRechargeComponent {
   getDataUser() {
     const data = JSON.parse(this._auth.getDataFromLocalStorage());
     this.pic = environment.SERVER + data.thumbnail;
+    this.profileId = data.profileId;
   }
 
   logOff(): void {

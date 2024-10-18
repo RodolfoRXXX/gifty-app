@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { isNot_authenticated, isNot_logged, is_authenticated, is_logged } from './guards/auth.guard';
+import { isNot_active, isNot_authenticated, isNot_logged, is_logged } from './guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './layouts/home/home.component';
 import { ProfileComponent } from './layouts/profile/profile.component';
@@ -16,15 +16,15 @@ const routes: Routes = [
           component: HomeComponent
         },
         {
-          path: 'profile/:id',
+          path: 'profile/:profileId',
           component: ProfileComponent
         },
         {
-          path: 'event/:id',
+          path: 'event/:eventId',
           component: EventComponent
         },
         {
-          path: 'settings/:id',
+          path: 'settings/:profileId',
           loadChildren: () => import('./layouts/settings/settings.module').then(m => m.SettingsModule),
           canActivate: [is_logged]
         },
@@ -54,9 +54,9 @@ const routes: Routes = [
           canActivate: [is_logged] 
         },
         { 
-          path: 'init', 
-          loadChildren: () => import('./layouts/init/init.module').then(m => m.InitModule), 
-          canActivate: [is_logged, is_authenticated]
+          path: 'verify', 
+          loadChildren: () => import('./layouts/auth/verify/verify.module').then(m => m.VerifyModule), 
+          canActivate: [isNot_active]
         },
         { 
           path: 'page-not-found', 

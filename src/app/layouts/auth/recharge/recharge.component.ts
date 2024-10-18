@@ -31,9 +31,26 @@ export class RechargeComponent {
   createForm(): void {
     this.dataForm = new FormGroup({
       email : new FormControl(''),
-      password : new FormControl(''),
+      profileId : new FormControl(''),
       remember_me : new FormControl(true)
     });
+  }
+
+  async getDataUser(): Promise<any> {
+    const data = await JSON.parse(this._auth.getDataFromLocalStorage());
+    return data;
+  }
+
+  setDataUser() {
+    this.getDataUser()
+        .then( value => {
+          this.pic = environment.SERVER + value.thumbnail;
+          this.email = value.email;
+          this.dataForm.patchValue({
+            email: value.email,
+            profileId: value.profileId
+          })
+        })
   }
 
   onSubmit() {
@@ -46,9 +63,9 @@ export class RechargeComponent {
           if(res.data.length){
             //Encontró el usuario
             this._notify.showSuccess('Acceso autorizado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.dataForm.value.remember_me);
+            this._auth.setDataInLocalStorage(res.data[0], res.token, res.data[0].status, this.dataForm.value.remember_me);
             setTimeout(() => {
-              this._router.navigate(['init']);
+              this._router.navigate(['profile', res.data[0].profileId]);
             }, 2000);
           } else{
             //No se pudo loguear
@@ -65,23 +82,6 @@ export class RechargeComponent {
         this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intentá nuevamente por favor.');
       }
     }) 
-  }
-
-  async getDataUser(): Promise<any> {
-    const data = await JSON.parse(this._auth.getDataFromLocalStorage());
-    return data;
-  }
-
-  setDataUser() {
-    this.getDataUser()
-        .then( value => {
-          this.pic = environment.SERVER + value.thumbnail;
-          this.email = value.email;
-          this.dataForm.patchValue({
-            email: value.email,
-            password: value.password
-          })
-        })
   }
 
   logOffAll(): void {

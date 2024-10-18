@@ -76,13 +76,13 @@ export class LoginComponent implements OnInit {
           if(res.data.length){
             //Encontró el usuario
             this._notify.showSuccess('Acceso autorizado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], this.dataForm.value.remember_me);
+            this._auth.setDataInLocalStorage(res.data[0], res.token, res.data[0].status, this.dataForm.value.remember_me);
             setTimeout(() => {
-              this._router.navigate(['init']);
+              this._router.navigate(['profile', res.data[0].profileId]);
             }, 2000);
           } else{
             //No encontró el usuario
-            this._notify.showError('Las credenciales de acceso no son correctas.')
+            this._notify.showError('Usuario o contraseña incorrecta')
           }
         } else{
           //Problemas de conexión con la base de datos(res.status == 0)

@@ -15,6 +15,8 @@ export class SettingsComponent implements OnInit {
   sector!: string;
   employee!: Employee;
 
+  profileId: string | null = null;
+
   constructor(
     private _actRoute: ActivatedRoute,
     private _conector: ConectorsService
@@ -25,14 +27,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    //Recibe los datos del resolver y carga los datos en la vista
-    this.employee = this._actRoute.snapshot.data['employee'].data[0];
-    if(this.employee) {
-      this._conector.setEmployee(this.employee);
-    } else {
-      this.employee = empty_employee;
-    }
+    this.profileId = this._actRoute.snapshot.paramMap.get('profileId');
 
     //Actualiza el título de la vista de acuerdo al componente cargado
     this._conector.getUpdateTitle().subscribe( value => {

@@ -108,11 +108,11 @@ import { calcularDiasRestantes } from '../shared/functions/date.function';
     const _authSvc = inject(AuthService);
     const _router = inject(Router);
 
-    const id = _authSvc.getUserId();
+    //const id = _authSvc.getUserId();
 
-    if (!id) return _router.parseUrl('init/blocked');
+    //if (!id) return _router.parseUrl('init/blocked');
 
-    return _apiSvc.postTypeRequest('profile/get-employee', { id_user: id }).pipe(
+    return _apiSvc.postTypeRequest('profile/get-employee', { id_user: 1 }).pipe(
         switchMap((response: any) => {
             const employee = response.data?.[0];
             if (employee && employee.status === 1) {
@@ -137,11 +137,11 @@ import { calcularDiasRestantes } from '../shared/functions/date.function';
     const _authSvc = inject(AuthService);
     const _router  = inject(Router);
 
-    const id = _authSvc.getUserId();
+    //const id = _authSvc.getUserId();
 
-    if(!id) return _router.navigate(['init/blocked']);
+    //if(!id) return _router.navigate(['init/blocked']);
 
-    return _apiSvc.postTypeRequest('profile/get-employee', { id_user: id }).pipe(
+    return _apiSvc.postTypeRequest('profile/get-employee', { id_user: 1 }).pipe(
       switchMap((response: any) => {
           const employee = response.data?.[0];
           if (!employee || employee.status === 0) {

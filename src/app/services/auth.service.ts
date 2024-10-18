@@ -40,8 +40,8 @@ export class AuthService {
 
       //Cambia el estado del observable isActive$ si el usuario está activo
       isActive(): boolean {
-        const state = localStorage.getItem('state');
-        if((state) && (JSON.parse(state) == '1')){
+        const status = localStorage.getItem('status');
+        if((status) && (JSON.parse(status) == '1')){
           this.setActiveState(true);
           return true;
         }
@@ -67,10 +67,9 @@ export class AuthService {
 
 // ----------------- SET ----------------
   //Guarda las credenciales de acceso en el localstorage y actualiza los observables de logged y authenticated
-  setDataInLocalStorage(id: number, token: any, state:any, data:any, remember:boolean): void {
+  setDataInLocalStorage(data:any, token: any, status:any, remember:boolean): void {
     this.setUserData(data);
-    this.setState(state);
-    this.setIdUserToLocalStorage(id);
+    this.setStatus(status);
     this.setToken(token);
     this.setRememberOption(remember);
     this.setLoggedState(true);
@@ -81,13 +80,9 @@ export class AuthService {
   setUserData(data: any) {
     localStorage.setItem('userData', JSON.stringify(data));
   }
-  //Guardo el Id del usuario logueado
-  setIdUserToLocalStorage(id: number): void {
-    localStorage.setItem("userId", id.toString());
-  }
-  //Guardo el state activo o no de la cuenta
-  setState(state: any): void {
-    localStorage.setItem('state', JSON.stringify(state));
+  //Guardo el estado activo o no de la cuenta
+  setStatus(state: any): void {
+    localStorage.setItem('status', JSON.stringify(state));
   }
   //Guardo el token del usuario logueado
   setToken(token: any): void {
@@ -97,22 +92,10 @@ export class AuthService {
   setRememberOption(remember_me: boolean) {
     localStorage.setItem("rememberOption", remember_me.toString());
   }
-  //Setear el objeto role del usuario logueado y guardarlo en el localStorage
-  setRole(role: any): void {
-    localStorage.setItem('role', role);
-  }
 // ----------------- GET ----------------
   //Devuelvo las credenciales de acceso
   getDataFromLocalStorage(): any | null {
     return localStorage.getItem('userData');
-  }
-  //Obtengo el userId del usuario logueado
-  getUserId(){
-    if (localStorage.getItem('userId')) {
-      return localStorage.getItem('userId')
-    } else {
-      return null;
-    }
   }
   //Obtengo el token del usuario logueado
   getToken(): any | null{
@@ -122,10 +105,6 @@ export class AuthService {
   getRememberOption() {
     let remember_me = (localStorage.getItem('rememberOption') === 'true');
     return remember_me;
-  }
-  //Recuperar el objeto role del usuario logueado
-  getRole(): any | null{
-    return localStorage.getItem('role');
   }
 
 // ------------- CLEAR STORAGE --------------

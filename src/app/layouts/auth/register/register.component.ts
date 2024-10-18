@@ -48,7 +48,6 @@ export class RegisterComponent implements OnInit {
 
   createForm(): void {
     this.dataForm = new FormGroup({
-        name : new FormControl(''),
         email : new FormControl('', [
           Validators.required,
           (control: AbstractControl):ValidationErrors|null => {
@@ -59,9 +58,8 @@ export class RegisterComponent implements OnInit {
           (control: AbstractControl):ValidationErrors|null => {
           return (control.value !== this.passwordFirst.value) ? {no_equal: {value: control.value}} : null;}
         ]),
-        thumbnail: new FormControl('no-image.png'),
-        activation_code: new FormControl(''),
-        state: new FormControl(0)
+        thumbnail: new FormControl('no-image-user.png'),
+        activationCode: new FormControl('')
     }
     );
   }
@@ -117,7 +115,7 @@ export class RegisterComponent implements OnInit {
       email: this.dataForm.get('email')?.value,
       data: hash_code
     });
-    this.dataForm.controls['activation_code'].patchValue(hash_code);
+    this.dataForm.controls['activationCode'].patchValue(hash_code);
     this._api.postTypeRequest('user/register', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
@@ -127,9 +125,9 @@ export class RegisterComponent implements OnInit {
           } else {
             //Creó el usuario
             this._notify.showSuccess('Usuario nuevo creado!');
-            this._auth.setDataInLocalStorage(res.data[0].id, res.token, res.data[0].state, res.data[0], false);
+            this._auth.setDataInLocalStorage(res.data[0], res.token, res.data[0].status, false);
             setTimeout(() => {
-              this._router.navigate(['init']);
+              this._router.navigate(['profile', res.data[0].profileId]);
             }, 2000);
             this._api.postTypeRequest('user/envio-email', this.formMsg.value).subscribe({
               next: (res: any) => {

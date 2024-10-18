@@ -89,7 +89,7 @@ export class VerifyComponent {
             this.loading =  false;
             this._notify.showSuccess('Cuenta verificada!');
             this._auth.setActiveState(true);
-            this._auth.setState(1);
+            this._auth.setStatus(1);
             setTimeout(() => {
               this._router.navigate(['init']);
             }, 2000);

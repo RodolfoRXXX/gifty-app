@@ -23,12 +23,12 @@
 </mat-menu>
 
 <mat-menu #profile="matMenu" class="btn-border" xPosition="before">
-    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../profile/:id" routerLinkActive="active" class="fw-500">
+    <a mat-menu-item *ngIf="isAuthenticated" [routerLink]="['./profile', profileId]" routerLinkActive="active" class="fw-500">
         <span class="material-symbols-outlined align-icon">
             person
         </span>
         Mi perfíl </a>
-    <a mat-menu-item *ngIf="isAuthenticated" routerLink="../settings/:id" routerLinkActive="active" class="fw-500">
+    <a mat-menu-item *ngIf="isAuthenticated" [routerLink]="['./settings', profileId]" routerLinkActive="active" class="fw-500">
         <span class="material-symbols-outlined align-icon">
             settings
         </span>

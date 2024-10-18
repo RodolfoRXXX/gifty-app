@@ -19,11 +19,6 @@ const routes: Routes = [
           resolve: { employee: InitResolver } 
         },
         { 
-          path: 'verify', 
-          loadChildren: () => import('./children/verify/verify.module').then(m => m.VerifyModule), 
-          canActivate: [isNot_active]
-        },
-        { 
           path: 'blocked', 
           loadChildren: () => import('./children/blocked/blocked.module').then(m => m.BlockedModule), 
           canActivate: [is_active, isNot_active_enterprise]
