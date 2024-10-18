@@ -60,6 +60,22 @@ body {
   bottom: 2px;
 }
 
+.btn-list-sidebar {
+  &:hover {
+    background: none;
+    > a {
+    color: $themecolor;
+    }
+  }
+  &.selected {
+    background: $themecolor;
+        a {
+            color: #fff!important;
+            font-weight: 400;
+        }
+  }
+}
+
 //color text main
 
 .primary-color {

@@ -1,0 +1,33 @@
+
+
+mat-nav-list {
+    width: 290px;
+    height: 100%;
+    padding-right: 15px;
+}
+
+.align-icon {
+    position: relative;
+    bottom: 2px;
+}
+
+.btn-list-sidebar {
+    .mat-list-item-content {
+    display: block;
+        a {
+            height: 45px;
+            padding: 0;
+            align-items: center;
+            display: flex;
+            font-size: 15px;
+            white-space: nowrap;
+            color: #000;
+        }
+    }
+}
+  
+.sidebar-closed #snav {
+    &.mat-sidenav ~ .mat-drawer-content {
+        margin-left: 0px !important;
+    }
+}

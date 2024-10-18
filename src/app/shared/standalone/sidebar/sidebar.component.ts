@@ -11,6 +11,7 @@ import { Employee } from '../../interfaces/employee.interface';
   standalone: true,
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss',
   imports: [
     RouterModule,
     MaterialModule,

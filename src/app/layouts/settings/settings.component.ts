@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConectorsService } from 'src/app/services/conectors.service';
-import { Employee, empty_employee } from 'src/app/shared/interfaces/employee.interface';
+import { Employee } from 'src/app/shared/interfaces/employee.interface';
 
 @Component({
   selector: 'app-settings',
-  templateUrl: './settings.component.html'
+  templateUrl: './settings.component.html',
+  styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
 

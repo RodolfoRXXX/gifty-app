@@ -3,22 +3,13 @@
         <app-sidebar [setMenu]="'settings'" [employee]="employee"></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content class="background-main layout-container">
-        <div class="content-sidenav">
+        <div class="content-sidenav btn-border ms-2 me-2">
             <div class="page-breadcrumb">
-              <div>
-                  <p class="mb-0 fw-500">
-                      {{ title }}
-                  </p>
-              </div>
-              <div class="max-768-hidden" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                  <ol class="breadcrumb mb-0">
-                      <li class="breadcrumb-item"><a href="init/main">Home</a></li>
-                      <li class="breadcrumb-item" aria-current="page"><a href="init/settings">{{ sector }}</a></li>
-                      <li class="breadcrumb-item" aria-current="page">{{ title }}</li>
-                  </ol>
-              </div>
+                <p class="mb-0 fw-500">
+                    {{ title }}
+                </p>
             </div>
-          </div>
+        </div>
         <div class="page-content">
             <router-outlet></router-outlet>
         </div>    
