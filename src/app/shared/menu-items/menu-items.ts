@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Menu } from '../interfaces/menu.interface';
 
 const MENUSETTINGS = [
-    { state: 'verify', name: 'Verificación', type: '', icon: 'badge', children: [] },
+    { state: 'verify-account', name: 'Verificación', type: '', icon: 'badge', children: [] },
     { state: 'security', name: 'Seguridad', type: '', icon: 'security', children: [] }
 ];
 

@@ -1,20 +1,5 @@
 
 
-.content-sidenav {
-    background: #fff;
-    .page-breadcrumb {
-        padding: 15px 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-
-        .breadcrumb-item a {
-            color: $themeAccent;
-        }
-    }
-}
-
 .user-data-container {
     flex-flow: row wrap;
     box-sizing: border-box;

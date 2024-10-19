@@ -1,16 +1,14 @@
 <mat-sidenav-container class="container-sidenav" autosize (backdropClick)="closeSidenav()">
     <mat-sidenav [(opened)]="opened" [mode]="mode"> 
-        <app-sidebar [setMenu]="'settings'" [employee]="employee"></app-sidebar>
+        <app-sidebar [setMenu]="'settings'"></app-sidebar>
     </mat-sidenav>
-    <mat-sidenav-content class="background-main layout-container">
-        <div class="content-sidenav btn-border ms-2 me-2">
-            <div class="page-breadcrumb">
-                <p class="mb-0 fw-500">
-                    {{ title }}
-                </p>
-            </div>
+    <mat-sidenav-content class="background-main ">
+        <div class="bg-white btn-border ms-3 p-3">
+            <p class="mb-0 fw-500">
+                {{ title }}
+            </p>
         </div>
-        <div class="page-content">
+        <div class="setting-layout m-3">
             <router-outlet></router-outlet>
         </div>    
     </mat-sidenav-content>

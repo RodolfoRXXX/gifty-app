@@ -7,7 +7,7 @@
         <ng-container *ngFor="let menu of menuItems.getMenuSettings(); index as item">
             <mat-list-item class="p-0 btn-border mb-2 btn-list-sidebar" [routerLinkActive]="(menu.children.length == 0)?'selected':''" disableRipple="true">
                 <div class="mat-list-item-content">
-                    <a class="ms-4" routerLink="{{ menu.state }}" (click)="setLink(0)">
+                    <a class="ms-4" routerLink="{{ menu.state + '/' + profileId }}">
                         <span class="material-symbols-outlined align-icon">
                             {{ menu.icon }}
                         </span>

@@ -24,7 +24,7 @@ const routes: Routes = [
           component: EventComponent
         },
         {
-          path: 'settings/:profileId',
+          path: 'settings',
           loadChildren: () => import('./layouts/settings/settings.module').then(m => m.SettingsModule),
           canActivate: [is_logged]
         },
@@ -52,11 +52,6 @@ const routes: Routes = [
           path: 'logoff', 
           loadChildren: () => import('./layouts/auth/logoff/logoff.module').then(m => m.LogoffModule), 
           canActivate: [is_logged] 
-        },
-        { 
-          path: 'verify', 
-          loadChildren: () => import('./layouts/auth/verify/verify.module').then(m => m.VerifyModule), 
-          canActivate: [isNot_active]
         },
         { 
           path: 'page-not-found', 

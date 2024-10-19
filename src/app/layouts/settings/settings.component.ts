@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
-import { Employee } from 'src/app/shared/interfaces/employee.interface';
 
 @Component({
   selector: 'app-settings',
@@ -13,22 +13,25 @@ export class SettingsComponent implements OnInit {
   opened: boolean = false;
   mode!: any;
   title!: string;
-  sector!: string;
-  employee!: Employee;
 
   profileId: string | null = null;
 
   constructor(
-    private _actRoute: ActivatedRoute,
-    private _conector: ConectorsService
+    private _conector: ConectorsService,
+    private _auth: AuthService,
+    private _router: Router
   ) {
     this._conector.getOpenedState().subscribe( state => this.opened = state );
     this._conector.getScreenState().subscribe( state => state?this.mode = 'side':this.mode = 'over' );
-    this.sector = 'Configuración';
   }
 
   ngOnInit(): void {
-    this.profileId = this._actRoute.snapshot.paramMap.get('profileId');
+    // Obtener el userId desde el localStorage
+    let data = JSON.parse(this._auth.getDataFromLocalStorage())
+    const profileId = data.profileId;
+    if (profileId) {
+      this._router.navigate(['settings/verify-account', profileId]);
+    }
 
     //Actualiza el título de la vista de acuerdo al componente cargado
     this._conector.getUpdateTitle().subscribe( value => {
