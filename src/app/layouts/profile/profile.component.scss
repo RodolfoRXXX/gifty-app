@@ -91,17 +91,14 @@
 }
 
 @media (max-width: 968px) {
-    .info-box {
-        flex-direction: column;
-    }
     .edit-box {
         height: 130px!important;
     }
 }
 
 @media (max-width: 768px) {
-    .description-box {
-        flex-direction: column!important;
+    .info-box {
+        flex-direction: column;
     }
     .edit-box {
         height: 100px!important;
@@ -109,6 +106,9 @@
 }
 
 @media (max-width: 568px) {
+    .description-box {
+        flex-direction: column!important;
+    }
     .status {
         display: none;
     }

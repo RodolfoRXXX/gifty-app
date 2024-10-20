@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConectorsService } from 'src/app/services/conectors.service';
@@ -17,12 +16,10 @@ export class VerifyAccountComponent {
   formMsg!: FormGroup;
   loading: boolean = false;
   load: boolean = false
-  profileId!: string | null;
   isActive!: boolean;
 
   constructor(
     private _auth: AuthService,
-    private _actRoute: ActivatedRoute,
     private _api: ApiService,
     private _notify: NotificationService,
     private _conector: ConectorsService
@@ -31,8 +28,6 @@ export class VerifyAccountComponent {
   ngOnInit(): void {
     //Modifica el título de la vista principal
     this._conector.setUpdateTitle('Verificación de cuenta')
-
-    this.profileId = this._actRoute.snapshot.paramMap.get('id');
 
     this.createForm();
     this.createFormMsg();

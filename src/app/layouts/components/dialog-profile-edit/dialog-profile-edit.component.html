@@ -29,7 +29,8 @@
             </div>
             
             <!-- Sección de agregar redes sociales -->
-            <div class="mb-3 pb-2 b-b">
+            <!-- NO POR AHORA
+            <div class="mb-3 pb-2 b-b" *ngIf="false">
                 <h5 class="text-left ms-2 pb-1 mb-2 b-b">Agregar redes sociales</h5>
                 <div class="d-flex justify-content-start align-items-center">
                     <button class="b-all ms-2" mat-icon-button (click)="showSocialForm = !showSocialForm">
@@ -63,12 +64,10 @@
                         </span>
                     </button>
                 </div>
-            
-                <!-- Redes sociales agregadas -->
                 <div *ngFor="let social of addedSocials" class="social-tag">
                     <button mat-stroked-button>{{ social.network }}: {{ social.value }}</button>
                 </div>
-            </div>
+            </div> -->
         
             <div class="d-flex justify-content-end">
                 <button mat-stroked-button class="me-2" color="warn" type="button">Reset</button>

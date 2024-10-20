@@ -2,42 +2,45 @@
 <mat-card class="card profile-card">
     <mat-card-content>
         <div class="edit-box btn-border bg-primary">
-            <button class="b-all" mat-icon-button (click)="editProfile('asadasdqwe12134')">
+            <button class="b-all" mat-icon-button (click)="editProfile('asadasdqwe12134')" *ngIf="isUser">
                 <span class="material-symbols-outlined align-button-icon text-white">
                     edit
                 </span>
             </button>
         </div>
-        <div class="info-box">
+        <div class="info-box" *ngIf="!loading">
+            <!-- Información -->
             <div class="d-flex justify-content-start">
                 <!-- image -->
                 <div class="img-container">
                     <div class="btn-border img-box">
-                        <img src="../../../assets/images/mario.png" class="btn-border" alt="user image">
+                        <img [src]="uriImg + profileData.thumbnail" class="btn-border" alt="user image">
                     </div>
                 </div>
                 <!-- text -->
-                <div class="d-flex flex-column align-items-start ms-4">
-                    <p class="mb-0 fw-bold font-22">Mario Gomez</p>
+                <div class="d-flex flex-column align-items-start ms-4 pb-2">
+                    <p class="mb-0 fw-bold font-22">{{ profileData.name || 'Sin información' }}</p>
                     <div class="description-box">
                         <div class="me-4">
                             <span class="material-symbols-outlined align-icon">
                                 location_on
                             </span>
-                            <span>Rosario, Santa Fe</span>
+                            <span>{{ profileData.location || 'Sin información' }}</span>
                         </div>
                         <div>
                             <span class="material-symbols-outlined align-icon">
                                 person_check
                             </span>
-                            <span>232</span> seguidores
+                            <span>{{ profileData.followers || 0 }}</span> seguidores
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Sociales -->
             <div class="d-flex justify-content-end align-items-center">
                 <!-- links -->
-                <div class="ms-4">
+                <!-- NO POR AHORA
+                <div class="ms-4" *ngIf="false">
                     <button class="b-all ms-2" mat-icon-button color="primary">
                         <span class="material-symbols-outlined align-button-icon">
                             call
@@ -48,25 +51,26 @@
                             photo_camera
                         </span>
                     </button>
-                </div>
+                </div> -->
                 <!-- follow -->
-                <div class="ms-4">
-                    <button mat-stroked-button class="btn-border d-flex justify-content-center pb-1" color="primary">
-                        <div *ngIf="true">
-                            <span class="material-symbols-outlined align-icon">
-                                person_add
-                            </span>
-                            <span class="status">Seguir</span>
-                        </div>
-                        <div *ngIf="false">
-                            <span class="material-symbols-outlined align-icon">
-                                person_check
-                            </span>
-                            <span class="status">Siguiendo</span>
-                        </div>
-                    </button>
-                </div>
+                <button mat-stroked-button class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" color="primary" *ngIf="!isUser">
+                    <div *ngIf="true">
+                        <span class="material-symbols-outlined align-icon">
+                            person_add
+                        </span>
+                        <span class="status">Seguir</span>
+                    </div>
+                    <div *ngIf="false">
+                        <span class="material-symbols-outlined align-icon">
+                            person_check
+                        </span>
+                        <span class="status">Siguiendo</span>
+                    </div>
+                </button>
             </div>
+        </div>
+        <div class="info-box" *ngIf="loading">
+            ...loading
         </div>
     </mat-card-content>
 </mat-card>
@@ -75,7 +79,7 @@
     <h4 class="m-4 mb-3">Eventos</h4>
     <div class="event-box flex-wrap gap-4 pb-3">
         <!-- Caja "Agregar Evento" -->
-        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent('asadasdqwe12134')">
+        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent('asadasdqwe12134')" *ngIf="isUser">
             <h5 class="w-100 text-center add-event-text">
                 + Agregar Evento
             </h5>
