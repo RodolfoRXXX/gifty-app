@@ -2,7 +2,7 @@
 <mat-card class="card profile-card">
     <mat-card-content>
         <div class="edit-box btn-border bg-primary">
-            <button class="b-all" mat-icon-button (click)="editProfile('asadasdqwe12134')" *ngIf="isUser">
+            <button class="b-all" mat-icon-button (click)="editProfile(profileId)" *ngIf="isUser">
                 <span class="material-symbols-outlined align-button-icon text-white">
                     edit
                 </span>
@@ -79,7 +79,7 @@
     <h4 class="m-4 mb-3">Eventos</h4>
     <div class="event-box flex-wrap gap-4 pb-3">
         <!-- Caja "Agregar Evento" -->
-        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent('asadasdqwe12134')" *ngIf="isUser">
+        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent(profileId)" *ngIf="isUser">
             <h5 class="w-100 text-center add-event-text">
                 + Agregar Evento
             </h5>

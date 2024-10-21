@@ -3,13 +3,25 @@
 <mat-card class="card">
     <mat-card-content>
         <h4 class="text-left pb-1 b-b">Editar perfíl</h4>
-        <form class="pt-2" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <form class="pt-2" [formGroup]="dataForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
             <div class="row p-2" style="margin: auto;">
                 <!-- Caja para la foto -->
-                <div class="photo-box col-md-12 col-xl-4" style="margin: 0 auto 15px;" (drop)="onFileDrop($event)" (click)="fileInput.click()" (dragover)="onDragOver($event)">
-                    <p *ngIf="!photo">Click o arrastra una foto aquí</p>
-                    <img *ngIf="photo" [src]="photo" alt="Foto" class="uploaded-photo"/>
-                    <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+                <div class="photo-box col-md-12 col-xl-4"
+                    (dragover)="onDragOver($event)"
+                    (dragleave)="onDragLeave($event)"
+                    (drop)="onDrop($event)"
+                    (click)="fileInput.click()">
+                    <div class="info-text" *ngIf="!load_image">
+                        <h6>Click o arrastra una foto aquí</h6>
+                    </div>
+                    <div class="upload-text" *ngIf="load_image">
+                        <h6>cargando...</h6>
+                    </div>
+                    <div class="error-text" *ngIf="error_image">
+                        <h6>{{ error_image }}</h6>
+                    </div>
+                    <img *ngIf="imageSrc && !load_image" [src]="imageSrc" alt="Foto" class="uploaded-photo"/>
+                    <input type="file" accept="image/*" #fileInput (change)="capture_img($event)" hidden>
                 </div>
 
                 <div class="col-md-12 col-xl-8">
@@ -17,12 +29,14 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Nombre</mat-label>
                         <input matInput formControlName="name">
+                        <mat-error class="fs-08" *ngIf="this.dataForm.controls['name']!.errors">{{getErrorName()}}</mat-error>
                     </mat-form-field>
 
                     <!-- Input de ubicación -->
                     <mat-form-field appearance="fill">
                         <mat-label>Ubicación</mat-label>
                         <input matInput formControlName="location">
+                        <mat-error class="fs-08" *ngIf="this.dataForm.controls['location']!.errors">{{getErrorLocation()}}</mat-error>
                     </mat-form-field>
                 </div>
                 
@@ -70,8 +84,15 @@
             </div> -->
         
             <div class="d-flex justify-content-end">
-                <button mat-stroked-button class="me-2" color="warn" type="button">Reset</button>
-                <button mat-flat-button color="primary" type="submit">Enviar</button>
+                <button mat-stroked-button class="me-2" color="warn" type="button" (click)="resetAll()">Reset</button>
+                <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading || (!dataForm.controls['thumbnail'].value)?dataForm.pristine:false">
+                    <ng-container *ngIf="!loading; else loadingSpinner">
+                      Guardar cambios
+                    </ng-container>
+                    <ng-template #loadingSpinner>
+                      <mat-spinner diameter="20"></mat-spinner>
+                    </ng-template>
+                </button>
             </div>
         </form>               
     </mat-card-content>
