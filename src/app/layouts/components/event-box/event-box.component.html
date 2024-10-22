@@ -49,7 +49,7 @@
                     <!-- Primera fila de texto (alineada a la derecha) -->
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="me-2">
-                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Aniversario</span>
+                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400 cap" style="padding: 0 10px;">{{ eventData.type }}</span>
                         </div>
                         <div>
                             <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Faltan 26 días</span>
@@ -59,7 +59,7 @@
                     <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
                     <div class="d-flex align-items-center" style="flex-grow: 1;">
                         <h3 class="text-left multiline-truncate m-0 fw-semibold">
-                            Mi Cumpleaños
+                            {{ eventData.name }}
                         </h3>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             
             <!-- Tercera Fila (Texto) -->
             <div class="mb-2">
-                <p class="font-14 text-muted">Me encanta poder disfrutar mi cumple con todos mis conocidos</p>
+                <p class="font-14 text-muted">{{ eventData.description }}</p>
             </div>
 
             <!-- Cuarta Fila (Avance) -->
