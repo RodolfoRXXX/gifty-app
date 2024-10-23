@@ -9,17 +9,19 @@
         <!-- Mensajes -->
         <h4 class="text-left mb-1 mt-3">Mensajes</h4>
         <div class="gap-container p-2">
-          <app-message-card></app-message-card>
-          <app-message-card></app-message-card>
-          <app-message-card></app-message-card>
-          <app-message-card></app-message-card>
-          <app-message-card></app-message-card>
-          <app-message-card></app-message-card>
+            <ng-container *ngIf="messageList">
+                <ng-container *ngFor="let message of messageList">
+                    <app-message-card [message]="message"></app-message-card>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="!messageList">
+                <p>No hay mensajes</p>
+            </div>
         </div>
     </div>
     <!-- Regalos -->
     <div class="col-md-12 col-xl-4">
         <h4 class="text-left mb-3">Regalos</h4>
-        <app-gift-box></app-gift-box>
+        <app-gift-box [eventId]="eventId"></app-gift-box>
     </div>
 </div>

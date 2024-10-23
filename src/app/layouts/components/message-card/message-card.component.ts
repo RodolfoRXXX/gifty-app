@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { MaterialModule } from 'src/app/material/material/material.module';
+import { daysSinceDate } from 'src/app/shared/functions/date.function';
 
 @Component({
   selector: 'app-message-card',
@@ -13,5 +14,11 @@ import { MaterialModule } from 'src/app/material/material/material.module';
   styleUrl: './message-card.component.scss'
 })
 export class MessageCardComponent {
+
+  @Input() message!: any;
+
+  daysSince(date: string) {
+    return daysSinceDate(date);
+  }
 
 }

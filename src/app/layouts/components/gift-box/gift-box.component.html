@@ -3,15 +3,21 @@
 <mat-card class="card">
     <mat-card-content>
         <div class="gap-container mb-3">
-          <app-gift-message-box></app-gift-message-box>
-          <app-gift-message-box></app-gift-message-box>
-          <app-gift-message-box></app-gift-message-box>
+        
+            <ng-container *ngIf="giftList">
+                <ng-container *ngFor="let gift of giftList">
+                    <app-gift-message-box [gift]="gift"></app-gift-message-box>
+                </ng-container>
+            </ng-container>
+            <div class="w-100" *ngIf="!giftList">
+                <p class="text-center text-muted">No hay regalos</p>
+            </div>
         </div>
         <button mat-flat-button color="primary" class="btn-border w-100">
             Hacer un regalo
         </button>
-        <div class="mt-2 btn-border b-all p-1">
-            <p class="text-center font-14">Acumulado: $<span class="fw-semibold primary-color font-18">15600</span></p>
+        <div class="mt-2 btn-border b-all p-1" *ngIf="total > 0">
+            <p class="text-center font-14">Acumulado: $<span class="fw-semibold primary-color font-18">{{ (total || 0) | number:'1.2-2' }}</span></p>
         </div>
     </mat-card-content>
 </mat-card>

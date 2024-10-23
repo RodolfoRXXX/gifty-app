@@ -9,39 +9,37 @@
                 <!-- Foto y nombre -->
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="image-container">
-                        <img src="../../../assets/images/mario.png" class="image-user">
+                        <img [src]="uriImg + userData.thumbnail" class="image-user">
                     </div>
                     
                     <!-- Contenedor del texto -->
                     <div class="text-container flex-grow-1">
-                        <a href="#" class="font-16 fw-semibold primary-color">Mario Gomez</a>
+                       <a href="#" class="font-16 fw-semibold primary-color">{{ userData.name || userData.email.split('@')[0] }}</a>
                     </div>
                 </div>
                 <!-- Seguir -->
-                <div>
-                    <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary">
-                        <div *ngIf="true">
-                            <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
-                                person_add
-                            </span>
-                            <span class="font-14">Seguir</span>
-                        </div>
-                        <div *ngIf="false">
-                            <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
-                                person_check
-                            </span>
-                            <span class="font-14">Siguiendo</span>
-                        </div>
-                    </button>
-                </div>
+                <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary" *ngIf="!isUser">
+                    <div *ngIf="true">
+                        <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
+                            person_add
+                        </span>
+                        <span class="font-14">Seguir</span>
+                    </div>
+                    <div *ngIf="false">
+                        <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
+                            person_check
+                        </span>
+                        <span class="font-14">Siguiendo</span>
+                    </div>
+                </button>
             </div>
 
             <!-- Segunda Fila (información) -->
             <div class="d-flex justify-content-start align-items-center mb-2">
                 <!-- Cuadrado a la izquierda (tamaño fijo) -->
                 <div class="btn-border d-flex flex-column justify-content-center aling-items-center background-main primary-color date-box">
-                    <h6 class="mb-0 text-center">Diciembre</h6>
-                    <h2 class="mb-0 text-center fw-semibold">17</h2>
+                    <h6 class="mb-0 text-center">{{ loading?'':getMonth(eventData.date) }}</h6>
+                    <h2 class="mb-0 text-center fw-semibold">{{ loading?'':(eventData.date | date:'dd') }}</h2>
                 </div>
                 
                 <!-- Texto a la derecha (ajuste automático a dos líneas como máximo) -->
@@ -49,17 +47,22 @@
                     <!-- Primera fila de texto (alineada a la derecha) -->
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="me-2">
-                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400 cap" style="padding: 0 10px;">{{ eventData.type }}</span>
+                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400 cap" style="padding: 0 10px;">{{ loading?'cargando..':eventData.type }}</span>
                         </div>
                         <div>
-                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Faltan 26 días</span>
+                            <span 
+                                class="font-12 b-all btn-border soft-grey-background fw-400" 
+                                ngClass="{{ loading?'cargando..':daysUntil(eventData.date)<365?'primary-color':'warn-color' }}"
+                                style="padding: 0 10px;">
+                                {{ loading?'cargando..':((daysUntil(eventData.date)<365)?'Faltan ' + daysUntil(eventData.date) + ' días':'Es hoy!') }}
+                            </span>
                         </div>
                     </div>
                     
                     <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
                     <div class="d-flex align-items-center" style="flex-grow: 1;">
                         <h3 class="text-left multiline-truncate m-0 fw-semibold">
-                            {{ eventData.name }}
+                            {{ loading?'cargando..':eventData.name }}
                         </h3>
                     </div>
                 </div>
@@ -67,7 +70,7 @@
             
             <!-- Tercera Fila (Texto) -->
             <div class="mb-2">
-                <p class="font-14 text-muted">{{ eventData.description }}</p>
+                <p class="font-14 text-muted">{{ loading?'cargando..':eventData.description }}</p>
             </div>
 
             <!-- Cuarta Fila (Avance) -->
@@ -77,9 +80,9 @@
                     <mat-progress-bar
                         class="me-2"
                         mode="determinate"
-                        [value]="35">
+                        [value]="goal">
                     </mat-progress-bar>
-                    <span class="font-16 fw-semibold">35%</span>
+                    <span class="font-16 fw-semibold">{{ goal }}%</span>
                 </div>
                 
             </div>
