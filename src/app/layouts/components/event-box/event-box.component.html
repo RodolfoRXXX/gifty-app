@@ -14,7 +14,7 @@
                     
                     <!-- Contenedor del texto -->
                     <div class="text-container flex-grow-1">
-                       <a href="#" class="font-16 fw-semibold primary-color">{{ userData.name || userData.email.split('@')[0] }}</a>
+                       <a [routerLink]="['../../profile', userData.profileId]" class="font-16 fw-semibold primary-color">{{ userData.name || userData.email.split('@')[0] }}</a>
                     </div>
                 </div>
                 <!-- Seguir -->
@@ -83,8 +83,7 @@
                         [value]="goal">
                     </mat-progress-bar>
                     <span class="font-16 fw-semibold">{{ goal }}%</span>
-                </div>
-                
+                </div> 
             </div>
         </div>
     </mat-card-content>

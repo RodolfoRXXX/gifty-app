@@ -7,52 +7,53 @@
             <div class="d-flex justify-content-between b-b mb-2 pb-2">
                 <!-- Foto y nombre -->
                 <div class="d-flex justify-content-start align-items-center">
-                    <div class="me-2">
-                        <div class="image-user">
-                            <img src="../../../assets/images/mario.png" class="">
-                        </div>
+                    <div class="image-user me-2">
+                        <img [src]="uriImg + event.thumbnail">
                     </div>
-                    <div class="">
-                        <p class="font-14 fw-semibold">Mario Gomez</p>
+                    <div>
+                        <a [routerLink]="['../../profile', event.profileId]" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
                     </div>
                 </div>
                 <!-- Seguir -->
-                <div>
-                    <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary">
-                        <div *ngIf="true">
-                            <span class="material-symbols-outlined align-icon" style="font-size: 17px;">
-                                person_add
-                            </span>
-                            <span class="font-12">Seguir</span>
-                        </div>
-                        <div *ngIf="false">
-                            <span class="material-symbols-outlined align-icon">
-                                person_check
-                            </span>
-                            <span class="font-12">Siguiendo</span>
-                        </div>
-                    </button>
-                </div>
+                <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary" *ngIf="!isUser">
+                    <div *ngIf="true">
+                        <span class="material-symbols-outlined align-icon" style="font-size: 17px;">
+                            person_add
+                        </span>
+                        <span class="font-12">Seguir</span>
+                    </div>
+                    <div *ngIf="false">
+                        <span class="material-symbols-outlined align-icon">
+                            person_check
+                        </span>
+                        <span class="font-12">Siguiendo</span>
+                    </div>
+                </button>
             </div>
 
             <!-- Segunda Fila (información) -->
             <div class="d-flex justify-content-start align-items-center">
                 <!-- Cuadrado a la izquierda (tamaño fijo) -->
                 <div class="btn-border d-flex flex-column justify-content-center aling-items-center background-main primary-color date-box">
-                    <h6 class="mb-0 text-center">Diciembre</h6>
-                    <h2 class="mb-0 text-center fw-semibold">17</h2>
+                    <h6 class="mb-0 text-center">{{ getMonth(event.date) }}</h6>
+                    <h2 class="mb-0 text-center fw-semibold">{{ event.date | date:'dd' }}</h2>
                 </div>
                 
                 <!-- Texto a la derecha (ajuste automático a dos líneas como máximo) -->
                 <div class="d-flex flex-column justify-content-between text-box">
                     <!-- Primera fila de texto (alineada a la derecha) -->
                     <div class="text-end">
-                        <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400" style="padding: 0 10px;">Faltan 26 días</span>
+                        <span 
+                                class="font-12 b-all btn-border soft-grey-background fw-400" 
+                                ngClass="{{ daysUntil(event.date)<365?'primary-color':'warn-color' }}"
+                                style="padding: 0 10px;">
+                                {{ ((daysUntil(event.date)<365)?'Faltan ' + daysUntil(event.date) + ' días':'Es hoy!') }}
+                            </span>
                     </div>
                     <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
                     <div class="d-flex align-items-center" style="flex-grow: 1;">
                         <h4 class="text-left multiline-truncate m-0 fw-semibold">
-                            Mi aniversario de casamiento
+                            {{ event.name }}
                         </h4>
                     </div>
                 </div>
@@ -65,18 +66,17 @@
                     <mat-progress-bar
                         class="me-2"
                         mode="determinate"
-                        [value]="35">
+                        [value]="goal">
                     </mat-progress-bar>
-                    <span class="font-16 fw-semibold">35%</span>
-                </div>
-                
+                    <span class="font-16 fw-semibold">{{ goal }}%</span>
+                </div> 
             </div>
             
             <!-- Cuarta Fila (botón de evento) -->
             <div>
-                <button mat-flat-button color="primary" class="btn-border w-100" (click)="getEvent('acoacoas')">
+                <a mat-flat-button color="primary" class="btn-border w-100" [routerLink]="['../../event', event.eventId]">
                     Ver evento
-                </button>
+                </a>
             </div>
         </div>
     </mat-card-content>

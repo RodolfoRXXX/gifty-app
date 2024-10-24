@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   profileId!: string | null;
   profileData: any;
+  eventList!: any[];
   loading: boolean = true;
   uriImg = environment.SERVER;
   isUser!: boolean;
@@ -44,6 +45,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.profileId = paramMap.get('profileId');
       if (this.profileId) {
         this.getUserData(this.profileId);
+        this.getEventList(this.profileId);
         const data = JSON.parse(this._auth.getDataFromLocalStorage());
         this.isUser = (data.profileId === this.profileId);
       } else {
@@ -66,6 +68,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       error: (err) => {
         this._router.navigate(['../page-not-found']);
         this.loading = false;
+      }
+    });
+  }
+
+  getEventList(profileId: string) {
+    this._api.postTypeRequest('profile/get-event-list', { profileId }).subscribe({
+      next: (response: any) => {
+        if(response.status == 1 && response.data.length) {
+          this.eventList = response.data; // Almacenar los datos
+        } else {
+          this.eventList = [];
+        }
+      },
+      error: (err) => {
+        this.eventList = [];
       }
     });
   }

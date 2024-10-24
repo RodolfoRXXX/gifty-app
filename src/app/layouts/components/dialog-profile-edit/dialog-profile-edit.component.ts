@@ -85,7 +85,7 @@ export class DialogProfileEditComponent {
 
   getUserData(profileId: string) {
     // Llamar a la API para obtener los datos del perfil
-    this._api.postTypeRequest('profile/get-profile-id', { profileId }).subscribe({
+    this._api.postTypeRequest('profile/get-profile', { profileId }).subscribe({
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.profileData = response.data[0];

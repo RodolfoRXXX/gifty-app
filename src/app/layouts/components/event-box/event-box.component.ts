@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   templateUrl: './event-box.component.html',
   styleUrl: './event-box.component.scss'
@@ -73,10 +74,12 @@ export class EventBoxComponent implements OnInit {
             sub += element.qty
           });
           this.goal = Math.floor((sub/goal)*100)
+        } else {
+          this.goal = 0;
         }
       },
       error: (err) => {
-        //this.loading = false;
+        this.goal = 0;
       }
     });
   }

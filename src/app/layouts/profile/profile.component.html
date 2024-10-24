@@ -86,10 +86,14 @@
         </div>
 
         <!-- Cajas con eventos -->
-        <app-event-card></app-event-card>
-        <app-event-card></app-event-card>
-        <app-event-card></app-event-card>
-        <app-event-card></app-event-card>
+        <ng-container *ngIf="eventList">
+            <ng-container *ngFor="let event of eventList">
+                <app-event-card [event]="event"></app-event-card>
+            </ng-container>
+        </ng-container>
+        <div *ngIf="!eventList && !isUser">
+            <p>No hay eventos</p>
+        </div>
     </div>
 </div>
 
