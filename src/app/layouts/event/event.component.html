@@ -9,12 +9,12 @@
         <!-- Mensajes -->
         <h4 class="text-left mb-1 mt-3">Mensajes</h4>
         <div class="gap-container p-2">
-            <ng-container *ngIf="messageList">
+            <ng-container *ngIf="messageList.length > 0">
                 <ng-container *ngFor="let message of messageList">
                     <app-message-card [message]="message"></app-message-card>
                 </ng-container>
             </ng-container>
-            <div *ngIf="!messageList">
+            <div *ngIf="messageList.length == 0">
                 <p>No hay mensajes</p>
             </div>
         </div>

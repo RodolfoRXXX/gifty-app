@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  getEventList(profileId: string) {
+  getEventList(profileId: string | null) {
     this._api.postTypeRequest('profile/get-event-list', { profileId }).subscribe({
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
@@ -89,17 +89,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   //Abrir el modal de edición de perfíl
   editProfile(profileId: string | null) {
-    const dialogRef = this._dialog.open(DialogProfileEditComponent, { data: { profileId: profileId }});
-      dialogRef.afterClosed().subscribe(result => {
+    const editProfileDialog = this._dialog.open(DialogProfileEditComponent, { data: { profileId: profileId }});
+      editProfileDialog.afterClosed().subscribe(result => {
         if(result) {
           window.location.reload();
         }
       });
   }
   //Abrir el modal de edición de evento
-  editEvent(id: string | null) {
-    console.log(id)
-    this._dialog.open(DialogEventEditComponent, { data: { id:id }});
+  editEvent(profileId: string | null, eventId: string) {
+    const editEventDialog = this._dialog.open(DialogEventEditComponent, { data: { profileId: profileId, eventId: eventId }});
+    editEventDialog.afterClosed().subscribe(result => {
+      if(result) {
+        this.getEventList(this.profileId);
+      }
+    });
   }
 
   // Al destruir el componente, cancelar la suscripción para evitar fugas de memoria

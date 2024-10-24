@@ -25,7 +25,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   private routeSub!: Subscription;
   eventId!: string | null;
-  messageList!: any[];
+  messageList: any[] = [];
   isUser!: boolean;
 
   constructor(

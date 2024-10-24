@@ -60,7 +60,7 @@
             </div>
             
             <!-- Tercera Fila (centrada con el acumulado) -->
-            <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;">
+            <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;" *ngIf="hasGoal">
                 <p class="font-12 me-2 mb-0 d-block">Meta cumplida: </p>
                 <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
                     <mat-progress-bar
@@ -70,6 +70,10 @@
                     </mat-progress-bar>
                     <span class="font-16 fw-semibold">{{ goal }}%</span>
                 </div> 
+            </div>
+            <!-- Descripción -->
+            <div class="mb-1 mt-1" style="height: 40px; overflow-y:hidden;" *ngIf="!hasGoal">
+                <p class="font-12 me-2 mb-0 d-block">{{ event.description }}</p>
             </div>
             
             <!-- Cuarta Fila (botón de evento) -->

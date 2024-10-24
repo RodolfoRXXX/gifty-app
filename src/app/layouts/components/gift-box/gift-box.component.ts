@@ -18,7 +18,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class GiftBoxComponent {
 
   @Input() eventId!: string | null;
-  giftList!: any[];
+  giftList: any[] = [];
   total: number = 0;
 
   constructor(
@@ -44,7 +44,7 @@ export class GiftBoxComponent {
         }
       },
       error: (err) => {
-        //this.loading = false;
+        this.giftList = [];
       }
     });
   }

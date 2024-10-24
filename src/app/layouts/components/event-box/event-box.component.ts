@@ -24,6 +24,7 @@ export class EventBoxComponent implements OnInit {
   eventData!: any;
   userData!: any;
   isUser!: boolean;
+  hasGoal!: boolean;
   uriImg = environment.SERVER;
   goal: number = 0;
   loading!: boolean;
@@ -41,18 +42,21 @@ export class EventBoxComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['eventId'].currentValue !== undefined) {
       this.loading = true;
-      this.loadEvent(changes['eventId'].currentValue)
+      this.getEvent(changes['eventId'].currentValue)
     }
   }
 
-  loadEvent(eventId: string) {
+  getEvent(eventId: string) {
     // Llamar a la API para obtener los datos del evento
     this._api.postTypeRequest('profile/get-event', { eventId }).subscribe({
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.eventData = response.data[0]; // Almacenar los datos del evento
-          this.getGoal(eventId, this.eventData.goal);
           this.isUser = (this.userData.profileId === this.eventData.profileId);
+          if(this.eventData.goal > 0) {
+            this.getGoal(eventId, this.eventData.goal);
+            this.hasGoal = true;
+          }
           this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);

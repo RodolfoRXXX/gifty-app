@@ -39,50 +39,7 @@
                         <mat-error class="fs-08" *ngIf="this.dataForm.controls['location']!.errors">{{getErrorLocation()}}</mat-error>
                     </mat-form-field>
                 </div>
-                
             </div>
-            
-            <!-- Sección de agregar redes sociales -->
-            <!-- NO POR AHORA
-            <div class="mb-3 pb-2 b-b" *ngIf="false">
-                <h5 class="text-left ms-2 pb-1 mb-2 b-b">Agregar redes sociales</h5>
-                <div class="d-flex justify-content-start align-items-center">
-                    <button class="b-all ms-2" mat-icon-button (click)="showSocialForm = !showSocialForm">
-                        <span class="material-symbols-outlined align-button-icon">
-                            add_circle
-                        </span>
-                    </button>
-                    <button class="b-all ms-2" mat-icon-button color="primary" (click)="showSocialForm = !showSocialForm">
-                        <span class="material-symbols-outlined align-button-icon">
-                            phone
-                        </span>
-                    </button>
-                </div>
-                
-                <div *ngIf="showSocialForm" class="social-form ms-2">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Red Social</mat-label>
-                        <mat-select formControlName="socialNetwork">
-                            <mat-option *ngFor="let network of availableSocialNetworks" [value]="network">{{ network }}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-            
-                    <mat-form-field appearance="fill">
-                        <mat-label>Valor</mat-label>
-                        <input matInput formControlName="socialValue">
-                    </mat-form-field>
-
-                    <button class="b-all ms-2" mat-icon-button color="primary" (click)="addSocial()">
-                        <span class="material-symbols-outlined align-button-icon">
-                            save
-                        </span>
-                    </button>
-                </div>
-                <div *ngFor="let social of addedSocials" class="social-tag">
-                    <button mat-stroked-button>{{ social.network }}: {{ social.value }}</button>
-                </div>
-            </div> -->
-        
             <div class="d-flex justify-content-end">
                 <button mat-stroked-button class="me-2" color="warn" type="button" (click)="resetAll()">Reset</button>
                 <button mat-flat-button class="btn-border" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading || (!dataForm.controls['thumbnail'].value)?dataForm.pristine:false">

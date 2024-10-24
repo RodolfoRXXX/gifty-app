@@ -79,7 +79,7 @@
     <h4 class="m-4 mb-3">Eventos</h4>
     <div class="event-box flex-wrap gap-4 pb-3">
         <!-- Caja "Agregar Evento" -->
-        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent(profileId)" *ngIf="isUser">
+        <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent(profileId, '')" *ngIf="isUser">
             <h5 class="w-100 text-center add-event-text">
                 + Agregar Evento
             </h5>
@@ -88,7 +88,7 @@
         <!-- Cajas con eventos -->
         <ng-container *ngIf="eventList">
             <ng-container *ngFor="let event of eventList">
-                <app-event-card [event]="event"></app-event-card>
+                <app-event-card class="card-hover btn-border" [event]="event" (click)="isUser?editEvent(profileId, event.eventId):''"></app-event-card>
             </ng-container>
         </ng-container>
         <div *ngIf="!eventList && !isUser">

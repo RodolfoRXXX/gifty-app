@@ -69,12 +69,12 @@
             </div>
             
             <!-- Tercera Fila (Texto) -->
-            <div class="mb-2">
-                <p class="font-14 text-muted">{{ loading?'cargando..':eventData.description }}</p>
+            <div class="d-flex flex-column align-items-start justify-content-center mt-2" style="height: 100%">
+                <p class="font-14">{{ loading ? 'cargando..' : eventData.description }}</p>
             </div>
 
             <!-- Cuarta Fila (Avance) -->
-            <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;">
+            <div class="d-flex flex-column align-items-start justify-content-center mt-2" style="height: 100%;" *ngIf="hasGoal">
                 <p class="font-14 me-2 mb-0 d-block">Meta cumplida: </p>
                 <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
                     <mat-progress-bar

@@ -198,19 +198,21 @@ export function isNewerThan30Days(inputDate: string): boolean {
 
 //Función que recibe una fecha y sin importar el año, devuelve cuantos días falta para esa fecha, en caso de que ya haya pasado, 
     //para el próximo año
-    //recibe una fecha: '2024-08-24'
+    //recibe una fecha: '1985-10-13T03:00:00.000Z'
     //devuelve un numero: 10
 export function daysUntilDate(targetDate: string): number {
   const today = new Date();
   const currentYear = today.getFullYear();
 
-  // Convertir la fecha de destino a una fecha de este año
-  const [year, month, day] = targetDate.split('-').map(Number);
-  let nextDate = new Date(currentYear, month - 1, day);
+  // Convertir el string de fecha objetivo en un objeto Date
+  const target = new Date(targetDate);
+  
+  // Crear una nueva fecha con el mismo día y mes de target pero en el año actual
+  let nextDate = new Date(currentYear, target.getMonth(), target.getDate());
 
   // Si la fecha ya ha pasado este año, sumarle un año
   if (nextDate < today) {
-    nextDate = new Date(currentYear + 1, month - 1, day);
+    nextDate = new Date(currentYear + 1, target.getMonth(), target.getDate());
   }
 
   // Calcular la diferencia en milisegundos y convertirla en días
@@ -219,6 +221,7 @@ export function daysUntilDate(targetDate: string): number {
 
   return daysUntil;
 }
+    
 
 //Función que devuelve la cantidad de días pasados desde la fecha pasada como parámetro
     //recibe: '2024-10-20 09:30:35'

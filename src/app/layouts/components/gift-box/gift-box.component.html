@@ -3,13 +3,12 @@
 <mat-card class="card">
     <mat-card-content>
         <div class="gap-container mb-3">
-        
-            <ng-container *ngIf="giftList">
+            <ng-container *ngIf="giftList.length > 0">
                 <ng-container *ngFor="let gift of giftList">
                     <app-gift-message-box [gift]="gift"></app-gift-message-box>
                 </ng-container>
             </ng-container>
-            <div class="w-100" *ngIf="!giftList">
+            <div class="w-100" *ngIf="giftList.length == 0">
                 <p class="text-center text-muted">No hay regalos</p>
             </div>
         </div>

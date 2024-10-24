@@ -22,6 +22,7 @@ export class EventCardComponent {
 
   @Input() event!: any;
   uriImg = environment.SERVER;
+  hasGoal!: boolean;
   goal: number = 0;
   isUser!: boolean;
 
@@ -32,8 +33,11 @@ export class EventCardComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['event'].currentValue !== undefined) {
-      this.getGoal(changes['event'].currentValue.eventId, changes['event'].currentValue.goal)
       this.isUser = (JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId);
+      if(changes['event'].currentValue.goal > 0) {
+        this.getGoal(changes['event'].currentValue.eventId, changes['event'].currentValue.goal);
+        this.hasGoal = true;
+      }
     }
   }
 
