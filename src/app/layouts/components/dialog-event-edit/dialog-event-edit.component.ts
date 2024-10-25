@@ -100,7 +100,6 @@ export class DialogEventEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.dataForm.value);
     this._api.postTypeRequest('profile/edit-event', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;

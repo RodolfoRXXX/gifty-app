@@ -25,7 +25,7 @@
 
         <!-- Fecha del evento -->
         <mat-form-field>
-            <mat-label>Fecha del evento</mat-label>
+            <mat-label>{{ (dataForm.controls['type'].value == 'aniversario')?'Fecha del evento':'Fecha límite' }}</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Seleccione una fecha">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>

@@ -31,36 +31,26 @@
                             <span class="material-symbols-outlined align-icon">
                                 person_check
                             </span>
-                            <span>{{ profileData.followers || 0 }}</span> seguidores
+                            <span>{{  getFollowersNumber(profileData.followers) || 0 }}</span> seguidores
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Sociales -->
             <div class="d-flex justify-content-end align-items-center">
-                <!-- links -->
-                <!-- NO POR AHORA
-                <div class="ms-4" *ngIf="false">
-                    <button class="b-all ms-2" mat-icon-button color="primary">
-                        <span class="material-symbols-outlined align-button-icon">
-                            call
-                        </span>
-                    </button>
-                    <button class="b-all ms-2" mat-icon-button color="primary">
-                        <span class="material-symbols-outlined align-button-icon">
-                            photo_camera
-                        </span>
-                    </button>
-                </div> -->
                 <!-- follow -->
-                <button mat-stroked-button class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" color="primary" *ngIf="!isUser">
-                    <div *ngIf="true">
+                <button mat-stroked-button 
+                        class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
+                        color="primary" 
+                        *ngIf="!isUser" 
+                        (click)="follow(isFollowed?false:true)">
+                    <div *ngIf="!isFollowed">
                         <span class="material-symbols-outlined align-icon">
                             person_add
                         </span>
                         <span class="status">Seguir</span>
                     </div>
-                    <div *ngIf="false">
+                    <div *ngIf="isFollowed">
                         <span class="material-symbols-outlined align-icon">
                             person_check
                         </span>
@@ -86,12 +76,12 @@
         </div>
 
         <!-- Cajas con eventos -->
-        <ng-container *ngIf="eventList">
+        <ng-container *ngIf="eventList.length > 0">
             <ng-container *ngFor="let event of eventList">
                 <app-event-card class="card-hover btn-border" [event]="event" (click)="isUser?editEvent(profileId, event.eventId):''"></app-event-card>
             </ng-container>
         </ng-container>
-        <div *ngIf="!eventList && !isUser">
+        <div *ngIf="eventList.length == 0 && !isUser">
             <p>No hay eventos</p>
         </div>
     </div>

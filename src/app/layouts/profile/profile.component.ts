@@ -26,10 +26,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   profileId!: string | null;
   profileData: any;
-  eventList!: any[];
+  eventList: any[] = [];
   loading: boolean = true;
   uriImg = environment.SERVER;
   isUser!: boolean;
+  isFollowed: boolean = false;
   private routeSub!: Subscription;
 
   constructor(
@@ -46,12 +47,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (this.profileId) {
         this.getUserData(this.profileId);
         this.getEventList(this.profileId);
-        const data = JSON.parse(this._auth.getDataFromLocalStorage());
-        this.isUser = (data.profileId === this.profileId);
+        this.isUser = (this.getLocalStorageData()?this.getLocalStorageData().profileId:'' === this.profileId);
       } else {
         this._router.navigate(['../page-not-found']);
       }
     });
+  }
+
+  getLocalStorageData() {
+    return JSON.parse(this._auth.getDataFromLocalStorage())
   }
 
   getUserData(profileId: string) {
@@ -60,6 +64,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.profileData = response.data[0]; // Almacenar los datos del perfil
+          this.isFollowed = Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
+                  JSON.parse(this.getLocalStorageData().followers).some(
+                    (value: any) => value == this.profileData.profileId
+                  );
           this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);
@@ -104,6 +112,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.getEventList(this.profileId);
       }
     });
+  }
+
+  getFollowersNumber(followers: string | null): number {
+    return followers ? JSON.parse(followers).length : 0;
+  }
+
+  follow(status: boolean) {
+    console.log(this.getLocalStorageData())
   }
 
   // Al destruir el componente, cancelar la suscripción para evitar fugas de memoria
