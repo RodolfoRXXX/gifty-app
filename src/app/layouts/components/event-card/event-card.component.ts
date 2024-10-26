@@ -22,8 +22,9 @@ export class EventCardComponent {
 
   @Input() event!: any;
   uriImg = environment.SERVER;
-  hasGoal!: boolean;
   goal: number = 0;
+  messages: number = 0;
+  gifts: number = 0;
   isUser!: boolean;
 
   constructor(
@@ -36,7 +37,8 @@ export class EventCardComponent {
       this.isUser = (JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId);
       if(changes['event'].currentValue.goal > 0) {
         this.getGoal(changes['event'].currentValue.eventId, changes['event'].currentValue.goal);
-        this.hasGoal = true;
+        this.countMessages(changes['event'].currentValue.eventId);
+        this.countGifts(changes['event'].currentValue.eventId);
       }
     }
   }
@@ -56,6 +58,36 @@ export class EventCardComponent {
       },
       error: (err) => {
         this.goal = 0;
+      }
+    });
+  }
+
+  countMessages(eventId: string) {
+    this._api.postTypeRequest('profile/count-messages-event', { eventId }).subscribe({
+      next: (response: any) => {
+        if(response.status == 1 && response.data.length) {
+           this.messages = response.data[0].total;
+        } else {
+          this.messages = 0;
+        }
+      },
+      error: (err) => {
+        this.messages = 0;
+      }
+    });
+  }
+
+  countGifts(eventId: string) {
+    this._api.postTypeRequest('profile/count-gifts-event', { eventId }).subscribe({
+      next: (response: any) => {
+        if(response.status == 1 && response.data.length) {
+           this.gifts = response.data[0].total;
+        } else {
+          this.gifts = 0;
+        }
+      },
+      error: (err) => {
+        this.gifts = 0;
       }
     });
   }

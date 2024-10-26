@@ -78,7 +78,7 @@
         <!-- Cajas con eventos -->
         <ng-container *ngIf="eventList.length > 0">
             <ng-container *ngFor="let event of eventList">
-                <app-event-card class="card-hover btn-border" [event]="event" (click)="isUser?editEvent(profileId, event.eventId):''"></app-event-card>
+                <app-event-card class="card-hover btn-border" [event]="event" (click)="getEvent(event.eventId)"></app-event-card>
             </ng-container>
         </ng-container>
         <div *ngIf="eventList.length == 0 && !isUser">

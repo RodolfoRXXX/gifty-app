@@ -44,11 +44,11 @@
                     <!-- Primera fila de texto (alineada a la derecha) -->
                     <div class="text-end">
                         <span 
-                                class="font-12 b-all btn-border soft-grey-background fw-400" 
-                                ngClass="{{ daysUntil(event.date)<365?'primary-color':'warn-color' }}"
-                                style="padding: 0 10px;">
-                                {{ ((daysUntil(event.date)<365)?'Faltan ' + daysUntil(event.date) + ' días':'Es hoy!') }}
-                            </span>
+                            class="font-13 b-all btn-border soft-grey-background fw-400 cap" 
+                            ngClass="{{ (event.type == 'aniversario')?'primary-color':'warn-color' }}"
+                            style="padding: 0 10px;">
+                            {{ event.type }}
+                        </span>
                     </div>
                     <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
                     <div class="d-flex align-items-center" style="flex-grow: 1;">
@@ -60,7 +60,7 @@
             </div>
             
             <!-- Tercera Fila (centrada con el acumulado) -->
-            <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;" *ngIf="hasGoal">
+            <div class="d-flex flex-column align-items-start justify-content-center" style="height: 100%;" *ngIf="event.type == 'deseo'">
                 <p class="font-12 me-2 mb-0 d-block">Meta cumplida: </p>
                 <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
                     <mat-progress-bar
@@ -72,15 +72,28 @@
                 </div> 
             </div>
             <!-- Descripción -->
-            <div class="mb-1 mt-1" style="height: 40px; overflow-y:hidden;" *ngIf="!hasGoal">
+            <div class="mb-1 mt-1" style="height: 40px; overflow-y:hidden;" *ngIf="event.type == 'aniversario'">
                 <p class="font-12 me-2 mb-0 d-block">{{ event.description }}</p>
             </div>
             
             <!-- Cuarta Fila (botón de evento) -->
-            <div>
-                <a mat-flat-button color="primary" class="btn-border w-100" [routerLink]="['../../event', event.eventId]">
-                    Ver evento
-                </a>
+            <div class="b-t d-flex justify-content-start align-items-center gap-2 pt-2">
+                <div class="d-flex b-all btn-border soft-grey-background" style="padding: 0 10px;">
+                    <span class="material-symbols-outlined text-muted font-18 align-icon">
+                        chat_bubble
+                    </span>
+                    <p class="font-14 mb-0 fw-400">{{ messages || 0 }}</p>
+                </div>
+                <div class="d-flex b-all btn-border soft-grey-background" style="padding: 0 10px;">
+                    <span class="material-symbols-outlined text-muted font-18 align-icon">
+                        featured_seasonal_and_gifts
+                    </span>
+                    <p class="font-14 mb-0 fw-400">{{ gifts || 0 }}</p>
+                </div>
+                <div class="font-13 b-all btn-border soft-grey-background fw-400" style="padding: 0 10px;"
+                     ngClass="{{ daysUntil(event.date)<365?'primary-color':'warn-color' }}">
+                    {{ (daysUntil(event.date)<365)?'Faltan ' + daysUntil(event.date) + ' días':'Es hoy!' }}
+                </div>
             </div>
         </div>
     </mat-card-content>
