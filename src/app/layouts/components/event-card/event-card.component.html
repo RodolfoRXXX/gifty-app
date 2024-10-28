@@ -1,6 +1,6 @@
 <!-- Cards de cada evento, se muestran como una vista rápida de cada evento -->
 
-<mat-card class="card size-box p-0">
+<mat-card class="card size-box p-0 card-hover" (click)="getEvent(event.eventId)">
     <mat-card-content class="h-100">
         <div class="d-flex flex-column justify-content-between" style="height: 100%;">
             <!-- Primera Fila (Contacto) -->
@@ -11,7 +11,7 @@
                         <img [src]="uriImg + event.thumbnail">
                     </div>
                     <div>
-                        <a [routerLink]="['../../profile', event.profileId]" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
+                        <a [routerLink]="['../../profile', event.profileId]" (click)="onLinkClick($event)" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
                     </div>
                 </div>
                 <!-- Seguir -->

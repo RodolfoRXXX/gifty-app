@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,7 +29,8 @@ export class EventCardComponent {
 
   constructor(
     private _api: ApiService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _router: Router
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,6 +93,10 @@ export class EventCardComponent {
     });
   }
 
+  getEvent(eventId: string) {
+    this._router.navigate(['./event', eventId]);
+  }
+
   getMonth(date: string) {
     return getMonthNameForDate(date)
   }
@@ -99,5 +104,10 @@ export class EventCardComponent {
   daysUntil(date: string) {
     return daysUntilDate(date)
   }
+
+  onLinkClick(event: MouseEvent): void {
+    // Detener la propagación del evento de clic hacia la caja
+    event.stopPropagation();
+}
 
 }

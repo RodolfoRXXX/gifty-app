@@ -32,6 +32,17 @@
                         <span class="font-14">Siguiendo</span>
                     </div>
                 </button>
+                <!-- Editar -->
+                <button mat-button 
+                        class="btn-border d-flex justify-content-center p-2 ms-2" 
+                        color="primary" 
+                        *ngIf="isUser" 
+                        (click)="loading?'':editEvent(eventData.profileId, eventData.eventId)">
+                    <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
+                        edit
+                    </span>
+                    <span class="font-14">Editar</span>
+                </button>
             </div>
 
             <!-- Segunda Fila (información) -->

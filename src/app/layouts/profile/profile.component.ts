@@ -114,10 +114,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  getEvent(eventId: string) {
-    this._router.navigate(['./event', eventId]);
-  }
-
   getFollowersNumber(followers: string | null): number {
     return followers ? JSON.parse(followers).length : 0;
   }

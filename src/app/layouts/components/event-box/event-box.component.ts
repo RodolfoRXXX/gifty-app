@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { daysUntilDate, getMonthNameForDate } from 'src/app/shared/functions/date.function';
 import { environment } from 'src/environments/environment';
+import { DialogEventEditComponent } from '../dialog-event-edit/dialog-event-edit.component';
 
 @Component({
   selector: 'app-event-box',
@@ -32,7 +34,8 @@ export class EventBoxComponent implements OnInit {
   constructor(
     private _api: ApiService,
     private _router: Router,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -65,6 +68,17 @@ export class EventBoxComponent implements OnInit {
       error: (err) => {
         this._router.navigate(['../page-not-found']);
         this.loading = false;
+      }
+    });
+  }
+
+  //Abrir el modal de edición de evento
+  editEvent(profileId: string | null, eventId: string) {
+    console.log('holis')
+    const editEventDialog = this._dialog.open(DialogEventEditComponent, { data: { profileId: profileId, eventId: eventId }});
+    editEventDialog.afterClosed().subscribe(result => {
+      if(result) {
+        console.log(result)
       }
     });
   }
