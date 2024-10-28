@@ -91,8 +91,8 @@
                     <p class="font-14 mb-0 fw-400">{{ gifts || 0 }}</p>
                 </div>
                 <div class="font-13 b-all btn-border soft-grey-background fw-400" style="padding: 0 10px;"
-                     ngClass="{{ daysUntil(event.date)<365?'primary-color':'warn-color' }}">
-                    {{ (daysUntil(event.date)<365)?'Faltan ' + daysUntil(event.date) + ' días':'Es hoy!' }}
+                    [ngClass]="daysLeft < 365 ? 'primary-color' : 'warn-color'">
+                    {{ displayMessage }}
                 </div>
             </div>
         </div>

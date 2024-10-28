@@ -201,27 +201,32 @@ export function isNewerThan30Days(inputDate: string): boolean {
     //recibe una fecha: '1985-10-13T03:00:00.000Z'
     //devuelve un numero: 10
 export function daysUntilDate(targetDate: string): number {
-  const today = new Date();
-  const currentYear = today.getFullYear();
+    const today = new Date();
+    const currentYear = today.getFullYear();
 
-  // Convertir el string de fecha objetivo en un objeto Date
-  const target = new Date(targetDate);
-  
-  // Crear una nueva fecha con el mismo día y mes de target pero en el año actual
-  let nextDate = new Date(currentYear, target.getMonth(), target.getDate());
-
-  // Si la fecha ya ha pasado este año, sumarle un año
-  if (nextDate < today) {
-    nextDate = new Date(currentYear + 1, target.getMonth(), target.getDate());
-  }
-
-  // Calcular la diferencia en milisegundos y convertirla en días
-  const diff = nextDate.getTime() - today.getTime();
-  const daysUntil = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-  return daysUntil;
-}
+    // Convertir el string de fecha objetivo en un objeto Date
+    const target = new Date(targetDate);
     
+    // Crear una nueva fecha con el mismo día y mes de target pero en el año actual
+    let nextDate = new Date(currentYear, target.getMonth(), target.getDate());
+
+    // Verificar si la fecha ya ha pasado este año
+    if (nextDate < today) {
+        // Calcular cuántos días han pasado desde la fecha objetivo
+        const daysPassed = Math.floor((today.getTime() - nextDate.getTime()) / (1000 * 60 * 60 * 24));
+
+        // Solo cambiar al siguiente año si han pasado 10 días desde la fecha objetivo
+        if (daysPassed >= 10) {
+            nextDate = new Date(currentYear + 1, target.getMonth(), target.getDate());
+        }
+    }
+
+    // Calcular la diferencia en milisegundos y convertirla en días
+    const diff = nextDate.getTime() - today.getTime();
+    const daysUntil = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    return daysUntil;
+}    
 
 //Función que devuelve la cantidad de días pasados desde la fecha pasada como parámetro
     //recibe: '2024-10-20 09:30:35'
@@ -240,5 +245,29 @@ export function daysSinceDate(targetDate: string): number {
   const daysPassed = Math.floor(diff / (1000 * 60 * 60 * 24));
   
   return daysPassed;
+}
+
+//Función que devuelve la cantidad de años pasados desde la fecha pasada como parámetro
+    //recibe: '2020-10-20 09:30:35'
+    //devuelve: 4 (ejemplo)
+export function yearsSinceDate(targetDate: string): number {
+  // Convertir la fecha recibida en un objeto Date
+  const target = new Date(targetDate);
+  
+  // Obtener la fecha actual
+  const today = new Date();
+
+  // Calcular la diferencia en años
+  let yearsPassed = today.getFullYear() - target.getFullYear();
+
+  // Ajustar el año si el mes y día de la fecha objetivo ya han pasado en el año actual
+  const monthDifference = today.getMonth() - target.getMonth();
+  const dayDifference = today.getDate() - target.getDate();
+  
+  if (monthDifference > 0 || (monthDifference === 0 && dayDifference >= 0)) {
+    yearsPassed++;
+  }
+
+  return yearsPassed;
 }
 

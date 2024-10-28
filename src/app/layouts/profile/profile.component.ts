@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
+import { DailyCheckService } from 'src/app/services/daily-check.service';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _api: ApiService,
     private _auth: AuthService,
     private _dialog: MatDialog,
-    private _router: Router
+    private _router: Router,
+    private dailyCheckService: DailyCheckService
   ) {}
 
   ngOnInit(): void {
@@ -47,11 +49,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (this.profileId) {
         this.getUserData(this.profileId);
         this.getEventList(this.profileId);
-        this.isUser = (this.getLocalStorageData()?this.getLocalStorageData().profileId:'' === this.profileId);
+        this.isUser = (this.getLocalStorageData()?this.getLocalStorageData().profileId === this.profileId:false);
       } else {
         this._router.navigate(['../page-not-found']);
       }
     });
+    //Verifica los eventos vencidos y los renueva
+    this.dailyCheckService.checkEventsDaily();
   }
 
   getLocalStorageData() {

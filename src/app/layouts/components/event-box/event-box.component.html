@@ -32,11 +32,33 @@
                         <span class="font-14">Siguiendo</span>
                     </div>
                 </button>
+
+                <!-- follow -->
+                <button mat-stroked-button 
+                        class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
+                        color="primary" 
+                        *ngIf="!isUser" 
+                        (click)="follow(isFollowed?false:true)">
+                    <div *ngIf="!isFollowed">
+                        <span class="material-symbols-outlined align-icon">
+                            person_add
+                        </span>
+                        <span class="status">Seguir</span>
+                    </div>
+                    <div *ngIf="isFollowed">
+                        <span class="material-symbols-outlined align-icon">
+                            person_check
+                        </span>
+                        <span class="status">Siguiendo</span>
+                    </div>
+                </button>
+
                 <!-- Editar -->
                 <button mat-button 
                         class="btn-border d-flex justify-content-center p-2 ms-2" 
                         color="primary" 
-                        *ngIf="isUser" 
+                        *ngIf="isUser"
+                        [disabled]="loading?true:(eventData.status == 0)" 
                         (click)="loading?'':editEvent(eventData.profileId, eventData.eventId)">
                     <span class="material-symbols-outlined align-icon" style="font-size: 18px;">
                         edit
@@ -57,22 +79,30 @@
                 <div class="d-flex flex-column justify-content-between text-box">
                     <!-- Primera fila de texto (alineada a la derecha) -->
                     <div class="d-flex justify-content-end align-items-center">
-                        <div class="me-2">
-                            <span class="font-12 b-all btn-border primary-color soft-grey-background fw-400 cap" style="padding: 0 10px;">{{ loading?'cargando..':eventData.type }}</span>
+                        <div class="font-12 b-all btn-border primary-color soft-grey-background fw-400 me-2 cap" style="padding: 0 10px;">
+                            {{ loading?'cargando..':eventData.type }}
                         </div>
                         <div 
                             class="font-12 b-all btn-border soft-grey-background fw-400" 
                             ngClass="{{ loading?'cargando..':daysUntil(eventData.date)<365?'primary-color':'warn-color' }}"
-                            style="padding: 0 10px;">
+                            style="padding: 0 10px;"
+                            *ngIf="loading?false:eventData.status == 1">
                             {{ loading?'cargando..':((daysUntil(eventData.date)<365)?'Faltan ' + daysUntil(eventData.date) + ' días':'Es hoy!') }}
+                        </div>
+                        <div 
+                            class="font-12 b-all btn-border soft-grey-background fw-400 warn-color"
+                            style="padding: 0 10px;"
+                            *ngIf="loading?false:eventData.status == 0">
+                            Inactivo
                         </div>
                     </div>
                     
                     <!-- Segunda fila de texto (alineada a la izquierda y con truncamiento después de dos líneas) -->
-                    <div class="d-flex align-items-center" style="flex-grow: 1;">
+                    <div class="d-flex flex-column justify-content-center" style="flex-grow: 1;">
                         <h3 class="text-left multiline-truncate m-0 fw-semibold">
                             {{ loading?'cargando..':eventData.name }}
                         </h3>
+                        <small class="text-muted fw-400" *ngIf="loading?'cargando..':eventData.type == 'aniversario'">Se cumplen {{ yearsSince }} años</small>
                     </div>
                 </div>
             </div>

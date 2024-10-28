@@ -43,9 +43,10 @@ body {
 
 .layout-container {
   height: calc(100vh - 70px);
-  padding: 15px 0;
+  padding: 15px 0 0;
   max-width: 1520px;
   margin: auto;
+  overflow-y: auto;
 }
 
 .page-content {

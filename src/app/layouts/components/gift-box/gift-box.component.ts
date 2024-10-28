@@ -20,6 +20,7 @@ export class GiftBoxComponent {
   @Input() eventId!: string | null;
   giftList: any[] = [];
   total: number = 0;
+  status: number = 0;
 
   constructor(
     private _api: ApiService
@@ -29,6 +30,7 @@ export class GiftBoxComponent {
     if (changes['eventId'].currentValue !== undefined) {
       //this.loading = true;
       this.loadGift(changes['eventId'].currentValue)
+      this.getStatus(changes['eventId'].currentValue)
     }
   }
 
@@ -45,6 +47,20 @@ export class GiftBoxComponent {
       },
       error: (err) => {
         this.giftList = [];
+      }
+    });
+  }
+
+  getStatus(eventId: string) {
+    // Llamar a la API para obtener los datos del evento
+    this._api.postTypeRequest('profile/get-event', { eventId }).subscribe({
+      next: (response: any) => {
+        if(response.status == 1 && response.data.length) {
+          this.status = response.data[0].status
+        }
+      },
+      error: (err) => {
+        this.status = 0;
       }
     });
   }

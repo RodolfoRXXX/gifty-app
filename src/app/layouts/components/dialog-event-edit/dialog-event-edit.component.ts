@@ -54,7 +54,8 @@ export class DialogEventEditComponent implements OnInit {
       date: ['', Validators.required],
       description: ['', Validators.required],
       addGoal: [false],
-      goal: [0]
+      goal: [0],
+      finalized: ['']
     });
   }
 
@@ -83,7 +84,8 @@ export class DialogEventEditComponent implements OnInit {
       date: event.date,
       description: event.description,
       addGoal: (event.goal>=0)?true:false,
-      goal: event.goal
+      goal: event.goal,
+      finalized: event.finalized
     })
   }
 
@@ -100,34 +102,55 @@ export class DialogEventEditComponent implements OnInit {
   }
 
   onSubmit() {
+    const selectedDate = new Date(this.dataForm.controls['date'].value);
+    const today = new Date();
+  
+    let finalizedDate;
+  
+    if (this.dataForm.controls['type'].value === 'aniversario') {
+      if (selectedDate < today) {
+        // Si la fecha seleccionada es menor a hoy, cambiamos el año al próximo
+        finalizedDate = new Date(selectedDate);
+        finalizedDate.setFullYear(today.getFullYear() + 1);
+      } else {
+        // Si la fecha seleccionada es mayor o igual a hoy, toma la fecha como está
+        finalizedDate = new Date(selectedDate);
+      }
+      
+      // Sumar 10 días
+      finalizedDate.setDate(finalizedDate.getDate() + 10);
+    } else {
+      // Si es de tipo "deseo", se toma la fecha seleccionada sin modificaciones
+      finalizedDate = selectedDate;
+    }
+  
+    this.dataForm.patchValue({
+      finalized: finalizedDate.toISOString().split('T')[0] // Ajustar el formato según necesidad
+    });
+  
+    console.log(this.dataForm.value);
+  
+    
     this._api.postTypeRequest('profile/edit-event', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
-        if(res.status == 1){
-          //Accedió a la base de datos y no hubo problemas
-          if(res.data.affectedRows == 1){
-            console.log(res.data)
-            //Consulta con éxito
-            this._notify.showSuccess('Evento actualizado!');
-            setTimeout(() => {
-              this.closeDialog(true);
-            }, 2000);
-          } else{
-            //No hubo modificación
-            this._notify.showError('No se detectaron cambios. Ingresá valores diferentes.');
-          }
-        } else{
-          //Problemas de conexión con la base de datos(res.status == 0)
-          this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intente nuevamente por favor.');
+        if (res.status == 1 && res.data.affectedRows == 1) {
+          console.log(res.data);
+          this._notify.showSuccess('Evento actualizado!');
+          setTimeout(() => this.closeDialog(true), 2000);
+        } else {
+          this._notify.showError('No se detectaron cambios. Ingresá valores diferentes.');
         }
       },
       error: (error) => {
-        //Error de conexión, no pudo consultar con la base de datos
         this.loading =  false;
         this._notify.showWarn('No ha sido posible conectarse a la base de datos. Intente nuevamente por favor.');
       }
-    })
+    });
+    
   }
+  
+  
 
   closeDialog(state: boolean) {
     this.dialogRef.close(state);

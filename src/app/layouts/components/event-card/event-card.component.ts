@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { ApiService } from 'src/app/services/api.service';
@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './event-card.component.html',
   styleUrl: './event-card.component.scss'
 })
-export class EventCardComponent {
+export class EventCardComponent implements OnInit {
 
   @Input() event!: any;
   uriImg = environment.SERVER;
@@ -26,12 +26,21 @@ export class EventCardComponent {
   messages: number = 0;
   gifts: number = 0;
   isUser!: boolean;
+  daysLeft!: number;
+  displayMessage: string = '';
 
   constructor(
     private _api: ApiService,
     private _auth: AuthService,
     private _router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.daysLeft = daysUntilDate(this.event.date);
+    this.displayMessage = this.daysLeft < 365 
+    ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
+    : 'Es hoy!';
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['event'].currentValue !== undefined) {
@@ -101,13 +110,9 @@ export class EventCardComponent {
     return getMonthNameForDate(date)
   }
 
-  daysUntil(date: string) {
-    return daysUntilDate(date)
-  }
-
   onLinkClick(event: MouseEvent): void {
     // Detener la propagación del evento de clic hacia la caja
     event.stopPropagation();
-}
+  }
 
 }
