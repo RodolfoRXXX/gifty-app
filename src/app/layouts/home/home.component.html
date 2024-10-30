@@ -7,29 +7,69 @@
     </div>
     <!-- Search -->
     <div class="search-container" style="width: 100%; padding: auto; margin-bottom: 50px;">
-        <!-- Campo de entrada -->
-        <input type="text" id="search-input" class="search-input btn-border" placeholder="Buscá personas..">
-        
-        <!-- Botón de limpiar (X) -->
-        <button class="clear-button" id="clear-button">
-            <img src="https://img.icons8.com/ios-glyphs/30/000000/macos-close.png" alt="Limpiar">
-        </button>
-
-        <!-- Botón de búsqueda -->
+        <input 
+            type="text" 
+            id="search-input" 
+            class="search-input btn-border" 
+            placeholder="Buscá personas.." 
+            [(ngModel)]="searchInput" 
+            (input)="onSearchChange()"
+            autocomplete="off">
+    
         <button class="search-button">
             <img src="https://img.icons8.com/ios-filled/50/000000/search--v1.png" alt="Buscar">
         </button>
+    
+        <!-- Contenedor para los resultados de búsqueda -->
+        <div class="results-container btn-border mt-1 p-2" *ngIf="showResults">
+            <div *ngIf="loading">...buscando</div>
+            <ul *ngIf="!loading && results.length > 0">
+                <li *ngFor="let user of results">
+                    <a [routerLink]="['../profile', user.profileId]" class="d-flex align-items-center b-all p-3 pt-2 pb-2 btn-border res-search">
+                        <!-- Contenedor de la imagen -->
+                        <div class="image-container">
+                          <img [src]="uriImg + user.thumbnail" class="image-user">
+                        </div>
+
+                        <div class="d-flex flex-column align-items-start justify-content-center ms-2">
+                            <p class="mb-0 fw-bold font-16">{{ user.name || user.email.split('@')[0] }}</p>
+                            <div class="description-box">
+                                <div class="me-4">
+                                    <span class="material-symbols-outlined align-icon" style="font-size: 17px;">
+                                        location_on
+                                    </span>
+                                    <span class="font-12">{{ user.location || 'Sin información' }}</span>
+                                </div>
+                                <div>
+                                    <span class="material-symbols-outlined align-icon" style="font-size: 17px;">
+                                        person_check
+                                    </span>
+                                    <span class="font-12">{{  getFollowersNumber(user.followers) || 0 }} seguidores</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div *ngIf="!loading && results.length === 0">No se encontraron resultados</div>
+        </div>
     </div>
+    
+    
 
     <!-- Events -->
     <h4 class="text-center mb-3">Próximos eventos</h4>
     <div class="event-box" #eventBox>
         <div class="event-content" #eventContent>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
+            <!-- Cajas con eventos -->
+            <ng-container *ngIf="eventList.length > 0">
+                <ng-container *ngFor="let event of eventList">
+                    <app-event-card class="btn-border" [event]="event"></app-event-card>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="eventLoading">
+                <p>...cargando</p>
+            </div>
         </div>
     </div>
 </div>

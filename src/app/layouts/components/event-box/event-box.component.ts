@@ -32,6 +32,8 @@ export class EventBoxComponent implements OnInit {
   loading!: boolean;
   yearsSince!: number;
   isFollowed: boolean = false;
+  daysLeft!: number;
+  displayMessage: string = '';
 
   constructor(
     private _api: ApiService,
@@ -67,6 +69,7 @@ export class EventBoxComponent implements OnInit {
             this.hasGoal = true;
           }
           this.getAcumulatted(this.eventData.date)
+          this.daysUntil(this.eventData.date)
           this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);
@@ -121,7 +124,10 @@ export class EventBoxComponent implements OnInit {
   }
 
   daysUntil(date: string) {
-    return daysUntilDate(date)
+    this.daysLeft = daysUntilDate(date);
+    this.displayMessage = this.daysLeft < 365 
+    ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
+    : 'Es hoy!';
   }
 
   follow(status: boolean) {

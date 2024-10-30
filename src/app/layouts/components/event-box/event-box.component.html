@@ -82,12 +82,10 @@
                         <div class="font-12 b-all btn-border primary-color soft-grey-background fw-400 me-2 cap" style="padding: 0 10px;">
                             {{ loading?'cargando..':eventData.type }}
                         </div>
-                        <div 
-                            class="font-12 b-all btn-border soft-grey-background fw-400" 
-                            ngClass="{{ loading?'cargando..':daysUntil(eventData.date)<365?'primary-color':'warn-color' }}"
-                            style="padding: 0 10px;"
+                        <div class="font-13 b-all btn-border soft-grey-background fw-400" style="padding: 0 10px;"
+                            [ngClass]="daysLeft < 365 ? 'primary-color' : 'warn-color'"
                             *ngIf="loading?false:eventData.status == 1">
-                            {{ loading?'cargando..':((daysUntil(eventData.date)<365)?'Faltan ' + daysUntil(eventData.date) + ' días':'Es hoy!') }}
+                            {{ displayMessage }}
                         </div>
                         <div 
                             class="font-12 b-all btn-border soft-grey-background fw-400 warn-color"

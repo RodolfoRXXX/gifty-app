@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="info-box" *ngIf="loading">
-            ...loading
+            ...cargando
         </div>
     </mat-card-content>
 </mat-card>
@@ -83,6 +83,9 @@
         </ng-container>
         <div *ngIf="eventList.length == 0 && !isUser">
             <p>No hay eventos</p>
+        </div>
+        <div *ngIf="eventLoading">
+            <p>...cargando</p>
         </div>
     </div>
 </div>

@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   profileData: any;
   eventList: any[] = [];
   loading: boolean = true;
+  eventLoading: boolean = true;
   uriImg = environment.SERVER;
   isUser!: boolean;
   isFollowed: boolean = false;
@@ -87,6 +88,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   getEventList(profileId: string | null) {
     this._api.postTypeRequest('profile/get-event-list', { profileId }).subscribe({
       next: (response: any) => {
+        this.eventLoading = false;
         if(response.status == 1 && response.data.length) {
           this.eventList = response.data; // Almacenar los datos
         } else {
@@ -94,6 +96,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
+        this.eventLoading = false;
         this.eventList = [];
       }
     });
