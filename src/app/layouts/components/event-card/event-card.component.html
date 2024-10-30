@@ -10,19 +10,21 @@
                     <div class="image-user me-2">
                         <img [src]="uriImg + event.thumbnail">
                     </div>
-                    <div>
-                        <a [routerLink]="['../profile', event.profileId]" (click)="onLinkClick($event)" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
-                    </div>
+                    <a [routerLink]="['/profile', event.profileId]" (click)="onLinkClick($event)" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
                 </div>
                 <!-- Seguir -->
-                <button mat-button class="btn-border d-flex justify-content-center p-2" color="primary" *ngIf="!isUser">
-                    <div *ngIf="true">
+                <button mat-button 
+                        class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
+                        color="primary"
+                        *ngIf="!isUser"
+                        (click)="follow(isFollowed?false:true)">
+                    <div *ngIf="!isFollowed">
                         <span class="material-symbols-outlined align-icon" style="font-size: 17px;">
                             person_add
                         </span>
                         <span class="font-12">Seguir</span>
                     </div>
-                    <div *ngIf="false">
+                    <div *ngIf="isFollowed">
                         <span class="material-symbols-outlined align-icon">
                             person_check
                         </span>

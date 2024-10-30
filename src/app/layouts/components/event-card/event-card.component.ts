@@ -28,6 +28,7 @@ export class EventCardComponent implements OnInit {
   isUser!: boolean;
   daysLeft!: number;
   displayMessage: string = '';
+  isFollowed: boolean = false;
 
   constructor(
     private _api: ApiService,
@@ -40,6 +41,11 @@ export class EventCardComponent implements OnInit {
     this.displayMessage = this.daysLeft < 365 
     ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
     : 'Es hoy!';
+
+    this.isFollowed = Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
+                  JSON.parse(this.getLocalStorageData().followers).some(
+                    (value: any) => value == this.event.profileId
+                  );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,6 +57,10 @@ export class EventCardComponent implements OnInit {
         this.countGifts(changes['event'].currentValue.eventId);
       }
     }
+  }
+
+  getLocalStorageData() {
+    return JSON.parse(this._auth.getDataFromLocalStorage())
   }
 
   getGoal(eventId: string, goal: number) {
@@ -113,6 +123,10 @@ export class EventCardComponent implements OnInit {
   onLinkClick(event: MouseEvent): void {
     // Detener la propagación del evento de clic hacia la caja
     event.stopPropagation();
+  }
+
+  follow(status: boolean) {
+    console.log(status)
   }
 
 }
