@@ -15,10 +15,10 @@
 
 <mat-menu #notification="matMenu" class="btn-border" xPosition="before">
     <div class="gap-container">
-        <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border" *ngIf="!notifications">
-            <p class="fw-semibold text-center w-100">No hay notificaciones</p>
+        <div class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border" *ngIf="notifications?.length == 0">
+            <p class="text-center w-100">No hay notificaciones</p>
         </div>
-        <ng-container *ngIf="notifications">
+        <ng-container *ngIf="notifications?.length != 0">
             <ng-container *ngFor="let notification of notifications">
                 <app-notification-message [notification]="notification"></app-notification-message>
             </ng-container>

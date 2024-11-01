@@ -100,7 +100,7 @@
                         <h3 class="text-left multiline-truncate m-0 fw-semibold">
                             {{ loading?'cargando..':eventData.name }}
                         </h3>
-                        <small class="text-muted fw-400" *ngIf="loading?'cargando..':eventData.type == 'aniversario'">Se cumplen {{ yearsSince }} años</small>
+                        <small class="text-muted fw-400" *ngIf="loading?'cargando..':((daysLeft > 0)?(eventData.type == 'aniversario'):'')">Se cumplen {{ yearsSince }} años</small>
                     </div>
                 </div>
             </div>
