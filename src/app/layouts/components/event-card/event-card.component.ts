@@ -42,15 +42,15 @@ export class EventCardComponent implements OnInit {
     ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
     : 'Es hoy!';
 
-    this.isFollowed = Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
+    this.isFollowed = this.getLocalStorageData()?(Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
                   JSON.parse(this.getLocalStorageData().followers).some(
                     (value: any) => value == this.event.profileId
-                  );
+                  )):false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['event'].currentValue !== undefined) {
-      this.isUser = (JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId);
+      this.isUser = this.getLocalStorageData()?(JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId):false;
       if(changes['event'].currentValue.goal > 0) {
         this.getGoal(changes['event'].currentValue.eventId, changes['event'].currentValue.goal);
         this.countMessages(changes['event'].currentValue.eventId);

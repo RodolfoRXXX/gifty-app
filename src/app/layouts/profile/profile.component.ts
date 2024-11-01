@@ -65,10 +65,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.profileData = response.data[0]; // Almacenar los datos del perfil
-          this.isFollowed = Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
-                  JSON.parse(this.getLocalStorageData().followers).some(
+          this.isFollowed = this.getLocalStorageData()?(Array.isArray(JSON.parse(this.getLocalStorageData().followed)) && 
+                  JSON.parse(this.getLocalStorageData().followed).some(
                     (value: any) => value == this.profileData.profileId
-                  );
+                  )):false;
           this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);
@@ -121,8 +121,39 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return followers ? JSON.parse(followers).length : 0;
   }
 
-  follow(status: boolean) {
-    console.log(this.getLocalStorageData())
+  follow(status: boolean, followedId: string) {
+    const data = this.getLocalStorageData();
+    if (!data) {
+        this._router.navigate(['../login']);
+        return;
+    }
+    let newFollowed: string[] = data.followed ? JSON.parse(data.followed) : [];
+    // Encuentra el índice del profileId en followers (si existe)
+    const index = newFollowed.indexOf(followedId);
+    if (status) {
+        // Si el usuario quiere seguir, añade el profileId si no está presente
+        if (index === -1) {
+            newFollowed.push(followedId);
+        }
+    } else {
+        // Si el usuario quiere dejar de seguir, elimina el profileId si está presente
+        if (index !== -1) {
+            newFollowed.splice(index, 1);
+        }
+    }
+    // Guarda los cambios en el localStorage (puedes agregar esta parte si es necesario)
+    const followed = data.followed = JSON.stringify(newFollowed);
+    localStorage.setItem('userData', JSON.stringify(data));
+    const profileId = data.profileId;
+    this._api.postTypeRequest('profile/update-followers', { profileId, followed }).subscribe({
+      next: (response: any) => {
+        console.log(response)
+        
+      },
+      error: (err) => {
+        
+      }
+    });
   }
 
   // Al destruir el componente, cancelar la suscripción para evitar fugas de memoria

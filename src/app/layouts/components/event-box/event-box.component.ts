@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { daysSinceDate, daysUntilDate, getMonthNameForDate, yearsSinceDate } from 'src/app/shared/functions/date.function';
+import { daysUntilDate, getMonthNameForDate, yearsSinceDate } from 'src/app/shared/functions/date.function';
 import { environment } from 'src/environments/environment';
 import { DialogEventEditComponent } from '../dialog-event-edit/dialog-event-edit.component';
 
@@ -50,6 +50,10 @@ export class EventBoxComponent implements OnInit {
     return JSON.parse(this._auth.getDataFromLocalStorage())
   }
 
+  getUserData() {
+    return this._auth.getDataFromLocalStorage();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['eventId'].currentValue !== undefined) {
       this.loading = true;
@@ -61,16 +65,16 @@ export class EventBoxComponent implements OnInit {
     // Llamar a la API para obtener los datos del evento
     this._api.postTypeRequest('profile/get-event', { eventId }).subscribe({
       next: (response: any) => {
+        this.loading = false;
         if(response.status == 1 && response.data.length) {
           this.eventData = response.data[0]; // Almacenar los datos del evento
-          this.isUser = (this.userData.profileId === this.eventData.profileId);
+          this.isUser = this.userData?(this.userData.profileId === this.eventData.profileId):false;
           if(this.eventData.goal > 0) {
             this.getGoal(eventId, this.eventData.goal);
             this.hasGoal = true;
           }
           this.getAcumulatted(this.eventData.date)
           this.daysUntil(this.eventData.date)
-          this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);
         }
@@ -115,10 +119,6 @@ export class EventBoxComponent implements OnInit {
     this.yearsSince = yearsSinceDate(targetDate)
   }
 
-  getUserData() {
-    return this._auth.getDataFromLocalStorage();
-  }
-
   getMonth(date: string) {
     return getMonthNameForDate(date)
   }
@@ -130,8 +130,15 @@ export class EventBoxComponent implements OnInit {
     : 'Es hoy!';
   }
 
-  follow(status: boolean) {
-    console.log(this.getLocalStorageData())
+  follow(status: boolean, profileId: string) {
+    let data = this.getLocalStorageData()
+    if(data) {
+      //debe verificar si el array de followers esta vacío o no
+        //si esta vacío, agrega el profileId
+        console.log(JSON.parse(data.followers))
+    } else {
+      this._router.navigate(['../login']);
+    }
   }
 
 }

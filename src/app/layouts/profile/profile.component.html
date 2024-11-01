@@ -31,7 +31,7 @@
                             <span class="material-symbols-outlined align-icon">
                                 person_check
                             </span>
-                            <span>{{  getFollowersNumber(profileData.followers) || 0 }}</span> seguidores
+                            <span>{{  getFollowersNumber(profileData.followed) || 0 }}</span> seguidores
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
                         color="primary" 
                         *ngIf="!isUser" 
-                        (click)="follow(isFollowed?false:true)">
+                        (click)="follow(isFollowed?false:true, profileData.profileId)">
                     <div *ngIf="!isFollowed">
                         <span class="material-symbols-outlined align-icon">
                             person_add
