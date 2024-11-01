@@ -1,12 +1,12 @@
 <!-- Notificación recibida -->
 
-<a [routerLink]="['/profile', notification.eventId]" class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border cursor-pointer">
+<a [routerLink]="['/event', notification.eventId]" class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border cursor-pointer">
     <!-- Contenedor del texto -->
-    <div class="text-container flex-grow-1">
+    <div class="text-container flex-grow-1 me-3">
         <p class="font-14 mb-0 text-wrap">
-        <span class="fw-semibold">{{ notification?(notification.userName || notification.name || notification.email.split('@')[0]):'' }}</span>
-        <span> {{ notification?notification.action:'' }}</span>
+            <span class=""> {{ notification?notification.action:'' }}</span>
         </p>
+        <small class="font-10">{{ isBeen(notification.created) }}</small>
     </div>
     
     <!-- Ícono a la derecha -->

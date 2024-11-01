@@ -271,3 +271,19 @@ export function yearsSinceDate(targetDate: string): number {
   return yearsPassed;
 }
 
+//Función que recibe una fecha y devuelve cuantas horas pasaron
+    //recibe una fecha: '2024-10-30 09:30:35'
+    //devuelve un numero: 10
+export function hoursSinceDate(targetDate: string): number {
+  const now = new Date();
+  const target = new Date(targetDate.replace(' ', 'T')); // Convertir a formato ISO para compatibilidad con `Date`
+
+  // Calcular la diferencia en milisegundos
+  const diffInMs = now.getTime() - target.getTime();
+
+  // Convertir la diferencia a horas
+  const hoursPassed = Math.floor(diffInMs / (1000 * 60 * 60));
+
+  return hoursPassed;
+}
+
