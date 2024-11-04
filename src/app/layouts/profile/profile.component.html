@@ -31,7 +31,7 @@
                             <span class="material-symbols-outlined align-icon">
                                 person_check
                             </span>
-                            <span>{{  getFollowersNumber(profileData.followed) || 0 }}</span> seguidores
+                            <span>{{  getFollowersNumber(profileData.followers) || 0 }}</span> seguidores
                         </div>
                     </div>
                 </div>
@@ -39,24 +39,7 @@
             <!-- Sociales -->
             <div class="d-flex justify-content-end align-items-center">
                 <!-- follow -->
-                <button mat-stroked-button 
-                        class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
-                        color="primary" 
-                        *ngIf="!isUser" 
-                        (click)="follow(isFollowed?false:true, profileData.profileId)">
-                    <div *ngIf="!isFollowed">
-                        <span class="material-symbols-outlined align-icon">
-                            person_add
-                        </span>
-                        <span class="status">Seguir</span>
-                    </div>
-                    <div *ngIf="isFollowed">
-                        <span class="material-symbols-outlined align-icon">
-                            person_check
-                        </span>
-                        <span class="status">Siguiendo</span>
-                    </div>
-                </button>
+                <app-button-follow [profileId]="profileId" [hideText]="false" *ngIf="!isUser" (doneFollow)="doneFollow($event)"></app-button-follow>
             </div>
         </div>
         <div class="info-box" *ngIf="loading">

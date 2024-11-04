@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { daysUntilDate, getMonthNameForDate, yearsSinceDate } from 'src/app/shared/functions/date.function';
 import { environment } from 'src/environments/environment';
 import { DialogEventEditComponent } from '../dialog-event-edit/dialog-event-edit.component';
+import { ButtonFollowComponent } from '../button-follow/button-follow.component';
 
 @Component({
   selector: 'app-event-box',
@@ -15,7 +16,8 @@ import { DialogEventEditComponent } from '../dialog-event-edit/dialog-event-edit
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    ButtonFollowComponent
   ],
   templateUrl: './event-box.component.html',
   styleUrl: './event-box.component.scss'
@@ -130,15 +132,8 @@ export class EventBoxComponent implements OnInit {
     : 'Es hoy!';
   }
 
-  follow(status: boolean, profileId: string) {
-    let data = this.getLocalStorageData()
-    if(data) {
-      //debe verificar si el array de followers esta vacío o no
-        //si esta vacío, agrega el profileId
-        console.log(JSON.parse(data.followers))
-    } else {
-      this._router.navigate(['../login']);
-    }
+  doneFollow(event: any) {
+    //Acción terminada
   }
 
 }

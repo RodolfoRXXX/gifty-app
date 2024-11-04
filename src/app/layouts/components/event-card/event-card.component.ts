@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { daysUntilDate, getMonthNameForDate } from 'src/app/shared/functions/date.function';
 import { environment } from 'src/environments/environment';
+import { ButtonFollowComponent } from '../button-follow/button-follow.component';
 
 @Component({
   selector: 'app-event-card',
@@ -13,7 +14,8 @@ import { environment } from 'src/environments/environment';
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    ButtonFollowComponent
   ],
   templateUrl: './event-card.component.html',
   styleUrl: './event-card.component.scss'
@@ -41,8 +43,7 @@ export class EventCardComponent implements OnInit {
     this.displayMessage = this.daysLeft < 365 
     ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
     : 'Es hoy!';
-
-    this.isFollowed = this.getLocalStorageData()?(Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
+    this.isFollowed = (this.getLocalStorageData() && this.getLocalStorageData().followers)?(Array.isArray(JSON.parse(this.getLocalStorageData().followers)) && 
                   JSON.parse(this.getLocalStorageData().followers).some(
                     (value: any) => value == this.event.profileId
                   )):false;
@@ -50,12 +51,7 @@ export class EventCardComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['event'].currentValue !== undefined) {
-      this.isUser = this.getLocalStorageData()?(JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId):false;
-      if(changes['event'].currentValue.goal > 0) {
-        this.getGoal(changes['event'].currentValue.eventId, changes['event'].currentValue.goal);
-        this.countMessages(changes['event'].currentValue.eventId);
-        this.countGifts(changes['event'].currentValue.eventId);
-      }
+      this.loadData(changes['event'].currentValue)
     }
   }
 
@@ -116,6 +112,15 @@ export class EventCardComponent implements OnInit {
     this._router.navigate(['./event', eventId]);
   }
 
+  loadData(event: any) {
+    this.isUser = this.getLocalStorageData()?(JSON.parse(this._auth.getDataFromLocalStorage()).profileId === this.event.profileId):false;
+    if(event.goal > 0) {
+      this.getGoal(event.eventId, event.goal);
+      this.countMessages(event.eventId);
+      this.countGifts(event.eventId);
+    }
+  }
+
   getMonth(date: string) {
     return getMonthNameForDate(date)
   }
@@ -125,8 +130,8 @@ export class EventCardComponent implements OnInit {
     event.stopPropagation();
   }
 
-  follow(status: boolean) {
-    console.log(status)
+  doneFollow(event: any) {
+    event?this.loadData(this.event):'';
   }
 
 }

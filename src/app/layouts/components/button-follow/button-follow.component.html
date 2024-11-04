@@ -1,0 +1,23 @@
+
+<button mat-stroked-button 
+        class="btn-border d-flex justify-content-center ms-4 mt-1 pb-1" 
+        color="primary" 
+        (click)="!loadingFollow?follow(!this.isFollow(), profileData.profileId, profileData.followers):''">
+    <ng-container *ngIf="!loadingFollow; else loadingSpinner">
+        <div *ngIf="!this.isFollow()">
+            <span class="material-symbols-outlined align-icon font-20">
+                person_add
+            </span>
+            <span *ngIf="!hideText" class="font-14">Seguir</span>
+        </div>
+        <div *ngIf="this.isFollow()">
+            <span class="material-symbols-outlined align-icon font-20">
+                person_check
+            </span>
+            <span *ngIf="!hideText" class="font-14">Siguiendo</span>
+        </div>
+    </ng-container>
+    <ng-template #loadingSpinner>
+        <mat-spinner diameter="20"></mat-spinner>
+    </ng-template>
+</button>
