@@ -128,14 +128,10 @@ export class DialogEventEditComponent implements OnInit {
       finalized: finalizedDate.toISOString().split('T')[0] // Ajustar el formato según necesidad
     });
   
-    console.log(this.dataForm.value);
-  
-    
     this._api.postTypeRequest('profile/edit-event', this.dataForm.value).subscribe({
       next: (res: any) => {
         this.loading =  false;
         if (res.status == 1 && res.data.affectedRows == 1) {
-          console.log(res.data);
           this._notify.showSuccess('Evento actualizado!');
           setTimeout(() => this.closeDialog(true), 2000);
         } else {

@@ -19,7 +19,7 @@
                 </div>
                 <!-- text -->
                 <div class="d-flex flex-column align-items-start ms-4 pb-2">
-                    <p class="mb-0 fw-bold font-22">{{ profileData.name || 'Sin información' }}</p>
+                    <p class="mb-0 fw-bold font-22 cap">{{ profileData.name || profileData.email.split('@')[0] || 'Sin información' }}</p>
                     <div class="description-box">
                         <div class="me-4">
                             <span class="material-symbols-outlined align-icon">

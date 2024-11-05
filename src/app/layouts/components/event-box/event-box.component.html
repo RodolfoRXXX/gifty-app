@@ -40,6 +40,7 @@
                 <div class="btn-border d-flex flex-column justify-content-center aling-items-center background-main primary-color date-box">
                     <h6 class="mb-0 text-center">{{ loading?'':getMonth(eventData.date) }}</h6>
                     <h2 class="mb-0 text-center fw-semibold">{{ loading?'':(eventData.date | date:'dd') }}</h2>
+                    <h6 class="mb-0 text-center font-10">{{ loading?'':(eventData.date | date:'YYYY') }}</h6>
                 </div>
                 
                 <!-- Texto a la derecha (ajuste automático a dos líneas como máximo) -->
