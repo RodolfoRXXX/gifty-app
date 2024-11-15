@@ -1,0 +1,34 @@
+<!-- Formulario para transferencia -->
+
+<mat-card class="p-4">
+    <h4 class="text-left pb-1 b-b">Hacer un regalo</h4>
+    <form class="p-3 pb-0 d-flex flex-column justify-content-between" [formGroup]="dataForm" (ngSubmit)="initiateTransfer()">
+        <!-- Quien envia -->
+        <mat-form-field>
+            <mat-label>Tu email</mat-label>
+            <input matInput type="email" formControlName="payerEmail" placeholder="algo@tu-correo.com">
+        </mat-form-field>
+
+        <!-- Quien recibe -->
+        <mat-form-field>
+            <mat-label>El email del que recibe</mat-label>
+            <input matInput type="email" formControlName="receiverEmail" placeholder="algo@tu-correo.com">
+        </mat-form-field>
+
+        <!-- Cantidad -->
+        <mat-form-field>
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" formControlName="qty">
+        </mat-form-field>
+  
+        <!-- Botón para enviar -->
+        <button mat-flat-button class="btn-border w-100" color="primary" type="submit" [disabled]="dataForm.invalid || this.loading || dataForm.pristine">
+            <ng-container *ngIf="!loading; else loadingSpinner">
+              Confirmar
+            </ng-container>
+            <ng-template #loadingSpinner>
+              <mat-spinner diameter="20"></mat-spinner>
+            </ng-template>
+        </button>
+    </form>
+</mat-card>

@@ -3,6 +3,8 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { MaterialModule } from 'src/app/material/material/material.module';
 import { GiftMessageBoxComponent } from '../gift-message-box/gift-message-box.component';
 import { ApiService } from 'src/app/services/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogTransferSetupComponent } from '../dialog-transfer-setup/dialog-transfer-setup.component';
 
 @Component({
   selector: 'app-gift-box',
@@ -23,7 +25,8 @@ export class GiftBoxComponent {
   status: number = 0;
 
   constructor(
-    private _api: ApiService
+    private _api: ApiService,
+    private _dialog: MatDialog
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -57,6 +60,7 @@ export class GiftBoxComponent {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.status = response.data[0].status
+          console.log(response.data)
         }
       },
       error: (err) => {
@@ -71,6 +75,16 @@ export class GiftBoxComponent {
       sub += element.qty
     });
     return sub
+  }
+
+  //Abrir el modal de edición de evento
+  setTransfer(eventId: string | null) {
+    const editEventDialog = this._dialog.open(DialogTransferSetupComponent, { data: { eventId: eventId }});
+    editEventDialog.afterClosed().subscribe(result => {
+      if(result) {
+        console.log(result)
+      }
+    });
   }
 
 }

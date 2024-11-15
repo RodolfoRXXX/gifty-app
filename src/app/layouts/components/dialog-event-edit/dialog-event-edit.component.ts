@@ -3,7 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MaterialModule } from 'src/app/material/material/material.module';
-import { DialogProfileEditComponent } from '../dialog-profile-edit/dialog-profile-edit.component';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -27,7 +26,7 @@ export class DialogEventEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<DialogProfileEditComponent>,
+    public dialogRef: MatDialogRef<DialogEventEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _api: ApiService,
     private _notify: NotificationService
@@ -145,8 +144,6 @@ export class DialogEventEditComponent implements OnInit {
     });
     
   }
-  
-  
 
   closeDialog(state: boolean) {
     this.dialogRef.close(state);
