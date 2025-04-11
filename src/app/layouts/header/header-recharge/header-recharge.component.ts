@@ -46,6 +46,7 @@ export class HeaderRechargeComponent implements OnInit {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.notifications = response.data
+          console.log(response.data)
         } else {
           this.notifications = [];
         }

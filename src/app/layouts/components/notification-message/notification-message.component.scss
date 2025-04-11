@@ -13,3 +13,10 @@
     position: relative;
     bottom: -2px;
 }
+
+.a-notification {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 1.25rem;
+}

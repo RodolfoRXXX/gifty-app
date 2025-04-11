@@ -1,10 +1,14 @@
 <!-- Notificación recibida -->
 
-<a [routerLink]="['/event', notification.eventId]" class="d-flex align-items-center soft-grey-background p-3 pt-2 pb-2 btn-border cursor-pointer">
+<a 
+    [routerLink]="['/event', notification.eventId]" 
+    class="a-notification soft-grey-background btn-border"
+    [ngClass]="notification.status == 1 ? 'border-primary' : ''"
+    (click)="isReaded()">
     <!-- Contenedor del texto -->
     <div class="text-container flex-grow-1 me-3">
         <p class="font-14 mb-0 text-wrap">
-            <span class=""> {{ notification?notification.action:'' }}</span>
+            {{ notification?notification.action:'' }}
         </p>
         <small class="font-10">{{ isBeen(notification.created) }}</small>
     </div>

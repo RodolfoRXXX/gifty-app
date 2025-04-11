@@ -20,6 +20,7 @@
         </div>
         <ng-container *ngIf="notifications?.length != 0">
             <ng-container *ngFor="let notification of notifications">
+                <!-- tengo que hacer que cuando se genere un cambio en el componente hijo avise al padre asi recarga las notificaciones -->
                 <app-notification-message [notification]="notification"></app-notification-message>
             </ng-container>
         </ng-container>

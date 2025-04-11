@@ -60,7 +60,6 @@ export class GiftBoxComponent {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.status = response.data[0].status
-          console.log(response.data)
         }
       },
       error: (err) => {
