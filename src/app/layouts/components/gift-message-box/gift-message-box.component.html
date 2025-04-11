@@ -9,7 +9,8 @@
     <!-- Contenedor del texto -->
     <div class="text-container flex-grow-1">
       <p class="font-14 mb-0 text-wrap">
-        <span class="fw-semibold cap">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</span>
+        <span class="fw-semibold cap" *ngIf="!gift.profileId">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</span>
+        <a *ngIf="gift.profileId" [routerLink]="['../../profile', gift.profileId]" class="fw-semibold cap">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</a> 
         <span> dió un regalo.</span>
         <span class="ms-2 btn-border background-main fw-400 b-all ps-2 pe-2" *ngIf="gift.visible == 1">${{ gift.qty }}</span>
       </p>
@@ -17,8 +18,11 @@
   
     <!-- Ícono a la derecha -->
     <div>
-      <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
+      <span class="material-symbols-outlined align-icon primary-color" *ngIf="gift.profileId">
         person_check
+      </span>
+      <span class="material-symbols-outlined align-icon primary-color" *ngIf="!gift.profileId">
+        person_add
       </span>
     </div>
 </div>

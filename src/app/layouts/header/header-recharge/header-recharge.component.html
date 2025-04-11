@@ -27,24 +27,48 @@
 </mat-menu>
 
 <mat-menu #profile="matMenu" class="btn-border" xPosition="before">
-    <a mat-menu-item *ngIf="isAuthenticated" [routerLink]="['./profile', profileId]" routerLinkActive="active" class="fw-500">
-        <span class="material-symbols-outlined align-icon">
-            person
-        </span>
-        Mi perfíl </a>
-    <a mat-menu-item *ngIf="isAuthenticated" routerLink="./settings" routerLinkActive="active" class="fw-500">
-        <span class="material-symbols-outlined align-icon">
-            settings
-        </span>
-        Configuración </a>
-    <button mat-menu-item *ngIf="isLogged && isAuthenticated" (click)="logOff()" class="fw-300">
-        <span class="material-symbols-outlined align-icon">
-            logout
-        </span>
-        Cerrar sesión </button>
-    <button mat-menu-item *ngIf="isLogged && !isAuthenticated" (click)="logOffAll()">
-        <span class="material-symbols-outlined align-icon">
-            logout
-        </span>
-        Olvidar sesión </button>
+    <div class="gap-container">
+        <a 
+            mat-menu-item 
+            *ngIf="isAuthenticated" 
+            [routerLink]="['./profile', profileId]" 
+            routerLinkActive="active" 
+            class="btn-border fw-500" 
+            title="Mi perfíl">
+            <span class="material-symbols-outlined align-icon">
+                person
+            </span>
+            Mi perfíl </a>
+        <a 
+            mat-menu-item 
+            *ngIf="isAuthenticated" 
+            routerLink="./settings" 
+            routerLinkActive="active" 
+            class="btn-border fw-500"
+            title="Configuración">
+            <span class="material-symbols-outlined align-icon">
+                settings
+            </span>
+            Configuración </a>
+        <button 
+            mat-menu-item 
+            *ngIf="isLogged && isAuthenticated" 
+            (click)="logOff()" 
+            class="btn-border fw-300"
+            title="Cerrar sesión">
+            <span class="material-symbols-outlined align-icon">
+                logout
+            </span>
+            Cerrar sesión </button>
+        <button 
+            mat-menu-item 
+            *ngIf="isLogged && !isAuthenticated" 
+            (click)="logOffAll()" 
+            class="btn-border fw-300"
+            title="Cerrar sesión">
+            <span class="material-symbols-outlined align-icon">
+                logout
+            </span>
+            Olvidar sesión </button>
+    </div>
 </mat-menu>
