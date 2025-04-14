@@ -90,6 +90,23 @@
                     <span class="font-16 fw-semibold">{{ goal }}%</span>
                 </div> 
             </div>
+
+            <!-- Quinta Fila (Compartir) -->
+            <div class="d-flex justify-content-end align-items-center mt-2 b-t gap-2 flex-wrap">
+                <span class="fw-semibold">Compartir:</span>
+
+                <a [href]="'https://wa.me/?text=' + getEncodedMessage(shareMessage) + '%20' + getEncodedUrl(currentUrl)" target="_blank">
+                    <button mat-icon-button matTooltip="Compartir por WhatsApp">
+                      <mat-icon>share</mat-icon>
+                    </button>
+                </a>
+            
+                <!-- Copiar link -->
+                <button mat-icon-button (click)="copyLink()" matTooltip="Copiar enlace">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            </div>
+  
         </div>
     </mat-card-content>
 </mat-card>

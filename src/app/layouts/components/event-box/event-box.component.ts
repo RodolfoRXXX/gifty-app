@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material/material/material.module';
@@ -22,7 +22,7 @@ import { ButtonFollowComponent } from '../button-follow/button-follow.component'
   templateUrl: './event-box.component.html',
   styleUrl: './event-box.component.scss'
 })
-export class EventBoxComponent implements OnInit {
+export class EventBoxComponent implements OnInit, OnChanges {
 
   @Input() eventId!: string | null;
   eventData!: any;
@@ -36,6 +36,8 @@ export class EventBoxComponent implements OnInit {
   isFollowed: boolean = false;
   daysLeft!: number;
   displayMessage: string = '';
+  currentUrl: string = '';
+  shareMessage: string = '';
 
   constructor(
     private _api: ApiService,
@@ -46,6 +48,17 @@ export class EventBoxComponent implements OnInit {
 
   ngOnInit() {
     this.userData = JSON.parse(this.getUserData());
+    const baseUrl = window.location.origin;
+    const eventUrl = `${baseUrl}/event/${this.eventId}`;
+    this.currentUrl = eventUrl;
+  }
+
+  getEncodedUrl(url: string): string {
+    return encodeURIComponent(url);
+  }
+  
+  getEncodedMessage(message: string): string {
+    return encodeURIComponent(message);
   }
 
   getLocalStorageData() {
@@ -64,19 +77,21 @@ export class EventBoxComponent implements OnInit {
   }
 
   getEvent(eventId: string | null) {
-    // Llamar a la API para obtener los datos del evento
     this._api.postTypeRequest('profile/get-event', { eventId }).subscribe({
       next: (response: any) => {
         this.loading = false;
         if(response.status == 1 && response.data.length) {
-          this.eventData = response.data[0]; // Almacenar los datos del evento
-          this.isUser = this.userData?(this.userData.profileId === this.eventData.profileId):false;
+          this.eventData = response.data[0];
+          this.isUser = this.userData ? (this.userData.profileId === this.eventData.profileId) : false;
+          // 👉 Generar URL y mensaje solo después de tener eventData
+          this.shareMessage = `¡Mirá el evento de ${this.eventData.userName || this.eventData.email.split('@')[0]}! Podés regalarle algo especial 🎁`;
+  
           if(this.eventData.goal > 0) {
             this.getGoal(eventId, this.eventData.goal);
             this.hasGoal = true;
           }
-          this.getAcumulatted(this.eventData.date)
-          this.daysUntil(this.eventData.date)
+          this.getAcumulatted(this.eventData.date);
+          this.daysUntil(this.eventData.date);
         } else {
           this._router.navigate(['../page-not-found']);
         }
@@ -130,6 +145,13 @@ export class EventBoxComponent implements OnInit {
     this.displayMessage = this.daysLeft < 365 
     ? (this.daysLeft > 0 ? 'Faltan ' + this.daysLeft + ' días' : 'Hace ' + (-1) * this.daysLeft + ' días') 
     : 'Es hoy!';
+  }
+
+  copyLink() {
+    navigator.clipboard.writeText(this.currentUrl).then(() => {
+      // Podés usar snackbar o alert
+      alert('Enlace copiado al portapapeles');
+    });
   }
 
   doneFollow(event: any) {
