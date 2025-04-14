@@ -11,13 +11,15 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { NotificationMessageComponent } from './layouts/components/notification-message/notification-message.component';
 import { HeaderLoginComponent } from './layouts/header/header-login/header-login.component';
 import { HeaderRechargeComponent } from './layouts/header/header-recharge/header-recharge.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
     HeaderLoginComponent,
-    HeaderRechargeComponent
+    HeaderRechargeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@
     <mat-card-content>
         <div class="d-flex flex-column justify-content-between" style="height: 100%;">
             <!-- Primera Fila (Contacto) -->
-            <div class="d-flex justify-content-between align-items-center b-b mb-2 pb-2" *ngIf="!loading">
+            <div class="d-flex justify-content-between align-items-center b-b mb-2 pb-1" *ngIf="!loading">
                 <!-- Foto y nombre -->
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="image-container">
@@ -74,12 +74,12 @@
             </div>
             
             <!-- Tercera Fila (Texto) -->
-            <div class="d-flex flex-column align-items-start justify-content-center mt-2" style="height: 100%">
+            <div class="d-flex flex-column align-items-start justify-content-center mt-2 mb-2" style="height: 100%">
                 <p class="font-14">{{ loading ? 'cargando..' : eventData.description }}</p>
             </div>
 
             <!-- Cuarta Fila (Avance) -->
-            <div class="d-flex flex-column align-items-start justify-content-center mt-2" style="height: 100%;" *ngIf="hasGoal">
+            <div class="d-flex flex-column align-items-start justify-content-center mt-2 mb-2" style="height: 100%;" *ngIf="hasGoal">
                 <p class="font-14 me-2 mb-0 d-block">Meta cumplida: </p>
                 <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
                     <mat-progress-bar
@@ -92,7 +92,7 @@
             </div>
 
             <!-- Quinta Fila (Compartir) -->
-            <div class="d-flex justify-content-end align-items-center mt-2 b-t gap-2 flex-wrap">
+            <div class="d-flex justify-content-end align-items-center b-t pt-1 gap-2 flex-wrap">
                 <span class="fw-semibold">Compartir:</span>
 
                 <a [href]="'https://wa.me/?text=' + getEncodedMessage(shareMessage) + '%20' + getEncodedUrl(currentUrl)" target="_blank">
