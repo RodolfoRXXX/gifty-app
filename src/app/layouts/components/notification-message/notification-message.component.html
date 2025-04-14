@@ -3,12 +3,11 @@
 <a 
     [routerLink]="['/event', notification.eventId]" 
     class="a-notification soft-grey-background btn-border"
-    [ngClass]="notification.status == 1 ? 'border-primary' : ''"
-    (click)="isReaded()">
+    [ngClass]="notification.unseen == 1 ? 'border-primary' : ''">
     <!-- Contenedor del texto -->
     <div class="text-container flex-grow-1 me-3">
         <p class="font-14 mb-0 text-wrap">
-            {{ notification?notification.action:'' }}
+            {{ notification?'Recibiste un regalo':'' }}
         </p>
         <small class="font-10">{{ isBeen(notification.created) }}</small>
     </div>
@@ -16,7 +15,7 @@
     <!-- Ícono a la derecha -->
     <div>
         <span class="material-symbols-outlined align-icon primary-color" style="font-size: 20px;">
-            {{ notification?notification.icon:'' }}
+            {{ notification?'featured_seasonal_and_gifts':'' }}
         </span>
     </div>
 </a>

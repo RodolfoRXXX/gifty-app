@@ -39,9 +39,6 @@ export class AppComponent {
     this._conector.getUpdateTitle().subscribe( title => {
       this.title = title;
     });
-    this._conector.getUpdateSector().subscribe( sector => {
-      this.sector = sector;
-    });
     this.cdRef.detectChanges();
   }
 

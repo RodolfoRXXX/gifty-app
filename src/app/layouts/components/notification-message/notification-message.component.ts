@@ -27,19 +27,4 @@ export class NotificationMessageComponent {
     return (hour < 48)?`Hace ${hour} horas`:`Hace ${Math.floor(hour/24)} días`
   }
 
-  isReaded() {
-    this._api.postTypeRequest('profile/read-notification', {id : this.notification.id} ).subscribe({
-      next: (response: any) => {
-        if(response.status == 1 && response.data.length) {
-          console.log(response.data)
-        } else {
-          
-        }
-      },
-      error: (err) => {
-        
-      }
-    });
-  }
-
 }

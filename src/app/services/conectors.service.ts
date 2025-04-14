@@ -19,9 +19,9 @@ export class ConectorsService {
   private _updateTitle: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public readonly updateTitle$ : Observable<string> = this._updateTitle.asObservable();
 
-  //Observable para actualizar el string final de la barra superior de "init"
-  private _updateSector: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public readonly updateSector$ : Observable<string> = this._updateSector.asObservable();
+  //Observable para actualizar las notificaciones leídas del header
+  private _updateReadedNotification: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public readonly updateReadedNotification$ : Observable<boolean> = this._updateReadedNotification.asObservable();
 
   //Observable para actualizar el observable que contiene el objeto del empleado que accedió
   private _employee: BehaviorSubject<Employee> = new BehaviorSubject<Employee>(empty_employee);
@@ -37,11 +37,11 @@ export class ConectorsService {
     getUpdateTitle(): Observable<string> {
       return this.updateTitle$;
     }
-    getUpdateSector(): Observable<string> {
-      return this.updateSector$;
-    }
     getEmployee(): Observable<Employee> {
       return this.employee$;
+    }
+    getReadedNotification(): Observable<boolean> {
+      return this.updateReadedNotification$;
     }
 
 
@@ -55,11 +55,11 @@ export class ConectorsService {
     setUpdateTitle(text: string) {
       this._updateTitle.next(text);
     }
-    setUpdateSector(text: string) {
-      this._updateSector.next(text);
-    }
     setEmployee(employee: Employee) {
       this._employee.next(employee);
+    }
+    setReadedNotification(state: boolean) {
+      this._updateReadedNotification.next(state);
     }
 
 }

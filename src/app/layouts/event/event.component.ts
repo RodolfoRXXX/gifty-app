@@ -7,6 +7,7 @@ import { MessageCardComponent } from '../components/message-card/message-card.co
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { ConectorsService } from 'src/app/services/conectors.service';
 
 @Component({
   selector: 'app-event',
@@ -31,13 +32,15 @@ export class EventComponent implements OnInit, OnDestroy {
   constructor(
     private _actRoute: ActivatedRoute,
     private _api: ApiService,
-    private _router: Router
+    private _router: Router,
+    private _conector: ConectorsService
   ) { }
 
   ngOnInit(): void {
     this.routeSub = this._actRoute.paramMap.subscribe(paramMap => {
       this.eventId = paramMap.get('eventId');
       this.getmessages(this.eventId);
+      this.readNotification(this.eventId);
       if (!this.eventId) {
         this._router.navigate(['../page-not-found']);
       }
@@ -57,6 +60,24 @@ export class EventComponent implements OnInit, OnDestroy {
         this.messageList = [];
       }
     });
+  }
+
+  readNotification(eventId: string | null) {
+    this._api.postTypeRequest('profile/read-notification', { eventId } ).subscribe({
+      next: (response: any) => {
+        if(response.status == 1) {
+          //ok
+          this._conector.setReadedNotification(true);
+        } else {
+          //no se hizo el cambio
+        }
+      },
+      error: (err) => {
+        //error
+      }
+    })
+
+    //tengo que hacer un servicio de actualización del componente que muestra las notificaciones
   }
 
   // Al destruir el componente, cancelar la suscripción para evitar fugas de memoria

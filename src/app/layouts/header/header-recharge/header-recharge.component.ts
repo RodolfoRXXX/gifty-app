@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConectorsService } from 'src/app/services/conectors.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -22,13 +23,22 @@ export class HeaderRechargeComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private _router: Router,
-    private _api: ApiService
+    private _api: ApiService,
+    private _conector: ConectorsService
   ) {
     this.getDataUser();
   }
 
   ngOnInit(): void {
     this.getNotifications()
+
+    //NO SE ACTUALIZA ESTO DESPUES DE ENTRAR AL EVENTOOOOO!!!
+    //Actualiza el título de la vista de acuerdo al componente cargado
+    this._conector.getUpdateTitle().subscribe( value => {
+      if(value) {
+        this.getNotifications();
+      }
+    })
   }
 
   getLocalStorageData() {
@@ -46,7 +56,6 @@ export class HeaderRechargeComponent implements OnInit {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.notifications = response.data
-          console.log(response.data)
         } else {
           this.notifications = [];
         }

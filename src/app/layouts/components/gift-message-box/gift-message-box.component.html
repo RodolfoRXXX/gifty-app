@@ -9,8 +9,8 @@
     <!-- Contenedor del texto -->
     <div class="text-container flex-grow-1">
       <p class="font-14 mb-0 text-wrap">
-        <span class="fw-semibold cap" *ngIf="!gift.profileId">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</span>
-        <a *ngIf="gift.profileId" [routerLink]="['../../profile', gift.profileId]" class="fw-semibold cap">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</a> 
+        <span class="fw-semibold cap" *ngIf="gift.gifterId.startsWith('%')">{{ gift.gifterId.slice(1) }}</span>
+        <a *ngIf="!gift.gifterId.startsWith('%')" [routerLink]="['../../profile', gift.gifterId]" class="fw-semibold cap">{{ gift.userName || gift.name || gift.email.split('@')[0] }}</a> 
         <span> dió un regalo.</span>
         <span class="ms-2 btn-border background-main fw-400 b-all ps-2 pe-2" *ngIf="gift.visible == 1">${{ gift.qty }}</span>
       </p>
