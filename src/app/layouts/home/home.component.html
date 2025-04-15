@@ -23,9 +23,9 @@
         <!-- Contenedor para los resultados de búsqueda -->
         <div class="results-container btn-border mt-1 p-2" *ngIf="showResults">
             <div *ngIf="loading">...buscando</div>
-            <ul *ngIf="!loading && results.length > 0">
+            <ul class="d-flex flex-column gap-2" *ngIf="!loading && results.length > 0">
                 <li *ngFor="let user of results">
-                    <a [routerLink]="['../profile', user.profileId]" class="d-flex align-items-center b-all p-3 pt-2 pb-2 btn-border res-search">
+                    <a [routerLink]="['../profile', user.profileId]" class="d-flex align-items-center b-all p-3 pt-2 pb-2 btn-border res-search cap">
                         <!-- Contenedor de la imagen -->
                         <div class="image-container">
                           <img [src]="uriImg + user.thumbnail" class="image-user">
