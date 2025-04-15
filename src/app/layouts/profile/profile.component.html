@@ -2,7 +2,7 @@
 <mat-card class="card profile-card">
     <mat-card-content>
         <div class="edit-box btn-border bg-primary">
-            <button class="b-all" mat-icon-button (click)="editProfile(profileId)" *ngIf="isUser">
+            <button class="b-all" mat-icon-button (click)="editProfile(profileId)" *ngIf="isUser && status">
                 <span class="material-symbols-outlined align-button-icon text-white">
                     edit
                 </span>
@@ -50,7 +50,8 @@
 
 <div style="max-width: 1280px; margin: auto;">
     <h4 class="m-4 mb-3">Eventos</h4>
-    <div class="event-box flex-wrap gap-4 pb-3" style="height: calc(100vh - 429px); overflow-y: auto;">
+    <!-- Caja con eventos -->
+    <div class="event-box flex-wrap gap-4 pb-3" style="height: calc(100vh - 429px); overflow-y: auto;" *ngIf="status">
         <!-- Caja "Agregar Evento" -->
         <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent(profileId, '')" *ngIf="isUser">
             <h5 class="w-100 text-center add-event-text">
@@ -70,6 +71,11 @@
         <div *ngIf="eventLoading">
             <p>...cargando</p>
         </div>
+    </div>
+    <!-- Caja advertencia si la cuenta no está activada -->
+    <div class="d-flex align-items-center flex-column" *ngIf="!status">
+        <p class="d-block mb-2">Tu cuenta no está activada</p>
+        <a mat-flat-button color="accent" routerLink="/settings/verify-account">Activar</a>
     </div>
 </div>
 

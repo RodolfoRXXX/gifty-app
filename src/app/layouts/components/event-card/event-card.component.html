@@ -10,7 +10,7 @@
                     <div class="image-user me-2">
                         <img [src]="uriImg + event.thumbnail">
                     </div>
-                    <a [routerLink]="['/profile', event.profileId]" (click)="onLinkClick($event)" class="font-14 fw-semibold">{{ event.userName || event.email.split('@')[0] }}</a>
+                    <a [routerLink]="['/profile', event.profileId]" (click)="onLinkClick($event)" class="font-14 fw-semibold text-wrap">{{ event.userName || event.email.split('@')[0] }}</a>
                 </div>
                 <!-- follow -->
                 <app-button-follow [profileId]="event.profileId" [hideText]="true" *ngIf="!isUser" (doneFollow)="doneFollow($event)" (click)="onLinkClick($event)"></app-button-follow>

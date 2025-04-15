@@ -5,7 +5,7 @@ import { EventCardComponent } from '../components/event-card/event-card.componen
 import { MatDialog } from '@angular/material/dialog';
 import { DialogProfileEditComponent } from '../components/dialog-profile-edit/dialog-profile-edit.component';
 import { DialogEventEditComponent } from '../components/dialog-event-edit/dialog-event-edit.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +19,8 @@ import { ButtonFollowComponent } from '../components/button-follow/button-follow
     CommonModule,
     MaterialModule,
     EventCardComponent,
-    ButtonFollowComponent
+    ButtonFollowComponent,
+    RouterModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
@@ -33,6 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   eventLoading: boolean = true;
   uriImg = environment.SERVER;
   isUser!: boolean;
+  status!: boolean;
   private routeSub!: Subscription;
 
   constructor(
@@ -66,6 +68,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.profileData = response.data[0]; // Almacenar los datos del perfil
+          this.status = this.profileData.status > 0
           this.loading = false; // Desactivar el estado de carga
         } else {
           this._router.navigate(['../page-not-found']);

@@ -9,6 +9,7 @@ import { daysUntilDate, getMonthNameForDate, yearsSinceDate } from 'src/app/shar
 import { environment } from 'src/environments/environment';
 import { DialogEventEditComponent } from '../dialog-event-edit/dialog-event-edit.component';
 import { ButtonFollowComponent } from '../button-follow/button-follow.component';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-event-box',
@@ -43,7 +44,8 @@ export class EventBoxComponent implements OnInit, OnChanges {
     private _api: ApiService,
     private _router: Router,
     private _auth: AuthService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _notify: NotificationService
   ) { }
 
   ngOnInit() {
@@ -149,8 +151,7 @@ export class EventBoxComponent implements OnInit, OnChanges {
 
   copyLink() {
     navigator.clipboard.writeText(this.currentUrl).then(() => {
-      // Podés usar snackbar o alert
-      alert('Enlace copiado al portapapeles');
+      this._notify.showSuccess('Enlace copiado');
     });
   }
 
