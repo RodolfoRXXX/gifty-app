@@ -2,7 +2,10 @@
     <button
     [matMenuTriggerFor]="notification"
     mat-icon-button 
-    class="btn-header-login me-2">
+    class="btn-header-login me-2 custom-badge"
+    [matBadge]="notification_total"
+    [matBadgeHidden]="notification_total == 0"
+    matBadgeColor="warn">
         <mat-icon class="m-0" style="position: relative; top: 3px;">notifications_none</mat-icon>
     </button>
     <button

@@ -19,6 +19,7 @@ export class HeaderRechargeComponent implements OnInit {
   pic!: string;
   profileId!: string;
   notifications!: any[];
+  notification_total!: number;
 
   constructor(
     private _auth: AuthService,
@@ -32,9 +33,8 @@ export class HeaderRechargeComponent implements OnInit {
   ngOnInit(): void {
     this.getNotifications()
 
-    //NO SE ACTUALIZA ESTO DESPUES DE ENTRAR AL EVENTOOOOO!!!
     //Actualiza el título de la vista de acuerdo al componente cargado
-    this._conector.getUpdateTitle().subscribe( value => {
+    this._conector.getReadedNotification().subscribe( value => {
       if(value) {
         this.getNotifications();
       }
@@ -56,6 +56,7 @@ export class HeaderRechargeComponent implements OnInit {
       next: (response: any) => {
         if(response.status == 1 && response.data.length) {
           this.notifications = response.data
+          this.notification_total = this.addNotification(response.data)
         } else {
           this.notifications = [];
         }
@@ -64,6 +65,10 @@ export class HeaderRechargeComponent implements OnInit {
         this.notifications = [];
       }
     });
+  }
+
+  addNotification(arr: any[]) {
+    return arr.reduce((total, obj) => total + (obj.unseen || 0), 0);
   }
 
   logOff(): void {
