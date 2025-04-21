@@ -82,22 +82,22 @@ body {
 
 /* Estilos del contenedor principal */
 .event-box {
-  position: relative;
-  width: 100%;
-  overflow-x: hidden;
-  white-space: nowrap;
-  margin: 0 auto;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
   cursor: grab;
+  width: 100%;
+  white-space: nowrap;
+  scrollbar-width: none; // Oculta scrollbar en Firefox
+  -ms-overflow-style: none; // IE/Edge
 }
 
-/* Contenido que será desplazado */
+.event-box::-webkit-scrollbar {
+  display: none; // Oculta scrollbar en Chrome
+}
+
 .event-content {
-  display: inline-flex; /* Usar flex para permitir alineación horizontal */
-  gap: 20px;
-  align-items: center;
-  white-space: nowrap;
-  will-change: transform;
-  animation: marquee 45s linear infinite;
+  display: inline-flex;
+  gap: 1rem;
 }
 
 //Resultados
@@ -139,19 +139,18 @@ body {
   background-color: rgb(240, 240, 240)
 }
 
-/* Animación para desplazamiento automático */
-@keyframes marquee {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
 
 //nuevo
 
+.event-content {
+  display: flex;
+  gap: 1rem; // o el espaciado que quieras entre cards
+  transition: all 0.3s ease;
+  animation: scrollLoop 30s linear infinite;
+}
 
-
-
+@keyframes scrollLoop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } // o lo que necesites
+}
 

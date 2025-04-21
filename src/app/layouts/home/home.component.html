@@ -60,16 +60,15 @@
     <!-- Events -->
     <h4 class="text-center mb-3">Próximos eventos</h4>
     <div class="event-box" #eventBox>
-        <div class="event-content" #eventContent>
-            <!-- Cajas con eventos -->
-            <ng-container *ngIf="eventList.length > 0">
-                <ng-container *ngFor="let event of eventList">
-                    <app-event-card class="btn-border" [event]="event"></app-event-card>
-                </ng-container>
+    <div class="event-content" #eventContent>
+        <ng-container *ngIf="eventList.length > 0">
+            <ng-container *ngFor="let event of duplicatedEventList">
+                <app-event-card class="btn-border" [event]="event"></app-event-card>
             </ng-container>
-            <div *ngIf="eventLoading">
-                <p>...cargando</p>
-            </div>
+        </ng-container>
+        <div *ngIf="eventLoading">
+        <p>...cargando</p>
         </div>
+    </div>
     </div>
 </div>

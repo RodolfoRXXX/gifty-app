@@ -36,6 +36,9 @@ export class HomeComponent {
   showResults: boolean = false;
   uriImg = environment.SERVER;
 
+  autoScrollInterval: any;
+  duplicatedEventList: any[] = [];
+
   constructor(
     private renderer: Renderer2,
     private _api: ApiService
@@ -44,6 +47,11 @@ export class HomeComponent {
   ngOnInit(): void {
     this.getEventList();
     this.setupMouseListeners();
+  }
+
+  ngAfterViewInit() {
+    this.setupMouseListeners();
+    this.startAutoScroll();
   }
 
   onSearchChange(): void {
@@ -77,40 +85,51 @@ export class HomeComponent {
     });
   }
 
+  startAutoScroll() {
+    this.autoScrollInterval = setInterval(() => {
+      const box = this.eventBox.nativeElement;
+      box.scrollLeft += 1;
+  
+      if (box.scrollLeft >= box.scrollWidth / 2) {
+        box.scrollLeft = 0;
+      }
+    }, 20); // velocidad del scroll
+  }
+  
+  stopAutoScroll() {
+    clearInterval(this.autoScrollInterval);
+  }
+  
   setupMouseListeners(): void {
-    // Mousedown: Detener animación y permitir el arrastre manual
-    this.renderer.listen(this.eventBox.nativeElement, 'mousedown', (e: MouseEvent) => this.onMouseDown(e));
-    this.renderer.listen(this.eventBox.nativeElement, 'mouseleave', () => this.onMouseLeave());
-    this.renderer.listen(this.eventBox.nativeElement, 'mouseup', () => this.onMouseUp());
-    this.renderer.listen(this.eventBox.nativeElement, 'mousemove', (e: MouseEvent) => this.onMouseMove(e));
+    const box = this.eventBox.nativeElement;
+  
+    this.renderer.listen(box, 'mousedown', (e: MouseEvent) => {
+      this.isDragging = true;
+      box.style.cursor = 'grabbing';
+      this.startX = e.pageX - box.offsetLeft;
+      this.scrollLeft = box.scrollLeft;
+      this.stopAutoScroll();
+    });
+  
+    this.renderer.listen(box, 'mouseleave', () => {
+      if (this.isDragging) this.onMouseUp();
+    });
+  
+    this.renderer.listen(box, 'mouseup', () => this.onMouseUp());
+  
+    this.renderer.listen(box, 'mousemove', (e: MouseEvent) => {
+      if (!this.isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - box.offsetLeft;
+      const walk = (x - this.startX) * 2;
+      box.scrollLeft = this.scrollLeft - walk;
+    });
   }
-  onMouseDown(e: MouseEvent): void {
-    // Detener la animación CSS al hacer clic
-    this.eventContent.nativeElement.style.animationPlayState = 'paused';
-
-    this.isDragging = true;
-    this.eventBox.nativeElement.style.cursor = 'grabbing';
-    this.startX = e.pageX - this.eventBox.nativeElement.offsetLeft;
-    this.scrollLeft = this.eventBox.nativeElement.scrollLeft;
-  }
-  onMouseLeave(): void {
-    if (this.isDragging) {
-      this.onMouseUp(); // Detener arrastre si el mouse sale del contenedor
-    }
-  }
-  onMouseUp(): void {
+  
+  onMouseUp() {
     this.isDragging = false;
     this.eventBox.nativeElement.style.cursor = 'grab';
-    // Reiniciar la animación al soltar el mouse
-    this.eventContent.nativeElement.style.animationPlayState = 'running';
-  }
-  onMouseMove(e: MouseEvent): void {
-    if (!this.isDragging) return;
-
-    e.preventDefault(); // Previene la selección de texto
-    const x = e.pageX - this.eventBox.nativeElement.offsetLeft;
-    const walk = (x - this.startX) * 2; // Ajuste la velocidad del desplazamiento
-    this.eventBox.nativeElement.scrollLeft = this.scrollLeft - walk;
+    this.startAutoScroll(); // Reanuda el scroll automático
   }
 
   getEventList() {
@@ -119,8 +138,11 @@ export class HomeComponent {
         this.eventLoading = false;
         if(response.status == 1 && response.data.length) {
           this.eventList = response.data; // Almacenar los datos
+          //this.duplicatedEventList = [...this.eventList, ...this.eventList];
+          this.duplicatedEventList = Array(5).fill(this.eventList).flat();
         } else {
           this.eventList = [];
+          this.duplicatedEventList = [];
         }
       },
       error: (err) => {

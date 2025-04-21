@@ -43,7 +43,9 @@
             </div>
         </div>
         <div class="info-box" *ngIf="loading">
-            ...cargando
+            <p>
+                Cargando...
+            </p>
         </div>
     </mat-card-content>
 </mat-card>
@@ -51,7 +53,7 @@
 <div style="max-width: 1280px; margin: auto;">
     <h4 class="m-4 mb-3">Eventos</h4>
     <!-- Caja con eventos -->
-    <div class="event-box flex-wrap gap-4 pb-3" style="height: calc(100vh - 429px); overflow-y: auto;" *ngIf="isUser?status:true">
+    <div class="event-box flex-wrap gap-4 pb-3" style="height: calc(100vh - 429px); overflow-y: auto;" *ngIf="!loading && (isUser?status:true)">
         <!-- Caja "Agregar Evento" -->
         <div class="d-flex align-items-center justify-content-center b-all btn-border add-event size-box" (click)="editEvent(profileId, '')" *ngIf="isUser">
             <h5 class="w-100 text-center add-event-text">
@@ -73,9 +75,14 @@
         </div>
     </div>
     <!-- Caja advertencia si la cuenta no está activada -->
-    <div class="d-flex align-items-center flex-column" *ngIf="!status && isUser">
+    <div class="d-flex align-items-center flex-column" *ngIf="!status && isUser && !loading">
         <p class="d-block mb-2">Tu cuenta no está activada</p>
         <a mat-flat-button color="accent" routerLink="/settings/verify-account">Activar</a>
+    </div>
+    <div class="d-flex justify-content-center p-4" *ngIf="loading">
+        <p>
+            Cargando...
+        </p>
     </div>
 </div>
 
